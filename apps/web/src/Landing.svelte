@@ -1,12 +1,11 @@
 <script lang="ts">
-  import type { Component } from 'svelte'
+  import DotHero from './DotHero.svelte'
 
   type Props = {
     scenes: string[]
-    Hero: Component<Record<string, never>>
   }
 
-  let { scenes, Hero }: Props = $props()
+  let { scenes }: Props = $props()
 
   const index = [
     'static-card',
@@ -35,32 +34,7 @@
     <a class="src" href="https://benji.org/stageshow" target="_blank" rel="noreferrer">original</a>
   </header>
 
-  <section class="hero">
-    <div class="lead">
-      <p class="eyebrow">Specimen 01 — the port</p>
-      <h1>Product shots that hold up as product.</h1>
-      <p class="body">
-        The Stageshow kit, rewritten for Svelte 5: window frames with real chrome, a cursor that
-        types and clicks under a script, and sixty-nine worked scenes to start from. The design
-        rules travel with it. No React in the bundle, one peer dependency, no animation runtime.
-      </p>
-      <div class="actions">
-        <code>pnpm add svelte-stageshow</code>
-        <a class="go" href="?scene=static-card">Open the gallery</a>
-      </div>
-    </div>
-
-    <figure class="plate">
-      <div class="plate__stage">
-        <Hero />
-      </div>
-      <figcaption>
-        <span>svelte 5</span>
-        <span class="dots"></span>
-        <span class="mono">dot lattice / 120 × 64</span>
-      </figcaption>
-    </figure>
-  </section>
+  <DotHero />
 
   <section class="ledger">
     {#each facts as [value, label] (label)}
@@ -147,101 +121,10 @@
     text-decoration: none;
   }
 
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-    gap: clamp(24px, 4vw, 64px);
-    align-items: start;
-  }
 
-  .eyebrow {
-    margin: 0 0 18px;
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--dim);
-  }
 
-  h1 {
-    margin: 0 0 18px;
-    font-family: var(--ss-display, 'Bahnschrift', 'Arial Narrow', sans-serif);
-    font-size: clamp(34px, 4.6vw, 60px);
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    max-width: 15ch;
-  }
 
-  .body {
-    margin: 0 0 26px;
-    max-width: 44ch;
-    font-size: 14.5px;
-    line-height: 1.65;
-    color: rgba(244, 241, 230, 0.78);
-  }
 
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  code {
-    padding: 9px 13px;
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 12px;
-    color: rgba(244, 241, 230, 0.9);
-  }
-
-  .go {
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--paper);
-    text-decoration: none;
-    border-bottom: 1px solid var(--orange);
-    padding-bottom: 3px;
-  }
-
-  .plate {
-    margin: 0;
-    border: 1px solid var(--line);
-    border-radius: 5px;
-    overflow: hidden;
-    background: #0f0d0c;
-  }
-
-  .plate__stage {
-    display: grid;
-    place-items: center;
-    padding: clamp(16px, 3vw, 34px);
-    background:
-      linear-gradient(180deg, rgba(232, 98, 42, 0.07), transparent 55%),
-      repeating-linear-gradient(90deg, rgba(244, 241, 230, 0.04) 0 1px, transparent 1px 64px);
-  }
-
-  figcaption {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 14px;
-    border-top: 1px solid var(--line);
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 10.5px;
-    color: var(--dim);
-  }
-
-  .dots {
-    flex: 1;
-    height: 1px;
-    background-image: linear-gradient(90deg, var(--line) 50%, transparent 50%);
-    background-size: 6px 1px;
-  }
 
   .ledger {
     display: grid;
@@ -262,9 +145,10 @@
   }
 
   .n {
-    font-family: var(--ss-display, 'Bahnschrift', 'Arial Narrow', sans-serif);
-    font-size: 30px;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 34px;
     line-height: 1;
+    color: #f6f1e7;
   }
 
   .l {
@@ -358,10 +242,6 @@
   }
 
   @media (max-width: 900px) {
-    .hero {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
     .ledger {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }

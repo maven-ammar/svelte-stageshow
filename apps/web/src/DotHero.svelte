@@ -1,20 +1,26 @@
 <script lang="ts">
-  import { Stage } from 'svelte-stageshow'
   import './dot-hero.css'
 
-  // The hero plate: the Svelte mark as dot-lattice art on a warm wash that runs
-  // purple at the top through coral to orange at the floor, with a fine grain
-  // over it so the gradient reads as pigment rather than a CSS ramp.
+  // The hero band: a soft warm bloom on near-black, the Svelte mark as dot lattice,
+  // and the headline set in Instrument Serif over it. Grain over everything so the
+  // gradient reads as pigment instead of a CSS ramp.
 </script>
 
-<Stage width={720} height={400} className="dot-hero" unframed>
-  {#snippet children()}
-    <div class="dot-hero__wash"></div>
-    <div class="dot-hero__grain"></div>
-    <img class="dot-hero__mark" src="/svelte-dots.png" alt="Svelte, drawn in dots" />
-    <p class="dot-hero__caption">
-      <span class="dot-hero__label">svelte 5</span>
-      <span class="dot-hero__note">the kit, ported</span>
+<section class="dot-hero">
+  <div class="dot-hero__wash"></div>
+  <div class="dot-hero__grain"></div>
+  <img class="dot-hero__mark" src="/svelte-dots.png" alt="" aria-hidden="true" />
+
+  <div class="dot-hero__content">
+    <p class="dot-hero__eyebrow">A Svelte 5 port of Stageshow</p>
+    <h1>Product shots that hold up as product.</h1>
+    <p class="dot-hero__sub">
+      Window frames with real chrome, a cursor that types and clicks under a script, sixty-nine
+      worked scenes to start from. The design rules travel with it.
     </p>
-  {/snippet}
-</Stage>
+    <div class="dot-hero__actions">
+      <code>pnpm add svelte-stageshow</code>
+      <a href="?scene=static-card">Open the gallery</a>
+    </div>
+  </div>
+</section>

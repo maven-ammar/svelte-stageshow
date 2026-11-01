@@ -5,8 +5,7 @@
   import HeroDemo from './scenes/HeroDemo.svelte'
   import StaticCard from './scenes/StaticCard.svelte'
   import Landing from './Landing.svelte'
-  import DotHero from './DotHero.svelte'
-
+  
   const params = new URLSearchParams(window.location.search)
   const capture = params.get('capture')
   const test = params.get('test')
@@ -71,12 +70,12 @@
 </script>
 
 <svelte:head>
-  <title>{capture ? `${capture} Ã¢â‚¬â€œ svelte-stageshow` : 'svelte-stageshow Ã¢â‚¬â€œ gallery'}</title>
+  <title>{capture ? `${capture} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ svelte-stageshow` : 'svelte-stageshow ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ gallery'}</title>
   <link rel="icon" href="data:," />
 </svelte:head>
 
 {#if landing}
-  <Landing scenes={sceneNames} Hero={DotHero} />
+  <Landing scenes={sceneNames}  />
 {:else if test === 'determinism'}
   <main class="capture" style="width:720px">
     <DeterminismTest />
@@ -107,7 +106,7 @@
 {:else}
   <main class="gallery">
     <header class="gallery-head">
-      <p class="eyebrow">Svelte 5 Ã‚Â· runes Ã‚Â· MIT</p>
+      <p class="eyebrow">Svelte 5 Ãƒâ€šÃ‚Â· runes Ãƒâ€šÃ‚Â· MIT</p>
       <h1>Stageshow</h1>
       <p class="lede">
         The whole Stageshow kit, ported from Benji Taylor's React source. {sceneNames.length} scenes. Pick one;
@@ -126,7 +125,7 @@
     <section class="scene-block">
       <div class="scene-head">
         <h2>{selectedSlug}</h2>
-        <p>Capture: <code>?capture={selectedSlug}</code> Ã‚Â· design size as authored in the scene.</p>
+        <p>Capture: <code>?capture={selectedSlug}</code> Ãƒâ€šÃ‚Â· design size as authored in the scene.</p>
       </div>
       <div class="scene-stage">
         {#if current}
@@ -140,12 +139,13 @@
 
     <footer class="gallery-foot">
       <p>
-        Ported from the MIT-licensed Stageshow kit, Ã‚Â© 2026 Benji Taylor. Every scene keeps the upstream
+        Ported from the MIT-licensed Stageshow kit, Ãƒâ€šÃ‚Â© 2026 Benji Taylor. Every scene keeps the upstream
         design size, copy, DOM order and Act script. See <code>REHEARSAL.md</code> and the diff table in
         <code>README.md</code>.
       </p>
     </footer>
   </main>
 {/if}
+
 
 
