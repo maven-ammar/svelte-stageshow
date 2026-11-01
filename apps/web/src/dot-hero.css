@@ -1,0 +1,62 @@
+/* The hero plate: warm wash, grain, dot mark. The stage itself is the frame. */
+
+.dot-hero :global(.ss-stage) {
+  background: #0b0908;
+  overflow: hidden;
+}
+
+.dot-hero__wash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 118%, #ff9b2f 0%, rgba(255, 155, 47, 0) 52%),
+    radial-gradient(95% 75% at 46% 72%, #f2452f 0%, rgba(242, 69, 47, 0) 62%),
+    radial-gradient(120% 80% at 70% 8%, #8b5cf6 0%, rgba(139, 92, 246, 0) 58%),
+    linear-gradient(178deg, #6d45c9 0%, #7b4fd0 26%, #e0503c 68%, #f8842c 100%);
+  opacity: 0.92;
+}
+
+.dot-hero__grain {
+  position: absolute;
+  inset: -10%;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.dot-hero__mark {
+  position: absolute;
+  left: 50%;
+  top: 47%;
+  width: 47%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 12px 34px rgba(20, 8, 0, 0.35));
+}
+
+.dot-hero__caption {
+  position: absolute;
+  left: 22px;
+  bottom: 16px;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--ss-mono, ui-monospace, monospace);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 245, 238, 0.82);
+}
+
+.dot-hero__label {
+  padding: 3px 7px;
+  border: 1px solid rgba(255, 245, 238, 0.4);
+  border-radius: 2px;
+}
+
+.dot-hero__note {
+  color: rgba(255, 245, 238, 0.6);
+}

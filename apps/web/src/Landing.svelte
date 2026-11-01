@@ -55,9 +55,9 @@
         <Hero />
       </div>
       <figcaption>
-        <span>static-card</span>
+        <span>svelte 5</span>
         <span class="dots"></span>
-        <span class="mono">900 × 316</span>
+        <span class="mono">dot lattice / 120 × 64</span>
       </figcaption>
     </figure>
   </section>
