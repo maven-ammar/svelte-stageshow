@@ -1,0 +1,18 @@
+[
+  {
+    "name": "static-900",
+    "port": "shots/example-static.png",
+    "ref": "shots/ref-static-card.png",
+    "average": "inf",
+    "pass": true,
+    "line": "[Parsed_psnr_0 @ 000002a0fa38a080] PSNR r:inf g:inf b:inf average:inf min:inf max:inf"
+  },
+  {
+    "name": "hero-900",
+    "port": "shots/example-hero.png",
+    "ref": "shots/ref-hero-demo.png",
+    "average": "42.510476",
+    "pass": true,
+    "line": "[Parsed_psnr_0 @ 000002921c877f80] PSNR r:42.513460 g:42.513460 b:42.504513 average:42.510476 min:42.510476 max:42.510476"
+  }
+]

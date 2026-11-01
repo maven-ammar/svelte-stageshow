@@ -1,0 +1,185 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #fbfbfa;
+  color: #1b1b1d;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #fbfbfa;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.gallery {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 52px 32px 104px;
+}
+
+.gallery-head {
+  max-width: 760px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b8b90;
+}
+
+.gallery h1 {
+  margin: 0;
+  font-size: 42px;
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.lede {
+  margin: 14px 0 0;
+  max-width: 620px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #5e5e63;
+}
+
+.scene-block {
+  margin-top: 56px;
+}
+
+.scene-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.scene-head h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.scene-head p {
+  margin: 0;
+  max-width: 620px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #7b7b80;
+}
+
+.scene-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.preview {
+  margin: 0;
+  flex: none;
+}
+
+.preview-wide {
+  width: 720px;
+  max-width: 100%;
+}
+
+.preview-card {
+  width: 400px;
+}
+
+.preview-compact {
+  width: 358px;
+}
+
+.preview figcaption {
+  margin-top: 10px;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #919196;
+}
+
+.gallery-foot {
+  margin-top: 72px;
+  padding-top: 22px;
+  border-top: 1px solid #e9e8e5;
+}
+
+.gallery-foot p {
+  margin: 0;
+  max-width: 760px;
+  font-size: 11.5px;
+  line-height: 1.65;
+  color: #85858a;
+}
+
+.gallery-foot code {
+  font-family: var(--ss-mono, ui-monospace, monospace);
+  font-size: 10.5px;
+  color: #5e5e63;
+}
+
+.capture {
+  margin: 0;
+  padding: 0;
+}
+
+/* The skill's film wrapper: 900 CSS px wide, 8px above and below the stage,
+   the stage centered. `--select '#example'` screenshots exactly this box. */
+.film-example {
+  width: 900px;
+  /* The skill's capture sits the stage at the top and keeps 16px below it:
+     static 400x300 -> 900x316, hero 720x340 -> 900x356. */
+  padding: 0 0 16px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.film-example .ss-fit {
+  margin-inline: auto;
+}
+
+.capture .ss-fit {
+  margin: 0;
+  max-width: none !important;
+}
+
+@media (max-width: 780px) {
+  .gallery {
+    padding: 34px 18px 72px;
+  }
+
+  .gallery h1 {
+    font-size: 32px;
+  }
+
+  .scene-head {
+    display: block;
+  }
+
+  .scene-head p {
+    margin-top: 6px;
+  }
+
+  .preview-wide {
+    width: 720px;
+    transform-origin: top left;
+  }
+}

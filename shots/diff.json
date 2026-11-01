@@ -1,0 +1,52 @@
+[
+  {
+    "name": "static-400",
+    "width": 800,
+    "height": 600,
+    "pixels": 480000,
+    "differing": 0,
+    "percent": 0,
+    "maxDelta": 5,
+    "bbox": null
+  },
+  {
+    "name": "static-358",
+    "width": 716,
+    "height": 600,
+    "pixels": 429600,
+    "differing": 0,
+    "percent": 0,
+    "maxDelta": 5,
+    "bbox": null
+  },
+  {
+    "name": "hero-720",
+    "width": 1440,
+    "height": 680,
+    "pixels": 979200,
+    "differing": 1341,
+    "percent": 0.137,
+    "maxDelta": 175,
+    "bbox": {
+      "x": 232,
+      "y": 262,
+      "width": 679,
+      "height": 192
+    }
+  },
+  {
+    "name": "hero-358",
+    "width": 716,
+    "height": 800,
+    "pixels": 572800,
+    "differing": 1242,
+    "percent": 0.217,
+    "maxDelta": 175,
+    "bbox": {
+      "x": 92,
+      "y": 446,
+      "width": 187,
+      "height": 18
+    }
+  }
+]

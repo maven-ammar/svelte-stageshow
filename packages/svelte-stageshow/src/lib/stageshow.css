@@ -1,0 +1,10 @@
+/* The gallery and workspace development entry. Publishing builds a single
+   dist/stageshow.css from the same files, with no @imports left. */
+@import './style/stage.css';
+@import './style/cursor.css';
+@import './style/keys.css';
+@import './style/window.css';
+@import './style/phone.css';
+@import './style/row.css';
+@import './style/avatar.css';
+@import './style/chip.css';

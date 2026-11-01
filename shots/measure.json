@@ -1,0 +1,342 @@
+[
+  {
+    "id": "static-card",
+    "size": "400x300",
+    "stage": {
+      "x": 0,
+      "y": 0,
+      "width": 400,
+      "height": 300,
+      "right": 400,
+      "bottom": 300
+    },
+    "window": {
+      "x": 104,
+      "y": 24,
+      "width": 460,
+      "height": 320,
+      "right": 564,
+      "bottom": 344
+    },
+    "satellite": {
+      "x": 24,
+      "y": 118,
+      "width": 176,
+      "height": 158,
+      "right": 200,
+      "bottom": 276
+    },
+    "visible": {
+      "width": 296,
+      "height": 276
+    },
+    "bleed": {
+      "top": 24,
+      "left": 104,
+      "right": 164,
+      "bottom": 44
+    },
+    "bleedPct": {
+      "width": 74,
+      "height": 92,
+      "windowOffRight": 35.7,
+      "windowOffBottom": 13.8
+    },
+    "satelliteStraddle": {
+      "insideOfWindow": 96,
+      "outsideOfWindow": 80
+    },
+    "type": {
+      "windowTitle": null,
+      "pageTitle": "13px",
+      "cardTitle": "12px",
+      "rowTitle": "12px",
+      "rowMeta": null,
+      "terminal": null
+    },
+    "strings": {
+      "total": 14,
+      "unique": 12,
+      "sample": [
+        "dashboard.northwind.co",
+        "Overview",
+        "Customers",
+        "Invoices",
+        "Reports",
+        "Halvorsen & Co",
+        "$1,240",
+        "Jackson Hot Yoga",
+        "Lumen Studio",
+        "$860",
+        "Total",
+        "$72.00"
+      ]
+    },
+    "targets": []
+  },
+  {
+    "id": "static-card",
+    "size": "358x300",
+    "stage": {
+      "x": 0,
+      "y": 0,
+      "width": 358,
+      "height": 300,
+      "right": 358,
+      "bottom": 300
+    },
+    "window": {
+      "x": 68,
+      "y": 24,
+      "width": 460,
+      "height": 320,
+      "right": 528,
+      "bottom": 344
+    },
+    "satellite": {
+      "x": 24,
+      "y": 118,
+      "width": 176,
+      "height": 158,
+      "right": 200,
+      "bottom": 276
+    },
+    "visible": {
+      "width": 290,
+      "height": 276
+    },
+    "bleed": {
+      "top": 24,
+      "left": 68,
+      "right": 170,
+      "bottom": 44
+    },
+    "bleedPct": {
+      "width": 81,
+      "height": 92,
+      "windowOffRight": 37,
+      "windowOffBottom": 13.8
+    },
+    "satelliteStraddle": {
+      "insideOfWindow": 132,
+      "outsideOfWindow": 44
+    },
+    "type": {
+      "windowTitle": null,
+      "pageTitle": "13px",
+      "cardTitle": "12px",
+      "rowTitle": "12px",
+      "rowMeta": null,
+      "terminal": null
+    },
+    "strings": {
+      "total": 14,
+      "unique": 12,
+      "sample": [
+        "dashboard.northwind.co",
+        "Overview",
+        "Customers",
+        "Invoices",
+        "Reports",
+        "Halvorsen & Co",
+        "$1,240",
+        "Jackson Hot Yoga",
+        "Lumen Studio",
+        "$860",
+        "Total",
+        "$72.00"
+      ]
+    },
+    "targets": []
+  },
+  {
+    "id": "hero-demo",
+    "size": "720x340",
+    "stage": {
+      "x": 0,
+      "y": 0,
+      "width": 720,
+      "height": 340,
+      "right": 720,
+      "bottom": 340
+    },
+    "window": {
+      "x": 32,
+      "y": 32,
+      "width": 656,
+      "height": 340,
+      "right": 688,
+      "bottom": 372
+    },
+    "satellite": {
+      "x": 348,
+      "y": 32,
+      "width": 340,
+      "height": 276,
+      "right": 688,
+      "bottom": 308
+    },
+    "visible": {
+      "width": 656,
+      "height": 308
+    },
+    "bleed": {
+      "top": 32,
+      "left": 32,
+      "right": 0,
+      "bottom": 32
+    },
+    "bleedPct": {
+      "width": 91.1,
+      "height": 90.6,
+      "windowOffRight": 0,
+      "windowOffBottom": 9.4
+    },
+    "satelliteStraddle": {
+      "insideOfWindow": 340,
+      "outsideOfWindow": 0
+    },
+    "type": {
+      "windowTitle": "13px",
+      "pageTitle": "11px",
+      "cardTitle": null,
+      "rowTitle": null,
+      "rowMeta": null,
+      "terminal": "10px"
+    },
+    "strings": {
+      "total": 14,
+      "unique": 14,
+      "sample": [
+        "localhost:3000",
+        "Maya's Dashboard",
+        "api-gateway",
+        "main",
+        "web",
+        "release-1.4",
+        "Cancel",
+        "Add",
+        "Maya's Project",
+        "Claude Code",
+        "v2.1.14",
+        "Welcome back Maya!",
+        "Opus 5.5 · ~/code/dashboard",
+        "## Page feedback Export button: primary style Sidebar icons: hover states Dashboard title: more prominence"
+      ]
+    },
+    "targets": [
+      "icons",
+      "icon-0",
+      "icon-1",
+      "icon-2",
+      "title",
+      "export",
+      "metric-0",
+      "metric-1",
+      "metric-2",
+      "row-0",
+      "row-1",
+      "row-2",
+      "toolbar",
+      "copy",
+      "add",
+      "terminal-input",
+      "rest"
+    ]
+  },
+  {
+    "id": "hero-demo",
+    "size": "358x400",
+    "stage": {
+      "x": 0,
+      "y": 0,
+      "width": 358,
+      "height": 400,
+      "right": 358,
+      "bottom": 400
+    },
+    "window": {
+      "x": 16,
+      "y": 16,
+      "width": 326,
+      "height": 400,
+      "right": 342,
+      "bottom": 416
+    },
+    "satellite": {
+      "x": 32,
+      "y": 72,
+      "width": 310,
+      "height": 296,
+      "right": 342,
+      "bottom": 368
+    },
+    "visible": {
+      "width": 326,
+      "height": 384
+    },
+    "bleed": {
+      "top": 16,
+      "left": 16,
+      "right": 0,
+      "bottom": 16
+    },
+    "bleedPct": {
+      "width": 91.1,
+      "height": 96,
+      "windowOffRight": 0,
+      "windowOffBottom": 4
+    },
+    "satelliteStraddle": {
+      "insideOfWindow": 310,
+      "outsideOfWindow": 0
+    },
+    "type": {
+      "windowTitle": "13px",
+      "pageTitle": "11px",
+      "cardTitle": null,
+      "rowTitle": null,
+      "rowMeta": null,
+      "terminal": "10px"
+    },
+    "strings": {
+      "total": 14,
+      "unique": 14,
+      "sample": [
+        "localhost:3000",
+        "Maya's Dashboard",
+        "api-gateway",
+        "main",
+        "web",
+        "release-1.4",
+        "Cancel",
+        "Add",
+        "Maya's Project",
+        "Claude Code",
+        "v2.1.14",
+        "Welcome back Maya!",
+        "Opus 5.5 · ~/code/dashboard",
+        "## Page feedback Export button: primary style Sidebar icons: hover states Dashboard title: more prominence"
+      ]
+    },
+    "targets": [
+      "icons",
+      "icon-0",
+      "icon-1",
+      "icon-2",
+      "title",
+      "export",
+      "metric-0",
+      "metric-1",
+      "metric-2",
+      "row-0",
+      "row-1",
+      "row-2",
+      "toolbar",
+      "copy",
+      "add",
+      "terminal-input",
+      "rest"
+    ]
+  }
+]

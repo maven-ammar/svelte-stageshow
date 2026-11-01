@@ -1,0 +1,504 @@
+{
+  "checked": 72,
+  "missing": 0,
+  "table": [
+    {
+      "component": "Stage",
+      "react": "width",
+      "svelte": "width",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "height",
+      "svelte": "height",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "initial",
+      "svelte": "initial",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "script",
+      "svelte": "script",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "poster",
+      "svelte": "poster",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "cursor",
+      "svelte": "cursor",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "play",
+      "svelte": "play",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "compact",
+      "svelte": "compact",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "keys",
+      "svelte": "keys",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "hover",
+      "svelte": "hover",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "theme",
+      "svelte": "theme",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "palette",
+      "svelte": "palette",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "fidelity",
+      "svelte": "fidelity",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "greys",
+      "svelte": "greys",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "tokens",
+      "svelte": "tokens",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "fill",
+      "svelte": "fill",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "accent",
+      "svelte": "accent",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "ground",
+      "svelte": "ground",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "speed",
+      "svelte": "speed",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "className",
+      "svelte": "className",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "specimen",
+      "svelte": "specimen",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "unframed",
+      "svelte": "unframed",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "children",
+      "svelte": "children",
+      "status": "same name"
+    },
+    {
+      "component": "Stage",
+      "react": "—",
+      "svelte": "deterministic",
+      "status": "added (Svelte idiom)"
+    },
+    {
+      "component": "Stage",
+      "react": "—",
+      "svelte": "class",
+      "status": "added (Svelte idiom)"
+    },
+    {
+      "component": "Window",
+      "react": "url",
+      "svelte": "url",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "urlShape",
+      "svelte": "urlShape",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "tabs",
+      "svelte": "tabs",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "nav",
+      "svelte": "nav",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "title",
+      "svelte": "title",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "sidebar",
+      "svelte": "sidebar",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "sidebarWidth",
+      "svelte": "sidebarWidth",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "sidebarStyle",
+      "svelte": "sidebarStyle",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "toolbar",
+      "svelte": "toolbar",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "lead",
+      "svelte": "lead",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "body",
+      "svelte": "body",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "receded",
+      "svelte": "receded",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "chrome",
+      "svelte": "chrome",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "lights",
+      "svelte": "lights",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "lightsSize",
+      "svelte": "lightsSize",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "barSize",
+      "svelte": "barSize",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "children",
+      "svelte": "children",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "className",
+      "svelte": "className",
+      "status": "same name"
+    },
+    {
+      "component": "Window",
+      "react": "—",
+      "svelte": "class",
+      "status": "added (Svelte idiom)"
+    },
+    {
+      "component": "Bar",
+      "react": "w",
+      "svelte": "w",
+      "status": "same name"
+    },
+    {
+      "component": "Bar",
+      "react": "h",
+      "svelte": "h",
+      "status": "same name"
+    },
+    {
+      "component": "Bar",
+      "react": "tone",
+      "svelte": "tone",
+      "status": "same name"
+    },
+    {
+      "component": "Bar",
+      "react": "r",
+      "svelte": "r",
+      "status": "same name"
+    },
+    {
+      "component": "Bar",
+      "react": "shrink",
+      "svelte": "shrink",
+      "status": "same name"
+    },
+    {
+      "component": "Bar",
+      "react": "className",
+      "svelte": "className",
+      "status": "same name"
+    },
+    {
+      "component": "Bar",
+      "react": "—",
+      "svelte": "style",
+      "status": "added (documented)"
+    },
+    {
+      "component": "Bar",
+      "react": "—",
+      "svelte": "class",
+      "status": "added (Svelte idiom)"
+    },
+    {
+      "component": "Text",
+      "react": "children",
+      "svelte": "children",
+      "status": "same name"
+    },
+    {
+      "component": "Text",
+      "react": "filler",
+      "svelte": "filler",
+      "status": "same name"
+    },
+    {
+      "component": "Text",
+      "react": "w",
+      "svelte": "w",
+      "status": "same name"
+    },
+    {
+      "component": "Text",
+      "react": "h",
+      "svelte": "h",
+      "status": "same name"
+    },
+    {
+      "component": "Text",
+      "react": "tone",
+      "svelte": "tone",
+      "status": "same name"
+    },
+    {
+      "component": "Text",
+      "react": "wrap",
+      "svelte": "wrap",
+      "status": "same name"
+    },
+    {
+      "component": "Text",
+      "react": "className",
+      "svelte": "className",
+      "status": "same name"
+    },
+    {
+      "component": "Text",
+      "react": "—",
+      "svelte": "style",
+      "status": "added (documented)"
+    },
+    {
+      "component": "Text",
+      "react": "—",
+      "svelte": "class",
+      "status": "added (Svelte idiom)"
+    },
+    {
+      "component": "Phone",
+      "react": "width",
+      "svelte": "width",
+      "status": "same name"
+    },
+    {
+      "component": "Phone",
+      "react": "frame",
+      "svelte": "frame",
+      "status": "same name"
+    },
+    {
+      "component": "Phone",
+      "react": "time",
+      "svelte": "time",
+      "status": "same name"
+    },
+    {
+      "component": "Phone",
+      "react": "island",
+      "svelte": "island",
+      "status": "same name"
+    },
+    {
+      "component": "Phone",
+      "react": "status",
+      "svelte": "status",
+      "status": "same name"
+    },
+    {
+      "component": "Phone",
+      "react": "dark",
+      "svelte": "dark",
+      "status": "same name"
+    },
+    {
+      "component": "Phone",
+      "react": "wallpaper",
+      "svelte": "wallpaper",
+      "status": "same name"
+    },
+    {
+      "component": "Phone",
+      "react": "className",
+      "svelte": "className",
+      "status": "same name"
+    },
+    {
+      "component": "Phone",
+      "react": "children",
+      "svelte": "children",
+      "status": "same name"
+    },
+    {
+      "component": "Phone",
+      "react": "—",
+      "svelte": "class",
+      "status": "added (Svelte idiom)"
+    },
+    {
+      "component": "Row",
+      "react": "lead",
+      "svelte": "lead",
+      "status": "same name"
+    },
+    {
+      "component": "Row",
+      "react": "title",
+      "svelte": "title",
+      "status": "same name"
+    },
+    {
+      "component": "Row",
+      "react": "subtitle",
+      "svelte": "subtitle",
+      "status": "same name"
+    },
+    {
+      "component": "Row",
+      "react": "meta",
+      "svelte": "meta",
+      "status": "same name"
+    },
+    {
+      "component": "Row",
+      "react": "preview",
+      "svelte": "preview",
+      "status": "same name"
+    },
+    {
+      "component": "Row",
+      "react": "unread",
+      "svelte": "unread",
+      "status": "same name"
+    },
+    {
+      "component": "Row",
+      "react": "selected",
+      "svelte": "selected",
+      "status": "same name"
+    },
+    {
+      "component": "Row",
+      "react": "pad",
+      "svelte": "pad",
+      "status": "same name"
+    },
+    {
+      "component": "Row",
+      "react": "children",
+      "svelte": "children",
+      "status": "same name"
+    },
+    {
+      "component": "Row",
+      "react": "—",
+      "svelte": "style",
+      "status": "added (documented)"
+    },
+    {
+      "component": "Row",
+      "react": "—",
+      "svelte": "className",
+      "status": "added (Svelte idiom)"
+    },
+    {
+      "component": "Row",
+      "react": "—",
+      "svelte": "class",
+      "status": "added (Svelte idiom)"
+    }
+  ]
+}

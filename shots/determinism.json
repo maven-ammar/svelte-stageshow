@@ -1,0 +1,10 @@
+{
+  "frames": 901,
+  "withinRun": true,
+  "acrossLoads": true,
+  "firstMismatchWithin": -1,
+  "firstHash": "9ede2ba1ef97c45c0a2ed0b68ad62e1efb998048dfb20e6f495ba4d49a60f6c3",
+  "lastHash": "8ab657352477be9c2b4d6b7634bd947bbeab8cb18f660a40b54581b79a346d4b",
+  "firstMismatchAcross": -1,
+  "pass": true
+}

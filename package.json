@@ -1,0 +1,17 @@
+{
+  "name": "svelte-stageshow-monorepo",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.13.1",
+  "scripts": {
+    "dev": "pnpm --filter svelte-stageshow build && pnpm --filter web dev",
+    "build": "pnpm --filter svelte-stageshow build && pnpm --filter web build",
+    "check": "pnpm --filter svelte-stageshow check && pnpm --filter web check",
+    "film": "node scripts/film.mjs",
+    "pack:lib": "pnpm --filter svelte-stageshow pack:tarball"
+  },
+  "devDependencies": {
+    "playwright-core": "1.56.1"
+  }
+}
