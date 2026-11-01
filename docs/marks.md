@@ -74,11 +74,11 @@ means the final mark is already the payoff. The four specimen sheets
 | staggered-bento | — | — | yes | — | still |
 | static-card | — | — | yes | — | still |
 | story | reveal, live, tier, exit | reveal, live, tier, exit | yes | tier | tier is the graduated plan and the poster; exit is the reset fade |
-| subscriptions | first, second, scene | first, second, scene | yes | scene | last mark |
+| subscriptions | first, second, scene, settled | first, second, scene, settled | yes | settled | the second checkout after its payment lands; scene is the crossfade start |
 | swipe | swipe, throw, close, done | swipe, throw, close, done | yes | done | last mark |
 | table-edit | open, type, commit | open, type, commit | yes | commit | last mark |
 | telegram | type, send, read, reply, done | type, send, read, reply, done | yes | done | last mark |
 | tilted-stack | — | — | yes | — | still |
 | upload | grab, drag, drop, done, undo | grab, drag, drop, done, undo | yes | done | done holds the uploaded row; undo removes it |
-| wikipedia | search, refine, pick, lake, back | search, refine, pick, lake, back | yes | lake | lake holds the Kawaguchi article; back returns to Fuji |
+| wikipedia | search, refine, pick, lake, settled, back | search, refine, pick, lake, settled, back | yes | settled | the lake article after its rise settles; lake catches the page transition |
 | window-row | ready | ready | yes | ready | last mark |

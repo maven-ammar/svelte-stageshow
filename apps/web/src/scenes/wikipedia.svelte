@@ -79,7 +79,12 @@
     await a.set({ page: 'lake', focus: false, cleared: true })
     a.mark('lake')
     await a.move({ x: rest.x + 40, y: rest.y - 20 })
-    await a.wait(2600)
+    // Let the lake page finish its 0.8s rise and settle, then mark the resting
+    // article. Scoring at `lake` catches the rise itself, whose sub-pixel
+    // transform differs by capture phase; `settled` removes that variable.
+    await a.wait(1000)
+    a.mark('settled')
+    await a.wait(1600)
 
     // 5. Back to Mount Fuji, the way a reader would
     a.mark('back')

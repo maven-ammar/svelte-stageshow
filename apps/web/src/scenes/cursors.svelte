@@ -12,12 +12,15 @@
   const TRACK = { w: 112 }
 
   const withCursor = async (a: Act<S>) => {
-    await a.wait(500)
-    // Text: an I-beam from the moment it's over the field
+    // Start at once: the still recorder lands ~900ms after mount, so the
+    // named field must be on screen by then rather than the empty opening.
     await a.move({ at: 'field', x: 0.3, y: 0.5 })
     await a.click()
     a.put({ typing: true })
     await a.type('name', 'Ada Lovelace')
+    a.put({ typing: false })
+    // Hold the typed frame long enough for the still.
+    await a.wait(900)
     // Options: a pointing hand
     await a.move({ at: 'net-1', x: 0.9, y: 0.7 })
     await a.click()
@@ -50,12 +53,13 @@
   }
 
   const withoutCursor = async (a: Act<S>) => {
-    await a.wait(650)
+    // Same still window as the cursor modes: typed by ~750ms, held.
+    await a.wait(250)
     await a.set({ focus: 'field', typing: true })
-    await a.wait(350)
+    await a.wait(100)
     await a.type('name', 'Ada Lovelace')
     await a.set({ focus: null, typing: false })
-    await a.wait(500)
+    await a.wait(900)
     await a.set({ terms: 1 })
     await a.wait(650)
     await a.set({ disc: 0.5 })

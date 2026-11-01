@@ -171,8 +171,8 @@ preview remains for this work.
 
 ### 2026-11-01 localised-parity pass
 
-Fresh pairs, both sides filmed in the same run against bundle
-`index-CpPHPTFH`:
+Fresh pairs, both sides filmed in the same run against the final bundle
+`index-CRNGKCb_`:
 
 | Scene | Was | Now | Cause |
 | --- | --- | --- | --- |
@@ -183,6 +183,9 @@ Fresh pairs, both sides filmed in the same run against bundle
 | ruled-bento | 29.6 | **34.2** (0.23%) | Same: a space between `Count` and `ms` (and `/14`) opened a 12px gap. |
 | bento | 26.6 | **34.2** (0.87%) | The gallery host lacked the `* { box-sizing: border-box }` reset the kit's stage.css names; every padded max-width copy was 56px wider and wrapped differently. Reset added to `apps/web/src/app.css` and documented for consumers. |
 | stacked-cards | 22.9 | **49.5** (0.00%) | The bars are a moving target as a still. The script now marks `settled` 1200ms after the growth starts (last bar ends at 1074ms), so the gate scores the finished chart on both sides. It is the only mark; no still-timing window remains. |
+| wikipedia | 18.3 | **32.9** (0.15%) | `lake` marked the switch, so the still caught the article's 0.8s rise at different sub-pixel phases (the border spans two or three rows depending on capture time). A second `settled` mark fires after the rise, so both sides score the resting article. |
+| subscriptions | 25.7 | **49.7** (0.00%) | `scene` marked the crossfade into the second org; the two captures caught different halves of it. `settled` fires after the second checkout's payment lands and the scene holds. |
+| cursors | 27.8 | **35.5 / 35.2** (0.19-0.26%) | Four looping stages as a still: the recorder caught the empty field before typing. The scripts start at once, type by ~770ms, and hold the typed frame for 900ms; two consecutive captures agree. |
 
 The reset and whitespace fixes were regression-checked on hero-demo 37.8,
 messages 48.0, imessage 44.6, google-docs 30.6, static-card 48.3,

@@ -106,6 +106,10 @@
     await pulse(a, 1, 0)
     await a.wait(2000)
 
+    // The second scene's payment has landed; hold that payoff for the gate.
+    a.mark('settled')
+    await a.wait(1400)
+
     await a.set({ scene: 0 })
     await a.wait(700)
     await a.snap((s) => ({ open: set2(s.open, 1, 0), landed: set2(s.landed, 1, 0), pay: set2(s.pay, 1, 'idle') }))

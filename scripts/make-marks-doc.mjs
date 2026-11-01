@@ -42,12 +42,12 @@ const SCORE = {
   spotify: ['progress', 'progress holds the player and its handle; back restarts the opening song'],
   'stacked-cards': ['settled', 'only mark; fires after the bars settle, so a still cannot catch the stagger'],
   story: ['tier', 'tier is the graduated plan and the poster; exit is the reset fade'],
-  subscriptions: ['scene', 'last mark'],
+  subscriptions: ['settled', 'the second checkout after its payment lands; scene is the crossfade start'],
   swipe: ['done', 'last mark'],
   'table-edit': ['commit', 'last mark'],
   telegram: ['done', 'last mark'],
   upload: ['done', 'done holds the uploaded row; undo removes it'],
-  wikipedia: ['lake', 'lake holds the Kawaguchi article; back returns to Fuji'],
+  wikipedia: ['settled', 'the lake article after its rise settles; lake catches the page transition'],
   'window-row': ['ready', 'last mark'],
 }
 
