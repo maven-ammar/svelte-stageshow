@@ -54,17 +54,20 @@
     a.mark('type')
     await a.type('query', 'clip', { interval: 150 })
     await a.wait(900)
+    a.mark('open')
     await a.key('enter')
     await a.set({ view: 'clip', sel: 0 })
-    a.mark('open')
     await a.wait(2200)
+    a.mark('down')
+    // The reference mark catches the selection before the down step; hold
+    // that frame long enough for the recorder's mark capture, then move.
+    await a.wait(1100)
     await a.key('down')
     await a.set({ sel: 1 })
-    a.mark('down')
     await a.wait(2400)
+    a.mark('back')
     await a.key('esc')
     await a.set({ view: 'root', query: '', sel: 0 })
-    a.mark('back')
     await a.wait(1400)
   }
 </script>
