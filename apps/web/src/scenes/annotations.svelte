@@ -145,38 +145,43 @@
     await a.set({ selected: false, clearing: false, phase: 0 }); await a.wait(600); a.mark('done')
   }
 
-  function arrivedWhenDrawn(node: SVGElement, show: boolean) {
-    const line = node.querySelector<SVGPathElement>('.ss-connector__line')
+  function arrivedWhenDrawn(node: SVGElement, initial: boolean) {
+    let line: SVGPathElement | null = null
+    let active = initial
     let raf = 0
     let timer: ReturnType<typeof setTimeout> | number | undefined = undefined
+    const getLine = () => (line ??= node.querySelector<SVGPathElement>('.ss-connector__line'))
     const check = () => {
-      if (!show || !line) return
-      const offset = parseFloat(getComputedStyle(line).strokeDashoffset || '0')
+      const path = getLine()
+      if (!active || !path) return
+      const offset = parseFloat(getComputedStyle(path).strokeDashoffset || '0')
       if (Math.abs(offset) < 0.0001) node.setAttribute('data-arrived', '')
     }
     const finish = (event: Event) => {
-      if (event.target === line && (event as TransitionEvent).propertyName === 'stroke-dashoffset') check()
+      if (event.target === getLine() && (event as TransitionEvent).propertyName === 'stroke-dashoffset') check()
     }
     const start = (on: boolean) => {
+      active = on
       node.removeAttribute('data-arrived')
       cancelAnimationFrame(raf)
       window.clearTimeout(timer)
-      line?.removeEventListener('transitionend', finish)
-      line?.removeEventListener('transitioncancel', finish)
+      const path = getLine()
+      path?.removeEventListener('transitionend', finish)
+      path?.removeEventListener('transitioncancel', finish)
       if (!on) return
       raf = requestAnimationFrame(check)
       timer = window.setTimeout(check, 1100)
-      line?.addEventListener('transitionend', finish)
-      line?.addEventListener('transitioncancel', finish)
+      path?.addEventListener('transitionend', finish)
+      path?.addEventListener('transitioncancel', finish)
     }
-    start(show)
+    start(initial)
     return {
       update(next: boolean) { start(next) },
       destroy() {
         cancelAnimationFrame(raf)
         window.clearTimeout(timer)
-        line?.removeEventListener('transitionend', finish)
-        line?.removeEventListener('transitioncancel', finish)
+        getLine()?.removeEventListener('transitionend', finish)
+        getLine()?.removeEventListener('transitioncancel', finish)
       },
     }
   }

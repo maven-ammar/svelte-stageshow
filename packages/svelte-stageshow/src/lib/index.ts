@@ -7,6 +7,7 @@
 // Stage and runtime
 export { default as Stage } from './Stage.svelte'
 export { default as Cursor } from './Cursor.svelte'
+export { default as StillProvider } from './StillProvider.svelte'
 export { default as Keycaps } from './Keycaps.svelte'
 export { getLook, setLook } from './look.js'
 export { useLook } from './looks.js'

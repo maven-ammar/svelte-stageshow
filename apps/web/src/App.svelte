@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Component } from 'svelte'
+  import { StillProvider } from 'svelte-stageshow'
   import DeterminismTest from './scenes/DeterminismTest.svelte'
   import HeroDemo from './scenes/HeroDemo.svelte'
   import StaticCard from './scenes/StaticCard.svelte'
@@ -74,22 +75,28 @@
     <DeterminismTest />
   </main>
 {:else if capture === 'static-card'}
-  <main id="example" class="capture-example">
-    <StaticCard />
-  </main>
+  <StillProvider still={still}>
+    <main id="example" class="capture-example">
+      <StaticCard />
+    </main>
+  </StillProvider>
 {:else if capture === 'hero-demo'}
-  <main id="example" class="capture-example">
-    {#if still}<HeroDemo still />{:else}<HeroDemo />{/if}
-  </main>
+  <StillProvider still={still}>
+    <main id="example" class="capture-example">
+      {#if still}<HeroDemo still />{:else}<HeroDemo />{/if}
+    </main>
+  </StillProvider>
 {:else if capture}
-  <main id="example" class="capture-example">
-    {#if current}
-      {@const Current = current}
-      <Current />
-    {:else if loadError}
-      <p class="capture-missing">{loadError}</p>
-    {/if}
-  </main>
+  <StillProvider still={still}>
+    <main id="example" class="capture-example">
+      {#if current}
+        {@const Current = current}
+        <Current />
+      {:else if loadError}
+        <p class="capture-missing">{loadError}</p>
+      {/if}
+    </main>
+  </StillProvider>
 {:else}
   <main class="gallery">
     <header class="gallery-head">

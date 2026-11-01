@@ -7,6 +7,7 @@
   import { realClock, VirtualClock, type Clock } from './clock.js'
   import type { Keys } from './keys.js'
   import { setLook, type Fidelity, type Layout, type Palette, type Theme } from './look.js'
+  import { getStill } from './still.js'
   import { EMPTY, layoutRectOf, nameOf, rectOf, sameRects, stageSpace, targetRectOf, type Point, type Rect, type Target } from './measure.js'
   import type { CompactConfig, CursorConfig, CursorKind, Ground, KeysAt, LookTokens, Play, Script } from './types.js'
   import { warn } from './util.js'
@@ -108,9 +109,10 @@
 
   // Upstream `film.mjs --still` sets window.__ssStill for its checks but does
   // not stop a scene's script; the reference stills are early script frames.
-  // A stage is still only when it has no script or the viewer asked for
-  // reduced motion, exactly as the React Stage does.
-  const still = $derived(!script || reduced)
+  // A stage is still when it has no script, the viewer asked for reduced
+  // motion, or a host StillProvider (the preview's ?still=1) says so.
+  const hostStill = getStill()
+  const still = $derived(!script || reduced || hostStill)
   const play: Play = $derived(playProp === 'hover' && hoverNone ? 'once' : playProp)
 
   let scene = $state<S>(untrack(() => (initial ?? {}) as S))
