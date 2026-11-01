@@ -10,3 +10,4 @@ reference/
 shots/*.log
 shots/video/
 shots/debug*
+.vercel

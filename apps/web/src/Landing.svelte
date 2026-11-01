@@ -61,7 +61,7 @@
 
   <footer>
     <span>MIT. Ported from Benji Taylor's Stageshow; the original licence and notices travel with it.</span>
-    <span class="mono">svelte-stageshow Â· 0.2.0</span>
+    <span class="mono">svelte-stageshow / 0.2.0</span>
   </footer>
 </main>
 
