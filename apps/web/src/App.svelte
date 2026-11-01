@@ -70,7 +70,7 @@
 </script>
 
 <svelte:head>
-  <title>{capture ? `${capture} ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ svelte-stageshow` : 'svelte-stageshow ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ gallery'}</title>
+  <title>{capture ? `${capture} - svelte-stageshow` : 'svelte-stageshow - gallery'}</title>
   <link rel="icon" href="data:," />
 </svelte:head>
 

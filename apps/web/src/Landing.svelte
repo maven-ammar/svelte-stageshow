@@ -7,23 +7,45 @@
 
   let { scenes }: Props = $props()
 
-  const index = [
-    'static-card',
-    'hero-demo',
-    'bento',
-    'phones',
-    'google-calendar',
-    'messages',
-    'stacked-cards',
-    'spotify'
-  ].filter((name) => scenes.includes(name))
-
   const facts = [
     ['69', 'scene slugs ported, every one'],
     ['42', 'stylesheets, byte-identical to upstream'],
     ['13', 'motion primitives'],
     ['0', 'React, react-dom or lucide in the bundle']
   ]
+
+  const strip = [
+    'static-card',
+    'hero-demo',
+    'bento',
+    'phones',
+    'google-calendar',
+    'messages'
+  ].filter((name) => scenes.includes(name))
+
+  const managers = [
+    { id: 'pnpm', cmd: 'pnpm add svelte-stageshow' },
+    { id: 'npm', cmd: 'npm install svelte-stageshow' },
+    { id: 'yarn', cmd: 'yarn add svelte-stageshow' },
+    { id: 'bun', cmd: 'bun add svelte-stageshow' }
+  ]
+
+  let manager = $state('pnpm')
+  const command = $derived(managers.find((entry) => entry.id === manager)?.cmd ?? managers[0].cmd)
+
+  let copied = $state(false)
+  let timer: ReturnType<typeof setTimeout> | undefined
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(command)
+      copied = true
+      clearTimeout(timer)
+      timer = setTimeout(() => (copied = false), 1800)
+    } catch {
+      copied = false
+    }
+  }
 </script>
 
 <main class="page">
@@ -45,30 +67,101 @@
     {/each}
   </section>
 
-  <section class="index" id="scenes">
-    <h2>Start from one of these</h2>
-    <ol>
-      {#each index as name, position (name)}
-        <li>
-          <a href={`?scene=${name}`}>
-            <span class="num">{String(position + 1).padStart(2, '0')}</span>
-            <span class="name">{name}</span>
+  <section class="showcase" id="scenes">
+    <div class="head">
+      <h2>Six of the seventy</h2>
+      <p>
+        Every scene is a working Svelte component — a frame, real chrome, and one moment worth
+        showing. The rest of them, and the design rules behind them, live on
+        <a href="https://benji.org/stageshow" target="_blank" rel="noreferrer">Benji Taylor's site</a>.
+      </p>
+    </div>
+
+    <div class="carousel">
+      {#each strip as name (name)}
+        <figure>
+          <a class="card" href={`?scene=${name}`}>
+            <img src={`/scenes/${name}.png`} alt={`The ${name} scene`} loading="lazy" />
           </a>
-        </li>
+          <figcaption>
+            <span>{name}</span>
+            <a href={`?scene=${name}`}>open</a>
+          </figcaption>
+        </figure>
       {/each}
-    </ol>
-    <a class="all" href="?scene=static-card">All {scenes.length} scenes</a>
+    </div>
   </section>
 
-  <footer>
-    <p>
-      Ported from <a href="https://benji.org/stageshow" target="_blank" rel="noreferrer">Stageshow</a>
-      by Benji Taylor. The original is MIT licensed; its licence, notices and third-party
-      attributions travel with this port unchanged.
-    </p>
-    <span class="mono">svelte-stageshow / 0.2.0</span>
-  </footer>
 </main>
+
+  <section class="cta">
+    <p class="kicker">A port, not an original</p>
+    <h2>Everything Stageshow does, in Svelte.</h2>
+    <p class="lede">
+      The design language, the kit and the scenes were made by
+      <a href="https://benji.org/stageshow" target="_blank" rel="noreferrer">Benji Taylor</a>. This
+      is a port of that system to Svelte 5, with his rules intact and every scene checked against
+      his own renders.
+    </p>
+
+    <div class="install">
+      <div class="tabs" role="tablist" aria-label="Package manager">
+        {#each managers as entry (entry.id)}
+          <button
+            type="button"
+            role="tab"
+            aria-selected={manager === entry.id}
+            data-on={manager === entry.id}
+            onclick={() => (manager = entry.id)}
+          >
+            {entry.id}
+          </button>
+        {/each}
+      </div>
+      <div class="actions">
+        <button class="primary" type="button" onclick={copy} data-copied={copied}>
+          <code>{command}</code>
+          <span>{copied ? 'copied' : 'copy'}</span>
+        </button>
+        <a class="secondary" href="?scene=static-card">See the demos</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="foot-links">
+      <div>
+        <span class="mono">this port</span>
+        <a href="?scene=static-card">Gallery</a>
+        <a href="?scene=hero-demo">Hero demo</a>
+        <a href="?scene=bento">Bento</a>
+      </div>
+      <div>
+        <span class="mono">the kit</span>
+        <a href="?scene=phones">Phones</a>
+        <a href="?scene=google-calendar">Calendar</a>
+        <a href="?scene=messages">Messages</a>
+      </div>
+      <div>
+        <span class="mono">upstream</span>
+        <a href="https://benji.org/stageshow" target="_blank" rel="noreferrer">Stageshow</a>
+        <a href="https://github.com/benjitaylor/skills" target="_blank" rel="noreferrer">Source</a>
+      </div>
+      <div>
+        <span class="mono">package</span>
+        <a href="https://github.com/maven-ammar/svelte-stageshow" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://www.npmjs.com/package/svelte-stageshow" target="_blank" rel="noreferrer">npm</a>
+      </div>
+    </div>
+    <div class="legal">
+      <span>
+        svelte-stageshow / 0.2.0 — MIT. Stageshow is Benji Taylor's; this port keeps his licence and
+        notices.
+      </span>
+      <span class="mono">ported by Maven</span>
+    </div>
+    <img class="dunes" src="/dunes.png" alt="" aria-hidden="true" />
+  </footer>
 
 <style>
   .page {
@@ -77,12 +170,12 @@
     --line: rgba(244, 241, 230, 0.14);
     --dim: rgba(244, 241, 230, 0.58);
     --orange: #e8622a;
-    min-height: 100dvh;
+    --serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
     background: #0b0908;
     color: var(--paper);
-    padding: 22px clamp(18px, 4vw, 64px) 32px;
+    padding: 22px clamp(18px, 4vw, 64px) 0;
     display: grid;
-    gap: clamp(28px, 4vw, 48px);
+    gap: clamp(28px, 4vw, 52px);
     align-content: start;
     font-family: var(--ss-font, system-ui, sans-serif);
   }
@@ -121,11 +214,6 @@
     text-decoration: none;
   }
 
-
-
-
-
-
   .ledger {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -145,8 +233,8 @@
   }
 
   .n {
-    font-family: 'Instrument Serif', Georgia, serif;
-    font-size: 34px;
+    font-family: var(--serif);
+    font-size: 38px;
     line-height: 1;
     color: #f6f1e7;
   }
@@ -158,90 +246,274 @@
     max-width: 24ch;
   }
 
-  .index h2 {
-    margin: 0 0 16px;
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--dim);
-    font-weight: 400;
-  }
-
-  .index ol {
-    list-style: none;
-    margin: 0 0 18px;
-    padding: 0;
+  .head {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .index li {
-    border-top: 1px solid var(--line);
-  }
-
-  .index a {
-    display: flex;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 24px;
     align-items: baseline;
-    gap: 10px;
-    padding: 12px 12px 12px 0;
-    color: var(--paper);
-    text-decoration: none;
-    font-size: 13px;
+    margin-bottom: 20px;
   }
 
-  .num {
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 10.5px;
-    color: var(--orange);
+  h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(26px, 2.6vw, 38px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #f6f1e7;
   }
 
-  .name {
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    letter-spacing: 0.02em;
-  }
-
-  .index a:hover .name {
-    border-bottom: 1px solid var(--orange);
-  }
-
-  .all {
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .head p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.65;
     color: var(--dim);
-    text-decoration: none;
+    max-width: 52ch;
   }
 
-  footer {
+  .head a {
+    color: rgba(244, 241, 230, 0.9);
+  }
+
+  .carousel {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(240px, 1fr);
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+  }
+
+  .carousel figure {
+    margin: 0;
+    display: grid;
+    gap: 8px;
+    scroll-snap-align: start;
+  }
+
+  .card {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+    background: #0f0d0c;
+    aspect-ratio: 9 / 5;
+  }
+
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+    display: block;
+  }
+
+  .carousel figcaption {
     display: flex;
     justify-content: space-between;
-    gap: 28px;
-    border-top: 1px solid var(--line);
-    padding-top: 16px;
-  }
-
-  footer p {
-    margin: 0;
-    max-width: 62ch;
-    font-size: 11.5px;
-    line-height: 1.6;
+    gap: 10px;
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 10.5px;
     color: var(--dim);
   }
 
-  footer a {
-    color: rgba(244, 241, 230, 0.9);
+  .carousel figcaption a {
+    color: rgba(244, 241, 230, 0.8);
+    text-decoration: none;
+  }
+
+  .cta {
+    background: #f4f1e6;
+    color: #14120f;
+    padding: clamp(40px, 5vw, 70px) clamp(18px, 4vw, 64px);
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .kicker {
+    margin: 0;
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(20, 18, 15, 0.5);
+  }
+
+  .cta h2 {
+    color: #14120f;
+    max-width: 18ch;
+  }
+
+  .lede {
+    margin: 0;
+    max-width: 54ch;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: rgba(20, 18, 15, 0.66);
+  }
+
+  .lede a {
+    color: #14120f;
+  }
+
+  .install {
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    margin-top: 8px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    padding: 3px;
+    border: 1px solid rgba(20, 18, 15, 0.16);
+    border-radius: 999px;
+  }
+
+  .tabs button {
+    border: 0;
+    background: transparent;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 11px;
+    color: rgba(20, 18, 15, 0.55);
+    cursor: pointer;
+  }
+
+  .tabs button[data-on='true'] {
+    background: #16130f;
+    color: #f6f1e7;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .primary,
+  .secondary {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 12px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .primary {
+    background: #16130f;
+    color: #f6f1e7;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .primary code {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 12px;
+  }
+
+  .primary span {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  .primary[data-copied='true'] {
+    background: #265b3a;
+  }
+
+  .secondary {
+    background: transparent;
+    color: #16130f;
+    border-color: rgba(20, 18, 15, 0.24);
+    text-decoration: none;
+  }
+
+  .site-footer {
+    position: relative;
+    background: #f4f1e6;
+    color: #14120f;
+    padding: clamp(26px, 3vw, 40px) 0 0;
+    overflow: hidden;
+  }
+
+  .foot-links {
+    padding: 0 clamp(18px, 4vw, 64px);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .foot-links div {
+    display: grid;
+    gap: 8px;
+    align-content: start;
   }
 
   .mono {
     font-family: var(--ss-mono, ui-monospace, monospace);
     font-size: 10.5px;
-    color: var(--dim);
-    white-space: nowrap;
+    letter-spacing: 0.04em;
+    color: rgba(20, 18, 15, 0.45);
+  }
+
+  .foot-links a {
+    font-size: 12.5px;
+    color: rgba(20, 18, 15, 0.86);
+    text-decoration: none;
+  }
+
+  .foot-links a:hover {
+    border-bottom: 1px solid rgba(232, 98, 42, 0.7);
+  }
+
+  .legal {
+    margin-left: clamp(18px, 4vw, 64px);
+    margin-right: clamp(18px, 4vw, 64px);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 24px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(20, 18, 15, 0.16);
+    font-size: 11px;
+    color: rgba(20, 18, 15, 0.55);
+    position: relative;
+    z-index: 1;
+  }
+
+  .legal .mono {
+    color: rgba(20, 18, 15, 0.45);
+  }
+
+  .dunes {
+    position: relative;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    margin: 18px 0 0;
+    height: auto;
   }
 
   @media (max-width: 900px) {
+    .head {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
     .ledger {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -250,17 +522,13 @@
       border-right: 0;
     }
 
-    .index ol {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .bar .sub {
       display: none;
     }
 
-    footer {
+    .legal {
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
   }
 </style>
