@@ -13,14 +13,12 @@ commands below; `shots/` holds the stills and reports.
 | Package `svelte-check` | **0 errors, 0 warnings** |
 | Gallery `svelte-check` | **0 errors, 0 warnings** |
 | Gallery build | pass |
+| Final acceptance (settled marks) | **71/71 pass**, 0 short, 0 missing; table `shots/acceptance.md` |
 | Capture registry | **69/69 slugs**, auto-globbed from `apps/web/src/scenes/*.svelte` |
 | Capture smoke | **69/69** routes render a `.ss-stage` |
-| static-card | **48.3 dB** at 900 CSS px; 0.00% changed |
-| hero-demo | **38.1 dB** at 900 CSS px; 0.31% changed |
-| messages / imessage / opposite-corners | **39.7 / 33.1 / 49.5 dB** after the CSS-bundle fix |
 | Reduced-motion ai-chat / hero | **49.7 / 36.7 dB** |
 | Determinism | **1,501 frames**, equal within run and across reloads |
-| Consumer tarball | **189,191 bytes**; SvelteKit build wrote **19 files** |
+| Consumer tarball | **189,191 bytes**; SvelteKit build wrote **19 files**, exit 0 |
 | Video recorder | 30 deterministic frames -> `shots/video-port-hero.mp4` |
 
 ## 1. Source

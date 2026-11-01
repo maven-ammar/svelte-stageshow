@@ -167,7 +167,10 @@ keeps its `.ss-fit` class and authored design size. This is the same protocol
 as the upstream preview, so the skill's `film.mjs --select '#example'` works
 unchanged. `?capture` with no slug shows the 69-scene gallery.
 
-Current gold stills at 900 CSS px:
+Final acceptance: **71/71 pass, 0 short, 0 missing** at settled marks —
+full table in [`shots/acceptance.md`](shots/acceptance.md).
+
+Earlier spot-check stills at 900 CSS px:
 
 | Scene | PSNR | Result |
 | --- | --- | --- |
@@ -176,10 +179,10 @@ Current gold stills at 900 CSS px:
 
 After the single bundle was completed (41 sheets), the three black-blob scenes
 re-filmed as: messages **39.7 dB** (0.32%), imessage **33.1 dB** (0.49%),
-opposite-corners **49.5 dB** (0.00%). The owner's earlier full sweep was 21
-pass / 15 close / 33 fail before that bundle fix; the current per-scene table
-is in [`shots/parity-all.md`](shots/parity-all.md) and will be refreshed by
-the owner's matched-mark sweep. Stills are in `shots/ref/` and `shots/port/`.
+opposite-corners **49.5 dB** (0.00%). The earlier sweep was 21 pass / 15 close
+/ 33 fail before that bundle fix; the final per-scene table is
+[`shots/acceptance.md`](shots/acceptance.md). Stills are in `shots/ref/` and
+`shots/port/`.
 
 ## Verify
 
