@@ -106,9 +106,14 @@ frozen. Reduced-motion spot checks match upstream: ai-chat **49.7 dB**, hero
 
 For animated scenes the reliable comparison is a matched mark. `act.mark()`
 writes `data-mark`; `film.mjs --at <mark>` waits on it. `docs/marks.md` lists
-all 38 scenes with marks. All match upstream except `annotations`, whose port
-deliberately folds the two `composed.tsx` studies into the same scene and
-therefore exposes 12 extra marks.
+42 marked rows: 38 example animations plus the four specimen sheets. Each row
+now carries a `score mark` — the stable payoff frame the acceptance gate
+scores, with a one-line reason wherever that is not the last mark. The last
+mark is often a reverse move (undo, back, close, refresh) or the start of a
+long morph, so scoring there measures frame timing rather than fidelity. All
+marks match upstream except `annotations`, whose port deliberately folds the
+two `composed.tsx` studies into the same scene and therefore exposes extra
+marks.
 
 **A reference is only valid for the build it was filmed against.** Film the
 upstream still/mark in the same run as the port capture, never reuse a
