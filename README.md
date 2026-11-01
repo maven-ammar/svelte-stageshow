@@ -182,7 +182,7 @@ node scripts/record.mjs "http://127.0.0.1:4173/?capture=hero-demo" --frames 30
 node scripts/list-marks.mjs               # mark audit
 ```
 
-Consumer gate: packed **0.2.0** tarball **180,250 bytes**, installed into a
+Consumer gate: packed **0.2.0** tarball **180,996 bytes**, installed into a
 throwaway SvelteKit app, production build wrote **19 files** and completed.
 The throwaway consumer preview was closed after the build.
 

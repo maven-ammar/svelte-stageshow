@@ -20,7 +20,7 @@ commands below; `shots/` holds the stills and reports.
 | messages / imessage / opposite-corners | **39.7 / 33.1 / 49.5 dB** after the CSS-bundle fix |
 | Reduced-motion ai-chat / hero | **49.7 / 36.7 dB** |
 | Determinism | **1,501 frames**, equal within run and across reloads |
-| Consumer tarball | **180,250 bytes**; SvelteKit build wrote **19 files** |
+| Consumer tarball | **180,996 bytes**; SvelteKit build wrote **19 files** |
 | Video recorder | 30 deterministic frames -> `shots/video-port-hero.mp4` |
 
 ## 1. Source
@@ -128,7 +128,7 @@ counterpart is `shots/video-react-hero.mp4`.
 
 ```sh
 cd packages/svelte-stageshow && pnpm pack
-# svelte-stageshow-0.2.0.tgz, 180,250 bytes
+# svelte-stageshow-0.2.0.tgz, 180,996 bytes
 cd <throwaway-sveltekit>
 pnpm add file:<absolute-tgz>
 pnpm run build
