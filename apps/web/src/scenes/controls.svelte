@@ -106,6 +106,8 @@
     await a.wait(1400)
 
     a.mark('exit')
+    // Hold the scrolled pre-exit frame for the mark capture before rewinding.
+    await a.wait(900)
     // Undo on screen, never at the seam: the list scrolls back, the card fades
     // out of B as its slot closes and back into A as that one opens
     await a.scroll('list', 0)

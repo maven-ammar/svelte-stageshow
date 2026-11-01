@@ -41,8 +41,8 @@
     await a.wait(2000)
     // The invoice remains the anchor. Hide only the changing figures before
     // preparing the next cycle; consumed tokens never count backwards in view.
-    a.mark('exit')
     await a.set({ show: 1 })
+    a.mark('exit')
     await a.wait(900)
     await a.set({ resetting: true })
     await a.wait(220)
