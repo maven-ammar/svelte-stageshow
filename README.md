@@ -4,21 +4,12 @@ Svelte 5 port of **Stageshow**, Benji Taylor's MIT kit for framed faux product
 UI: a believable interface, cropped with intent, as one still or a short
 scripted demo.
 
-- **Components:** Stage, Window, Bar, Text, Row, Phone, plus Avatar and Chip.
-- **Style:** one importable stylesheet, plain CSS custom properties, no SCSS,
-  no React, no icon dependency.
-- **Runtime:** an Act scheduler with `set`, `wait`, `move`, `click`, `type`,
-  `snap`, `stagger`, `mark`, `drag`, `scroll` and `enter`.
-- **Determinism:** `runFrames(n)` runs the same script on a virtual 60fps clock
-  and returns one SHA-256 per rendered frame. 1,501 frames match within a run
-  and across page loads.
-- **Gold parity:** filmed at 900 CSS px with the skill's `#example` method and
-  measured with ffmpeg PSNR: static card **∞ dB** (pixel-identical), hero demo
-  **42.51 dB** (text anti-aliasing only). Target was 30 dB.
+The whole upstream kit is ported: **13 motion primitives, 10 parts, 6 controls,
+the Code/Chart/Keyboard/Messages/Prompt/Caret/LockScreen/Notification modules,
+35 brand marks, all four looks, and all 69 example scenes.** No React,
+react-dom or lucide runtime is shipped; `svelte` is the only peer.
 
-Version **0.2.0**. Intended private repository (local commit only so far):
-`maven-ammar/svelte-stageshow`. The npm name is reserved for release; install
-from the packed tarball or the workspace until then.
+Version **0.2.0**. Local repository only; no remote and no publish.
 
 ## Install
 
@@ -36,7 +27,7 @@ pnpm add svelte-stageshow
   {#snippet children(state, rect, layout)}
     <Window title="Customers" className="my-window">
       <div class="my-body">
-        <Row selected title="Polaris Studio" subtitle="Scale · 24 seats">
+        <Row selected title="Polaris Studio" subtitle="Scale - 24 seats">
           {#snippet lead()}<Avatar name="Polaris Studio" size={30} tone="accent" />{/snippet}
           {#snippet meta()}$12,400.00{/snippet}
         </Row>
@@ -44,21 +35,42 @@ pnpm add svelte-stageshow
     </Window>
   {/snippet}
 </Stage>
-
-<style>
-  :global(.my-stage .ss-stage) { background: #e8e5df; border-radius: 14px; overflow: hidden; }
-  :global(.my-window) { position: absolute; left: 90px; top: 24px; width: 700px; height: 420px; box-shadow: var(--ss-shadow-hero); }
-  :global(.my-body) { padding: 16px; }
-</style>
 ```
 
 The Stage puts `className` on the outer `.ss-fit`; the scene's own CSS goes
 under `.ss-stage`. The stage is the shot: give it a ground and let the window
 bleed, rather than wrapping it in another card.
 
+## API
+
+```ts
+import {
+  // stage and runtime
+  Stage, Cursor, Keycaps, useLook, getLook, capsOf, EASE, bezier, easeCss,
+  // frames
+  Window, Bar, Text, Row, Phone, Avatar, Chip,
+  Prompt, Caret, LockScreen, Notification, WALLPAPER,
+  // motion
+  Connector, Count, Roll, Swap, Collapse, Fly, Follow, cellOf, States,
+  Stream, Popover, Camera, Scroll, Expand,
+  // parts
+  BrandMark, brandMarks, Check, Facepile, Icon, Menu, Meter, Pin, Spinner,
+  Toast, Tooltip,
+  // controls
+  Badge, Field, Segmented, Slot, Tabs, Toggle,
+  // root modules
+  Code, Chart, chartPoints, Keyboard, Thread, Bubble, Stamp, Receipt,
+} from 'svelte-stageshow'
+```
+
+React prop names are kept verbatim. ReactNode props became `Snippet` (or
+`Snippet | string` where a string is enough), and React callbacks became
+callback props. `style` is a CSS string. `className` and Svelte's `class` are
+merged on every component.
+
 ## The Act
 
-`script` is a function given an `Act`. A typical beat:
+`script` is a function given an `Act`:
 
 ```svelte
 <Stage
@@ -78,199 +90,112 @@ bleed, rather than wrapping it in another card.
   }}
   cursor={{ at: { wide: { x: 410, y: 94 }, compact: { x: 210, y: 80 } }, idle: false }}
 >
-  {#snippet children(state, rect, layout)}
-    <!-- render from state; put data-target="ask" on the trigger -->
-  {/snippet}
+  {#snippet children(s, rect, layout)}...{/snippet}
 </Stage>
 ```
 
-Implemented: `set`, `put`, `wait`, `rect`, `center`, `caret`, `move`, `click`,
-`scroll`, `cursor`, `snap`, `stagger`, `mark`, `type`, `drag`, `place`,
-`enter`, `signal`, `layout`. `key` keeps its timing (320ms) but keycaps are not
-ported yet. `drag` is a carried press with `onMove`; it does not yet close the
-hand into the grab cursor the way the React kit does.
+The runtime supports `set`, `put`, `wait`, `rect`, `caret`, `center`, `move`,
+`click`, `scroll`, `cursor`, `snap`, `key` (with keycaps), `stagger`, `mark`,
+`type`, `drag`, `place` and `enter`.
+
+`act.mark(name)` sets `data-mark="name"` on the stage. The upstream recorder's
+`film.mjs --at name` waits on that attribute. The exact mark list for every
+scene is in [`docs/marks.md`](docs/marks.md).
 
 ## Deterministic stepping
 
-Set `deterministic` and call `runFrames()` from a component ref:
+`runFrames(n)` runs the same script on a virtual 60fps clock, disables CSS
+transitions with `data-still`, flushes Svelte, and returns one SHA-256 per
+rendered frame. The gate runs the hero script twice on one page and twice after
+a reload: **1,501 frames, identical within run and across loads**.
 
-```svelte
-<Stage bind:this={stage} {script} {initial} deterministic ... />
-```
-
-```ts
-const hashes = await stage.runFrames(600) // frames 0..600
-```
-
-Each frame advances a `VirtualClock` by exactly 1/60s, runs due timers before
-requestAnimationFrame callbacks, flushes Svelte, then hashes a canonical DOM
-clone with attributes sorted. CSS transitions and animations are off through
-`data-still`; a frame is a settled state, not a film of a transition.
-
-The gate:
-
-```sh
-node scripts/determinism.mjs "http://127.0.0.1:4173/?test=determinism"
-# frames=1501 withinRun=true acrossLoads=true first=9ede2ba1… last=c1b98270… pass=true
-```
-
-This is the guarantee: a script and frame index render the same DOM every run,
-including across reloads. Live playback uses real time and CSS transitions and
-is not part of that frame contract.
+`scripts/record.mjs` uses the same clock one frame at a time, screenshots each
+frame, and hands the PNG sequence to ffmpeg. A 30-frame test produced
+`shots/video-port-hero.mp4`; the React reference is
+`shots/video-react-hero.mp4`. A recording is deterministic frame-by-frame; live
+CSS transitions and text rasterisation are outside the DOM-hash contract.
 
 ## What is ported
 
-| Area | State |
-|---|---|
-| `Stage` | fit and scale, `compact`, look context, tokens, accent, ground orbs, cursor rest, target rects, hover stills, `play` loop/once/hover, visibility, deterministic `runFrames` |
-| `Window` | browser, app, sidebar app, tabs, terminal, glass, card, hairline, receded, lights, tall bar |
-| `Bar`, `Text` | tones 1–5, shrink, fidelity-aware text, filler bars, measuring fallback |
-| `Row` | lead, title, subtitle, meta, preview, unread, selected, pad, trailing children |
-| `Phone` | pro, photo fallback, bezel, silver, clay, soft, bare, outline, android, status bar, island, home indicator |
-| `Avatar`, `Chip` | initials/person/accent/ink/ios/plain, remove callback |
-| `Cursor` | pointer, I-beam, hand, wait, crosshair, resize-ns/ew/nwse/nesw; open/grab share the hand glyph |
-| CSS | tokens, light/dark/blueprint/glass looks, mono palette, stage, window, phone, cursor, keycaps, edge fades, Row/Avatar/Chip |
-| Act | listed above |
+| Area | Status | Notes |
+| --- | --- | --- |
+| `Stage`, `Window`, `Bar`, `Text`, `Row`, `Phone`, `Avatar`, `Chip`, `Cursor` | ported | Stage adds `deterministic`; keycaps wired into `act.key`; open/grab cursor share the hand glyph |
+| Motion: Camera, Collapse, Connector, Count, Expand, Fly, Follow, Popover, Roll, Scroll, States, Stream, Swap | 13/13 | Roll/Swap/Popover freeze outgoing text/HTML for the fade; layout measurement uses `$effect` + RAF, one frame later than React's layout effect |
+| Parts: BrandMark, Check, Facepile, Icon, Menu, Meter, Pin, Spinner, Toast, Tooltip | 10/10 | Icon uses an inline Lucide map; raw stroke width means sub-24px icons are slightly thinner than React's `absoluteStrokeWidth` |
+| Controls: Badge, Field, Segmented, Slot, Tabs, Toggle | 6/6 | callback props, same classes and states |
+| Code, Chart, Keyboard, Thread, Bubble, Stamp, Receipt, Prompt, Caret, LockScreen, Notification | ported | Thread assigns tails through a registry instead of `cloneElement`; `Bubble` string children have the React minimal-fidelity caveat; FLIP is MutationObserver-driven |
+| Brands | 35 marks / 44 SVGs | local artwork, licence files kept under `src/lib/brands/` |
+| Looks | light, dark, blueprint, glass | CSS in `style/stage.css`; the `looks` example carries upstream's three identity looks and six studies, not a four-theme sheet |
+| Examples | 69/69 registered | all upstream example folders plus `static-card` and `hero-demo`; every scene has copied CSS |
+| Cross-browser | Chromium only | Firefox/Safari deferred by owner |
 
-Not ported, and deliberately absent from the exports:
+### Known deviations
 
-- Motion parts: `Collapse`, `Fly`, `Connector`, `Count`, `Roll`, `Swap`,
-  `Follow`, `States`, `Stream`, `Popover`, `Camera`, `Scroll`, `Expand`.
-- Controls: `Field`, `Segmented`, `Toggle`, `Tabs`, `Badge`, `Slot`.
-- Messages: `Thread`, `Bubble`, `Stamp`, `Receipt`; `Keyboard`, `LockScreen`,
-  `Notification`.
-- Small parts: `Icon` and the icon set, `Check`, `Spinner`, `Meter`, `Menu`,
-  `Facepile`, `BrandMark`, `Pin`, `Tooltip`, `Code`, `Chart`.
-- Keycap rows; cursor style morphing between kinds; `drag`'s grab cursor.
+- `Icon` stroke scaling differs from lucide-react's `absoluteStrokeWidth` below
+  24px.
+- `Roll`, `Swap` and `Popover` snapshot outgoing plain text/HTML; element
+  children in `Swap` can reflect a parent update during the fade.
+- `Thread`/`Bubble` use a Svelte registry and MutationObserver instead of
+  React.Children/cloneElement and `useLayoutEffect`.
+- `annotations` folds upstream's `composed.tsx` studies into the same scene, so
+  it exposes 12 marks beyond `index.tsx`; see `docs/marks.md`.
+- The `looks` example is the upstream identity/studies page, not a four-theme
+  gallery.
+- Reduced motion holds the poster (or initial) and stops the script. The
+  upstream `--still` flag does not freeze a scripted scene; matched `--at`
+  marks are the reliable motion comparison. Reduced-motion spot checks:
+  ai-chat **49.7 dB**, hero-demo **36.7 dB**.
 
-These are a scope decision for this milestone, not a missing source: the
-public kit contains them in the ignored `reference/` checkout and they can be
-ported in a later pass. The next section records how the source was recovered.
+## Capture protocol and parity
 
-## Prop mapping
+`/?capture=<slug>` renders one scene under `<main id="example">`; the Stage
+keeps its `.ss-fit` class and authored design size. This is the same protocol
+as the upstream preview, so the skill's `film.mjs --select '#example'` works
+unchanged. `?capture` with no slug shows the 69-scene gallery.
 
-The React kit's prop names are preserved: **72 checked, 0 missing**
-(`node scripts/api-map.mjs`). The frozen React list is in
-`docs/react-api.json`; the generated table is `docs/api-map.json`.
+Current gold stills at 900 CSS px:
 
-| Component | Props (same names) | Svelte type / behavior |
-|---|---|---|
-| `Stage` | width, height, initial, script, poster, cursor, play, compact, keys, hover, theme, palette, fidelity, greys, tokens, fill, accent, ground, speed, className, specimen, unframed, children | `children` is a snippet with the same `(state, rect, layout)` signature; adds `deterministic` and `class` |
-| `Window` | url, urlShape, tabs, nav, title, sidebar, sidebarWidth, sidebarStyle, toolbar, lead, body, receded, chrome, lights, lightsSize, barSize, children, className | node slots are snippets; `url` is `string \| Snippet`; `body` is an attribute object; adds `class` |
-| `Bar` | w, h, tone, r, shrink, className | `style` is a CSS string; adds `class` |
-| `Text` | children, filler, w, h, tone, wrap, className | `children` is a snippet; adds `class` |
-| `Phone` | width, frame, time, island, status, dark, wallpaper, className, children | `children` is a snippet; adds `class` |
-| `Row` | lead, title, subtitle, meta, preview, unread, selected, pad, children | ported from the public gold kit; node slots are snippets; adds `className` and `class` |
+| Scene | PSNR | Result |
+| --- | --- | --- |
+| static-card | **48.3 dB** | pass; 0.00% changed, 0.00% aspect drift |
+| hero-demo | **38.1 dB** | pass; 0.31% changed |
 
-Every component also accepts Svelte's `class` attribute, merged after
-`className`. `style` on Bar/Text/Avatar/Phone is a string, as Svelte expects.
-
-## Diff from React
-
-| React | Svelte 5 port | Why |
-|---|---|---|
-| `children: (state, rect, layout) => ReactNode` | `children: Snippet<[S, rect, layout]>` | Svelte's render prop; same three arguments |
-| `ReactNode` slots (`sidebar`, `toolbar`, `lead`, `url`, tabs) | `Snippet` (or `string` where a string is enough) | Svelte idiom; prop names kept |
-| `useLook()` context | `getLook()` from Svelte context, backed by getters over runes | Same `theme`, `palette`, `fidelity`, `layout` values |
-| `style={{ ... }}` objects | `style="..."` strings | Svelte writes CSS strings |
-| `flushSync` inside drag/selection | state updates + `tick()`; no synchronous render | Svelte batches; the deterministic driver flushes each frame |
-| Component CSS imports | one `svelte-stageshow/style.css` built from `style/*.css` | One importable file; no SCSS |
-| `stageshow.css` all-in-one | same tokens, looks, stage/window/phone/cursor; Row/Avatar/Chip CSS copied from the kit | One importable file; no SCSS |
-| React events (e.g. Chip remove) | callback props (`onRemove`) | Brief's rule for Svelte ports |
-| Keycap rows from `act.key` | `key` resolves after 320ms, no keycaps | Keycap UI is not ported; script timing is preserved |
-| Cursor glyph morphing | one active glyph per kind; open/grab share the hand | Simplified cursor layer |
-| Gold example sources | both scenes ported from `benjitaylor/skills`; stills filmed from the same source | Same content, dimensions and 1× DOM geometry |
-| React, react-dom, lucide-react | none; `svelte` is the only peer | No React at consumer level |
-
-The class names, DOM structure and CSS custom properties are kept, so a demo's
-own unlayered CSS still wins over the kit's `@layer stageshow` styles.
-
-## Source recovery
-
-The local copy of the skill this port started from was incomplete: 28 kit root
-files, 0 files in `kit/parts`, `kit/motion`, `kit/controls`, `kit/brands`, 0
-across all 69 `examples/` folders (including `static-card` and `hero-demo`), 0
-gold images, and 14 of 15 references.
-
-The complete source is public in **`benjitaylor/skills`** (MIT), under
-`stageshow/`. It was cloned into an ignored `reference/` folder inside this
-project, its React playground was installed there, and the gold stills were
-filmed from it at the same sizes as the port. The actual `Row`, `Avatar`,
-`Chip`, `Row.css`, `Avatar.css`, `Chip.css` and both scene sources were then
-ported directly. The first pass, built from the written reference while the
-public source was not yet found, was replaced.
-
-Nothing in `reference/` is committed or shipped. It is a local-only copy used
-to film the gold stills and read the source; `shots/` keeps the resulting
-stills. There is no remaining source gap for the ported scope. The motion
-parts, controls, messages and other small parts are still not ported — that is
-scope, not missing source.
-
-### Gold parity
-
-Filmed at 900 CSS px with the skill's method — `film.mjs --select '#example'
---still`, deviceScaleFactor 2 — then compared with `ffmpeg -lavfi psnr`:
-
-| Scene | Capture | PSNR | Result |
-|---|---|---|---|
-| Static card | 900 × 316 (stage 400 × 300 + 16px below) | **∞ dB** | pixel-identical |
-| Hero demo | 900 × 356 (stage 720 × 340 + 16px below) | **42.51 dB** | pass; residual is terminal-text anti-aliasing |
-
-The supplied hero reference is the **opening frame** (toolbar closed, markers 1
-and 2, no terminal), not the terminal poster. The port's `still` mode renders
-that same frame; the live Act loop and poster are separate. The target was
-30 dB; `node scripts/psnr.mjs` reproduces the two numbers and writes
-`shots/psnr.json`. Design-size stills at 400/358 and 720/358 are kept in
-`shots/port-*` for component geometry. See `shots/parity-sheet.png` and
-`REHEARSAL.md`.
+After the single bundle was completed (41 sheets), the three black-blob scenes
+re-filmed as: messages **39.7 dB** (0.32%), imessage **33.1 dB** (0.49%),
+opposite-corners **49.5 dB** (0.00%). The owner's earlier full sweep was 21
+pass / 15 close / 33 fail before that bundle fix; the current per-scene table
+is in [`shots/parity-all.md`](shots/parity-all.md) and will be refreshed by
+the owner's matched-mark sweep. Stills are in `shots/ref/` and `shots/port/`.
 
 ## Verify
 
 ```sh
 pnpm install
-pnpm check          # 0 errors, 0 warnings (package + gallery)
-pnpm build          # svelte-package + gallery
-pnpm dev            # gallery at http://127.0.0.1:5173
-pnpm build && pnpm --filter web preview   # capture server at 4173
-
-# gold gate: film the port at 900 CSS px with the skill's #example method,
-# then compare against the supplied reference stills
-node scripts/film.mjs "http://127.0.0.1:4173/?capture=static-card" --out shots/example-static.png --size 900x400 --select '#example' --still
-node scripts/film.mjs "http://127.0.0.1:4173/?capture=hero-demo" --out shots/example-hero.png --size 900x400 --select '#example' --still
-node scripts/psnr.mjs                              # ∞ dB / 42.51 dB
-
-# design-size stills (component geometry)
-node scripts/film.mjs "http://127.0.0.1:4173/?capture=static-card&w=400" --out shots/port-static-400.png --size 400x300
-node scripts/film.mjs "http://127.0.0.1:4173/?capture=static-card&w=358" --out shots/port-static-358.png --size 358x300
-node scripts/film.mjs "http://127.0.0.1:4173/?capture=hero-demo&w=720" --out shots/port-hero-720.png --size 720x340
-node scripts/film.mjs "http://127.0.0.1:4173/?capture=hero-demo&w=358" --out shots/port-hero-358.png --size 358x400
-
-node scripts/measure.mjs "http://127.0.0.1:4173"   # geometry and strings
-node scripts/api-map.mjs                           # 72/72 prop names
+pnpm --filter svelte-stageshow build      # 138,656-byte dist/stageshow.css, 41 sheets
+pnpm --filter svelte-stageshow check      # 0 errors, 0 warnings
+pnpm --filter web build                   # gallery build
+pnpm --filter web exec svelte-check --tsconfig ./tsconfig.json --fail-on-warnings
+node scripts/sync-css.mjs                 # source CSS entry for the gallery
+node scripts/smoke-scenes.mjs             # 69/69 capture routes have a stage
 node scripts/determinism.mjs "http://127.0.0.1:4173/?test=determinism"
-node scripts/parity-sheet.mjs                      # shots/parity-sheet.png
+node scripts/record.mjs "http://127.0.0.1:4173/?capture=hero-demo" --frames 30
+node scripts/list-marks.mjs               # mark audit
 ```
 
-The consumer test used a throwaway SvelteKit app, installed the packed
-0.2.0 tarball (62,871 bytes), rendered Stage + Window + Row + Avatar + Bar and
-built it with `@sveltejs/adapter-static`; exit 0. No devDependency was needed
-at runtime. The tarball's `dist/stageshow.css` has no `@import`s.
+Consumer gate: packed **0.2.0** tarball **180,250 bytes**, installed into a
+throwaway SvelteKit app, production build wrote **19 files** and completed.
+The throwaway consumer preview was closed after the build.
 
-## Repository layout
+## Git
 
-```
-packages/svelte-stageshow/   the library (src/lib, style, dist)
-apps/web/                    the gallery and capture routes
-scripts/                     film, measure, api-map, determinism, parity sheet
-shots/                       gold and ported stills, diffs, reports, parity sheet
-docs/                        frozen React prop list, generated API map
-reference/                   ignored local gold checkout used for filming
-REHEARSAL.md                 the verification record and gold parity
-```
+Local commits only. No remote, no GitHub repository, no push.
 
-## Licence
+- `f782169` - full kit: motion, parts, controls, modules, looks, brands
+- `59db499` - all 69 scenes, capture gallery, smoke/recorder/marks, parity evidence
 
-MIT. Stageshow is © 2026 Benji Taylor; see `LICENSE`. The Svelte port is by
-Ammar (maven-ammar), 2026. `NOTICE.md` keeps the original notices and adds the
-port attribution. Product and OS names, device geometry and app marks in any
-example remain with their owners.
+## Licence and source
+
+Ported from the public **`benjitaylor/skills`** Stageshow source, MIT,
+© 2026 Benji Taylor. The original `LICENSE` and `NOTICE.md` are kept, with
+port attribution. Brand artwork retains its upstream licence files.
+`reference/` is ignored and not shipped.
