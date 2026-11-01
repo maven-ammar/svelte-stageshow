@@ -40,6 +40,7 @@ const SCORE = {
   share: ['invite', 'invite holds the added person; close is the reset'],
   slack: ['done', 'last mark'],
   spotify: ['progress', 'progress holds the player and its handle; back restarts the opening song'],
+  'stacked-cards': ['settled', 'only mark; fires after the bars settle, so a still cannot catch the stagger'],
   story: ['tier', 'tier is the graduated plan and the poster; exit is the reset fade'],
   subscriptions: ['scene', 'last mark'],
   swipe: ['done', 'last mark'],

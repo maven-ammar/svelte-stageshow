@@ -9,7 +9,7 @@ the scene is designed to rest, not a mark that starts a transition or a
 reverse move. `why` explains a choice that is not the last mark; `last mark`
 means the final mark is already the payoff. The four specimen sheets
 (`annotations`, `controls`, `kit-extras`, `parts`) are included, so this is
-42 marked rows: 38 example animations and 4 sheets.
+43 marked rows: 39 example animations and 4 sheets.
 
 | scene | upstream marks | port marks | same | score mark | why |
 | --- | --- | --- | --- | --- | --- |
@@ -70,7 +70,7 @@ means the final mark is already the payoff. The four specimen sheets
 | share | open, type, role, invite, close | open, type, role, invite, close | yes | invite | invite holds the added person; close is the reset |
 | slack | hover, react, thread, send, exit, done | hover, react, thread, send, exit, done | yes | done | last mark |
 | spotify | play, progress, back | play, progress, back | yes | progress | progress holds the player and its handle; back restarts the opening song |
-| stacked-cards | — | — | yes | — | still |
+| stacked-cards | settled | settled | yes | settled | only mark; fires after the bars settle, so a still cannot catch the stagger |
 | staggered-bento | — | — | yes | — | still |
 | static-card | — | — | yes | — | still |
 | story | reveal, live, tier, exit | reveal, live, tier, exit | yes | tier | tier is the graduated plan and the poster; exit is the reset fade |

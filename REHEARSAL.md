@@ -106,14 +106,16 @@ frozen. Reduced-motion spot checks match upstream: ai-chat **49.7 dB**, hero
 
 For animated scenes the reliable comparison is a matched mark. `act.mark()`
 writes `data-mark`; `film.mjs --at <mark>` waits on it. `docs/marks.md` lists
-42 marked rows: 38 example animations plus the four specimen sheets. Each row
+43 marked rows: 39 example animations plus the four specimen sheets. Each row
 now carries a `score mark` — the stable payoff frame the acceptance gate
 scores, with a one-line reason wherever that is not the last mark. The last
 mark is often a reverse move (undo, back, close, refresh) or the start of a
-long morph, so scoring there measures frame timing rather than fidelity. All
-marks match upstream except `annotations`, whose port deliberately folds the
-two `composed.tsx` studies into the same scene and therefore exposes extra
-marks.
+long morph, so scoring there measures frame timing rather than fidelity.
+`stacked-cards` gained a `settled` mark for exactly that reason: as a still it
+swung 21-27 dB with no code change because the capture caught different
+stagger phases; at `settled` it reads 49.5 dB. All marks match upstream except
+`annotations`, whose port deliberately folds the two `composed.tsx` studies
+into the same scene and therefore exposes extra marks.
 
 **A reference is only valid for the build it was filmed against.** Film the
 upstream still/mark in the same run as the port capture, never reuse a
@@ -180,7 +182,7 @@ Fresh pairs, both sides filmed in the same run against bundle
 | staggered-bento | 27.8 | **52.6** (0.04%) | Same inline whitespace: the value span and the `km` unit were separated by a space. |
 | ruled-bento | 29.6 | **34.2** (0.23%) | Same: a space between `Count` and `ms` (and `/14`) opened a 12px gap. |
 | bento | 26.6 | **34.2** (0.87%) | The gallery host lacked the `* { box-sizing: border-box }` reset the kit's stage.css names; every padded max-width copy was 56px wider and wrapped differently. Reset added to `apps/web/src/app.css` and documented for consumers. |
-| stacked-cards | 22.9 | calibrated; local 21.5–24.1 | The bars are a moving target. The owner's paired stills put upstream at 350ms into the growth and the port at 499ms with the original 500ms start (port capture +149ms). The start is now 650ms, which puts the port at 349ms on that clock. Local refs vary 299–548ms, so a local pass is not representative. |
+| stacked-cards | 22.9 | **49.5** (0.00%) | The bars are a moving target as a still. The script now marks `settled` 1200ms after the growth starts (last bar ends at 1074ms), so the gate scores the finished chart on both sides. It is the only mark; no still-timing window remains. |
 
 The reset and whitespace fixes were regression-checked on hero-demo 37.8,
 messages 48.0, imessage 44.6, google-docs 30.6, static-card 48.3,
