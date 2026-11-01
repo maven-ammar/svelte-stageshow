@@ -1,4 +1,5 @@
-/* Hero band: near-black ground, one soft bloom, dot mark, serif headline over it. */
+/* Hero band: near-black ground, one soft warm bloom, grain, serif claim on the
+   left and a live stageshow composition on the right. */
 
 @font-face {
   font-family: 'Instrument Serif';
@@ -11,90 +12,76 @@
 .dot-hero {
   position: relative;
   isolation: isolate;
-  min-height: clamp(460px, 62vh, 640px);
-  display: grid;
-  place-items: center;
   overflow: hidden;
-  border-radius: 6px;
+  border-radius: 8px;
   background: #08080a;
+  padding: clamp(28px, 4vw, 56px);
 }
 
-/* The bloom is one wide, weak radial plus a barely-there vertical tint. Anything
-   stronger competes with the type sitting on top of it. */
 .dot-hero__wash {
   position: absolute;
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(58% 46% at 50% 58%, rgba(255, 122, 74, 0.42) 0%, rgba(255, 122, 74, 0.16) 38%, rgba(255, 122, 74, 0) 72%),
-    radial-gradient(90% 70% at 50% 100%, rgba(255, 160, 70, 0.16) 0%, rgba(255, 160, 70, 0) 60%),
-    linear-gradient(186deg, #0a0912 0%, #0c0810 42%, #100a09 74%, #0a0808 100%);
+    radial-gradient(52% 46% at 72% 46%, rgba(255, 122, 74, 0.40) 0%, rgba(255, 122, 74, 0.14) 40%, rgba(255, 122, 74, 0) 72%),
+    radial-gradient(80% 60% at 12% 8%, rgba(120, 78, 190, 0.22) 0%, rgba(120, 78, 190, 0) 62%),
+    radial-gradient(90% 70% at 50% 108%, rgba(255, 150, 70, 0.14) 0%, rgba(255, 150, 70, 0) 58%),
+    linear-gradient(184deg, #0a0912 0%, #0c0810 45%, #0f0a09 78%, #0a0808 100%);
 }
 
 .dot-hero__grain {
   position: absolute;
   inset: -8%;
   z-index: 1;
-  opacity: 0.22;
+  opacity: 0.2;
   mix-blend-mode: overlay;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
 
-.dot-hero__mark {
-  position: absolute;
-  z-index: 1;
-  left: 50%;
-  top: 44%;
-  width: min(42%, 400px);
-  transform: translate(-50%, -50%);
-  opacity: 0.34;
-  filter: blur(0.2px) drop-shadow(0 0 44px rgba(255, 140, 80, 0.28));
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.dot-hero__content {
+.dot-hero__inner {
   position: relative;
   z-index: 2;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(8, 8, 10, 0.82) 0%, rgba(8, 8, 10, 0.55) 58%, rgba(8, 8, 10, 0) 100%);
-  max-width: 44rem;
-  padding: clamp(28px, 5vw, 64px);
-  text-align: center;
   display: grid;
-  justify-items: center;
-  gap: 18px;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+
+.dot-hero__copy {
+  display: grid;
+  gap: 16px;
+  align-content: center;
 }
 
 .dot-hero__eyebrow {
   margin: 0;
   font-family: var(--ss-mono, ui-monospace, monospace);
   font-size: 10.5px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(244, 241, 230, 0.55);
+  color: rgba(244, 241, 230, 0.5);
 }
 
 .dot-hero h1 {
   margin: 0;
   font-family: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
   font-weight: 400;
-  font-size: clamp(42px, 6.4vw, 92px);
-  line-height: 0.94;
+  font-size: clamp(38px, 4.6vw, 72px);
+  line-height: 0.96;
   letter-spacing: -0.015em;
   color: #f6f1e7;
   text-wrap: balance;
-  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.55);
+  max-width: 16ch;
 }
 
 .dot-hero__sub {
   margin: 0;
-  max-width: 38ch;
+  max-width: 40ch;
   font-size: 14px;
   line-height: 1.65;
-  color: rgba(244, 241, 230, 0.72);
+  color: rgba(244, 241, 230, 0.66);
 }
 
 .dot-hero__actions {
@@ -102,8 +89,7 @@
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .dot-hero__actions code {
@@ -127,13 +113,22 @@
   padding-bottom: 3px;
 }
 
-@media (max-width: 720px) {
-  .dot-hero__mark {
-    width: 68%;
-    opacity: 0.42;
+.dot-hero__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+@media (max-width: 1080px) {
+  .dot-hero__inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dot-hero__stage {
+    order: -1;
   }
 
   .dot-hero h1 {
-    font-size: clamp(34px, 9vw, 54px);
+    max-width: 20ch;
   }
 }

@@ -1,5 +1,6 @@
 <script lang="ts">
   import DotHero from './DotHero.svelte'
+  import StaticCard from './scenes/StaticCard.svelte'
 
   type Props = {
     scenes: string[]
@@ -78,6 +79,17 @@
     </div>
 
     <div class="carousel">
+      <figure class="live">
+        <a class="card" href="?scene=static-card" aria-label="Open the static-card scene">
+          <span class="stage-slot">
+            <StaticCard />
+          </span>
+        </a>
+        <figcaption>
+          <span>static-card · live</span>
+          <a href="?scene=static-card">open</a>
+        </figcaption>
+      </figure>
       {#each strip as name (name)}
         <figure>
           <a class="card" href={`?scene=${name}`}>
@@ -160,7 +172,7 @@
       </span>
       <span class="mono">ported by Maven</span>
     </div>
-    <img class="dunes" src="/dunes.png" alt="" aria-hidden="true" />
+    <img class="dunes" src="/dunes-ascii.png" alt="" aria-hidden="true" />
   </footer>
 
 <style>
@@ -279,11 +291,12 @@
   .carousel {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: minmax(240px, 1fr);
+    grid-auto-columns: 260px;
     gap: 14px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     padding-bottom: 12px;
+    max-width: 100%;
     scrollbar-width: thin;
   }
 
@@ -300,7 +313,20 @@
     border-radius: 6px;
     overflow: hidden;
     background: #0f0d0c;
-    aspect-ratio: 9 / 5;
+    aspect-ratio: 16 / 10;
+    position: relative;
+  }
+
+  .stage-slot {
+    position: absolute;
+    inset: 0;
+    display: block;
+    /* The scene is authored at 400x300; scale it to the card and crop the rest. */
+    transform: scale(0.66);
+    transform-origin: top left;
+    width: 400px;
+    height: 300px;
+    pointer-events: none;
   }
 
   .card img {
@@ -326,13 +352,14 @@
   }
 
   .cta {
-    background: #f4f1e6;
-    color: #14120f;
-    padding: clamp(40px, 5vw, 70px) clamp(18px, 4vw, 64px);
+    background: #0b0908;
+    color: var(--paper);
+    padding: clamp(48px, 6vw, 86px) clamp(18px, 4vw, 64px);
     display: grid;
     justify-items: center;
     gap: 14px;
     text-align: center;
+    border-top: 1px solid var(--line);
   }
 
   .kicker {
@@ -341,11 +368,11 @@
     font-size: 10.5px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(20, 18, 15, 0.5);
+    color: rgba(244, 241, 230, 0.45);
   }
 
   .cta h2 {
-    color: #14120f;
+    color: #f6f1e7;
     max-width: 18ch;
   }
 
@@ -354,11 +381,11 @@
     max-width: 54ch;
     font-size: 13.5px;
     line-height: 1.65;
-    color: rgba(20, 18, 15, 0.66);
+    color: rgba(244, 241, 230, 0.62);
   }
 
   .lede a {
-    color: #14120f;
+    color: rgba(244, 241, 230, 0.94);
   }
 
   .install {
@@ -372,7 +399,7 @@
     display: flex;
     gap: 4px;
     padding: 3px;
-    border: 1px solid rgba(20, 18, 15, 0.16);
+    border: 1px solid rgba(244, 241, 230, 0.18);
     border-radius: 999px;
   }
 
@@ -383,13 +410,13 @@
     padding: 6px 12px;
     font-family: var(--ss-mono, ui-monospace, monospace);
     font-size: 11px;
-    color: rgba(20, 18, 15, 0.55);
+    color: rgba(244, 241, 230, 0.55);
     cursor: pointer;
   }
 
   .tabs button[data-on='true'] {
-    background: #16130f;
-    color: #f6f1e7;
+    background: #f4f1e6;
+    color: #16130f;
   }
 
   .actions {
@@ -411,8 +438,8 @@
   }
 
   .primary {
-    background: #16130f;
-    color: #f6f1e7;
+    background: #f4f1e6;
+    color: #16130f;
     display: inline-flex;
     align-items: center;
     gap: 14px;
@@ -431,22 +458,24 @@
   }
 
   .primary[data-copied='true'] {
-    background: #265b3a;
+    background: #2f7a4a;
+    color: #f6f1e7;
   }
 
   .secondary {
     background: transparent;
-    color: #16130f;
-    border-color: rgba(20, 18, 15, 0.24);
+    color: #f6f1e7;
+    border-color: rgba(244, 241, 230, 0.28);
     text-decoration: none;
   }
 
   .site-footer {
     position: relative;
-    background: #f4f1e6;
-    color: #14120f;
+    background: #0b0908;
+    color: var(--paper);
     padding: clamp(26px, 3vw, 40px) 0 0;
     overflow: hidden;
+    border-top: 1px solid var(--line);
   }
 
   .foot-links {
@@ -468,12 +497,12 @@
     font-family: var(--ss-mono, ui-monospace, monospace);
     font-size: 10.5px;
     letter-spacing: 0.04em;
-    color: rgba(20, 18, 15, 0.45);
+    color: rgba(244, 241, 230, 0.42);
   }
 
   .foot-links a {
     font-size: 12.5px;
-    color: rgba(20, 18, 15, 0.86);
+    color: rgba(244, 241, 230, 0.86);
     text-decoration: none;
   }
 
@@ -489,15 +518,15 @@
     gap: 20px;
     margin-top: 24px;
     padding-top: 12px;
-    border-top: 1px solid rgba(20, 18, 15, 0.16);
+    border-top: 1px solid rgba(244, 241, 230, 0.16);
     font-size: 11px;
-    color: rgba(20, 18, 15, 0.55);
+    color: rgba(244, 241, 230, 0.55);
     position: relative;
     z-index: 1;
   }
 
   .legal .mono {
-    color: rgba(20, 18, 15, 0.45);
+    color: rgba(244, 241, 230, 0.42);
   }
 
   .dunes {
