@@ -176,7 +176,8 @@ Fresh pairs, both sides filmed in the same run against the final bundle
 
 | Scene | Was | Now | Cause |
 | --- | --- | --- | --- |
-| dynamic-island | 29.2 | **49.5** (0.00%) | Svelte rewrote the shape's `style` attribute on every mode change, wiping the `transition-*` properties an action had set imperatively: the island jumped instead of springing. Timing now lives in the same style string as the geometry. A second run read 30.6 (0.20%) from camera phase. |
+| dynamic-island | 29.2 | **49.5** (0.00%) | Svelte rewrote the shape's `style` attribute on every mode change, wiping the `transition-*` properties an action had set imperatively: the island jumped instead of springing. Timing now lives in the same style string as the geometry. The score is at a `settled` mark after the idle spring; `end` caught the shrink itself. |
+| raycast | 28.6 | **33.6 / 49.8** (0.19 / 0.00%) | `down` was marked before the key, so the capture could land before or after the selection depending on the run. `settled` fires 350ms after the down key; both runs pass. |
 | story | 29.1 | **47.8** (0.18%), 35.0 | Exit mark moved 220ms into the unchanged 900ms hold. The port's still camera fires at scene-start+999ms, upstream's at +850ms; the mark offset puts both on the same frame of the reset fade. |
 | telegram | 29.9 | **50.6** (0.00%) | Svelte kept a newline between a message's text and its meta row as a space; every text bubble was 3.44px wider and every bubble shifted. Joined the text and `{@render meta()}`. |
 | staggered-bento | 27.8 | **52.6** (0.04%) | Same inline whitespace: the value span and the `km` unit were separated by a space. |

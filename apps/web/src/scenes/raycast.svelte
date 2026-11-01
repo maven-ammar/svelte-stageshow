@@ -59,12 +59,13 @@
     await a.set({ view: 'clip', sel: 0 })
     await a.wait(2200)
     a.mark('down')
-    // The reference mark catches the selection before the down step; hold
-    // that frame long enough for the recorder's mark capture, then move.
-    await a.wait(1100)
     await a.key('down')
     await a.set({ sel: 1 })
-    await a.wait(2400)
+    // Let the selection land, then mark the resting result. The old hold
+    // before the key was for the previous pre-down mark and is no longer used.
+    await a.wait(350)
+    a.mark('settled')
+    await a.wait(2050)
     a.mark('back')
     await a.key('esc')
     await a.set({ view: 'root', query: '', sel: 0 })

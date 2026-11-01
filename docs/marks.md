@@ -32,7 +32,7 @@ means the final mark is already the payoff. The four specimen sheets
 | dark-bento | — | — | yes | — | still |
 | dark-hero | deploy, ready | deploy, ready | yes | ready | last mark |
 | device-pair | — | — | yes | — | still |
-| dynamic-island | press, open, fold, timer, merge, end | press, open, fold, timer, merge, end | yes | end | last mark |
+| dynamic-island | press, open, fold, timer, merge, end, settled | press, open, fold, timer, merge, end, settled | yes | settled | the idle pill after the spring settles; end catches the shrink |
 | excel | autosum, formula, undo | autosum, formula, undo | yes | formula | the formula readout is the settled total; undo is the loop reset |
 | fade-crop | — | — | yes | — | still |
 | figma | select, fill, drag, done, undo | select, fill, drag, done, undo | yes | done | done holds the applied colour; undo is the loop reset |
@@ -64,7 +64,7 @@ means the final mark is already the payoff. The four specimen sheets
 | phones | — | — | yes | — | still |
 | powerpoint | open, designer, pick, undo | open, designer, pick, undo | yes | designer | designer holds the suggestions pane; pick and undo are mid-morph |
 | presence | maya, jon, reset | maya, jon, reset | yes | reset | last mark |
-| raycast | type, open, down, back | type, open, down, back | yes | down | down holds the selected Ship result; back is the Esc close |
+| raycast | type, open, down, settled, back | type, open, down, settled, back | yes | settled | the selection after the down key; down lands before or after it |
 | reorder | grab, drop | grab, drop | yes | drop | last mark |
 | ruled-bento | — | — | yes | — | still |
 | share | open, type, role, invite, close | open, type, role, invite, close | yes | invite | invite holds the added person; close is the reset |

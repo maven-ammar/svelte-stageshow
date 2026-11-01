@@ -118,7 +118,9 @@
     a.put({ mode: 'idle' })
     await a.wait(600)
     a.snap({ ...START, mode: 'idle' })
-    await a.wait(200)
+    // The idle spring is done; hold the settled pill long enough for the still.
+    a.mark('settled')
+    await a.wait(1400)
     a.put({ mode: 'compact' })
     await a.wait(900)
   }
