@@ -8,6 +8,20 @@
 export { default as Stage } from './Stage.svelte'
 export { default as Cursor } from './Cursor.svelte'
 export { default as StillProvider } from './StillProvider.svelte'
+export {
+  MacPointer,
+  MacIbeam,
+  MacCrosshair,
+  MacPointingHand,
+  MacOpenHand,
+  MacGrab,
+  MacWait,
+  MacResize,
+  MacResizeNS,
+  MacResizeEW,
+  MacResizeNWSE,
+  MacResizeNESW,
+} from './cursors.js'
 export { default as Keycaps } from './Keycaps.svelte'
 export { getLook, setLook } from './look.js'
 export { useLook } from './looks.js'
