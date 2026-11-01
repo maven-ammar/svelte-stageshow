@@ -12,7 +12,7 @@ and pnpm 10.13.1.
 | `pnpm build` | library `svelte-package` + gallery Vite build succeed |
 | Consumer tarball | 0.2.0, 62,871 bytes; SvelteKit build exit 0 |
 | API names | 72 checked, 0 missing (`scripts/api-map.mjs`) |
-| Determinism | 901 frames; within a run and across reloads, all hashes equal |
+| Determinism | 1,501 frames; within a run and across reloads, all hashes equal |
 | Static gold parity | **∞ dB PSNR** at the 900 × 316 capture (pixel-identical) |
 | Hero gold parity | **42.51 dB PSNR** at the 900 × 356 capture (text AA only) |
 | Parity sheet | `shots/parity-sheet.png` — reference and port side by side |
@@ -88,8 +88,8 @@ numbers exactly; the only rendered differences are the hero text pixels above.
 
 ```sh
 node scripts/determinism.mjs "http://127.0.0.1:4173/?test=determinism"
-# frames=901 withinRun=true acrossLoads=true firstMismatch=-1
-# first=9ede2ba1ef97... last=8ab657352477... pass=true
+# frames=1501 withinRun=true acrossLoads=true firstMismatch=-1
+# first=9ede2ba1ef97... last=c1b98270ffd2... pass=true
 ```
 
 It runs the full HeroDemo Act script twice in one page and twice again after a
@@ -97,6 +97,11 @@ reload. Each frame is one `VirtualClock.advanceFrame()` (16.666 ms), then a
 Svelte flush, then SHA-256 over a clone of `.ss-stage` with every element's
 attributes sorted by name. `data-still` disables CSS transitions and
 animations for the run, so a frame is a settled state.
+
+The live loop was also sampled at 720 × 340 on the real clock:
+the terminal opens and the browser recedes at ~18 s, the reset clears both at
+~21 s, and the next loop's toolbar/popup are running by ~24 s. The sampled
+frames are in `shots/beats/` (`hero-*.png`, `live-*.png`).
 
 The first failure found was attribute order: Svelte put a dynamic
 `aria-hidden` before the static attributes on first render and after them on a
@@ -147,7 +152,7 @@ The tarball includes `dist/` and `dist/stageshow.css`; the CSS has no
    found, the actual parts and scenes were ported, and the gold stills were
    filmed. The first-pass re-authored scenes were replaced.
 2. **Determinism failed at frame 0 on attribute order.** Fixed with a canonical
-   attribute-sorted clone; 901 frames pass.
+   attribute-sorted clone; 1,501 frames pass.
 3. **The cursor was invisible** because `data-active` rendered as a bare
    attribute and the CSS expects `="true"`. Set explicitly.
 4. **The cursor was hidden in live playback** because `showCursor` used
@@ -173,7 +178,7 @@ The tarball includes `dist/` and `dist/stageshow.css`; the CSS has no
   package (scope), not claimed as ported.
 - Dark, blueprint and glass looks; only the light look is exercised.
 - Firefox and Safari; Chrome only.
-- The live loop as a video; the stills and the 901-frame deterministic run
-  cover the script and seam.
+- The live loop as a video; sampled frames at 800–24,000 ms and the 1,501-frame
+  deterministic run cover the script and seam, not a continuous recording.
 - Screen-reader behavior of the faux controls; the components are illustrative
   surfaces, not application widgets.

@@ -10,7 +10,7 @@ scripted demo.
 - **Runtime:** an Act scheduler with `set`, `wait`, `move`, `click`, `type`,
   `snap`, `stagger`, `mark`, `drag`, `scroll` and `enter`.
 - **Determinism:** `runFrames(n)` runs the same script on a virtual 60fps clock
-  and returns one SHA-256 per rendered frame. 901 frames match within a run
+  and returns one SHA-256 per rendered frame. 1,501 frames match within a run
   and across page loads.
 - **Gold parity:** filmed at 900 CSS px with the skill's `#example` method and
   measured with ffmpeg PSNR: static card **∞ dB** (pixel-identical), hero demo
@@ -111,7 +111,7 @@ The gate:
 
 ```sh
 node scripts/determinism.mjs "http://127.0.0.1:4173/?test=determinism"
-# frames=901 withinRun=true acrossLoads=true first=9ede2ba1… last=8ab65735… pass=true
+# frames=1501 withinRun=true acrossLoads=true first=9ede2ba1… last=c1b98270… pass=true
 ```
 
 This is the guarantee: a script and frame index render the same DOM every run,

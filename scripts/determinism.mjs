@@ -9,7 +9,7 @@ import { chromium } from 'playwright-core'
 
 const CHROME = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
 const url = process.argv[2] || 'http://127.0.0.1:4173/?test=determinism'
-const frames = 900
+const frames = 1500
 
 const browser = await chromium.launch({ executablePath: CHROME, headless: true })
 const page = await browser.newPage({ viewport: { width: 720, height: 340 } })

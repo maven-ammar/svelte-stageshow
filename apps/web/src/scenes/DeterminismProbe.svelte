@@ -11,7 +11,7 @@
 
   let hero: { runFrames: (count?: number) => Promise<string[]> } | undefined = $state()
 
-  export async function run(count = 900): Promise<RunResult> {
+  export async function run(count = 1500): Promise<RunResult> {
     if (!hero) throw new Error('HeroDemo is not mounted')
     await document.fonts.ready
     const a = await hero.runFrames(count)

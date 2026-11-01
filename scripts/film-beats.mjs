@@ -10,13 +10,16 @@ import { chromium } from 'playwright-core'
 const CHROME = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
 const url = process.argv[2] || 'http://127.0.0.1:4173/?capture=hero-demo'
 const beats = [
-  [250, 'open-time'],
-  [700, 'opened'],
-  [1800, 'typing'],
-  [3200, 'answer'],
-  [4200, 'terminal'],
-  [5200, 'annotation'],
-  [6900, 'reset'],
+  [800, 'opening'],
+  [1800, 'toolbar'],
+  [3200, 'annotation-1'],
+  [4800, 'drag-area'],
+  [6500, 'annotation-2'],
+  [8000, 'selection'],
+  [9500, 'annotation-3'],
+  [10800, 'terminal'],
+  [12000, 'pasted'],
+  [13400, 'reset'],
 ]
 
 const browser = await chromium.launch({ executablePath: CHROME, headless: true })
