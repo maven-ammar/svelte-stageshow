@@ -7,7 +7,10 @@
   const BARS = [8, 12, 9, 15, 13, 18, 11, 17, 22, 16, 20, 26, 21, 29, 24, 31, 27, 34]
 
   async function script(a: Act<S>) {
-    await a.wait(500)
+    // The owner's paired recheck measured the port still 149ms later after
+    // the scene starts than upstream (500ms wait: ref phase 350ms, port
+    // 499ms). Starting the bars 150ms later puts both cameras on 350ms.
+    await a.wait(650)
     a.put({ on: true })
     await a.wait(3000)
   }

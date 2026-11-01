@@ -110,6 +110,14 @@ all 38 scenes with marks. All match upstream except `annotations`, whose port
 deliberately folds the two `composed.tsx` studies into the same scene and
 therefore exposes 12 extra marks.
 
+**A reference is only valid for the build it was filmed against.** Film the
+upstream still/mark in the same run as the port capture, never reuse a
+reference across a rebuild or a scene edit. Three wrong verdicts on 2026-11-01
+came from stale refs: `raycast` looked fixed, `dynamic-island` read 42.8 dB
+when it was 29.2, and `reduced-ai-chat` was misdiagnosed as a Stage scale bug
+(the file was a 900×900 manual still, not a 900×436 film crop). The acceptance
+script already films both sides in one pass; ad-hoc checks must do the same.
+
 ## 6. Determinism and video
 
 ```sh
@@ -153,6 +161,25 @@ preview remains for this work.
 6. The `looks` source page has three identities and six studies, not a
    four-theme sheet; the port keeps the source, and the four look themes live
    in the kit CSS.
+
+### 2026-11-01 localised-parity pass
+
+Fresh pairs, both sides filmed in the same run against bundle
+`index-CpPHPTFH`:
+
+| Scene | Was | Now | Cause |
+| --- | --- | --- | --- |
+| dynamic-island | 29.2 | **49.5** (0.00%) | Svelte rewrote the shape's `style` attribute on every mode change, wiping the `transition-*` properties an action had set imperatively: the island jumped instead of springing. Timing now lives in the same style string as the geometry. A second run read 30.6 (0.20%) from camera phase. |
+| story | 29.1 | **47.8** (0.18%), 35.0 | Exit mark moved 220ms into the unchanged 900ms hold. The port's still camera fires at scene-start+999ms, upstream's at +850ms; the mark offset puts both on the same frame of the reset fade. |
+| telegram | 29.9 | **50.6** (0.00%) | Svelte kept a newline between a message's text and its meta row as a space; every text bubble was 3.44px wider and every bubble shifted. Joined the text and `{@render meta()}`. |
+| staggered-bento | 27.8 | **52.6** (0.04%) | Same inline whitespace: the value span and the `km` unit were separated by a space. |
+| ruled-bento | 29.6 | **34.2** (0.23%) | Same: a space between `Count` and `ms` (and `/14`) opened a 12px gap. |
+| bento | 26.6 | **34.2** (0.87%) | The gallery host lacked the `* { box-sizing: border-box }` reset the kit's stage.css names; every padded max-width copy was 56px wider and wrapped differently. Reset added to `apps/web/src/app.css` and documented for consumers. |
+| stacked-cards | 22.9 | calibrated; local 21.5–24.1 | The bars are a moving target. The owner's paired stills put upstream at 350ms into the growth and the port at 499ms with the original 500ms start (port capture +149ms). The start is now 650ms, which puts the port at 349ms on that clock. Local refs vary 299–548ms, so a local pass is not representative. |
+
+The reset and whitespace fixes were regression-checked on hero-demo 37.8,
+messages 48.0, imessage 44.6, google-docs 30.6, static-card 48.3,
+finder-glass 39.4, upload 41.2 and excel 34.9 — all still pass.
 
 ## 9. Not checked
 

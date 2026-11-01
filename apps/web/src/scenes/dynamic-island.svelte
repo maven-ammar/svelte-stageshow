@@ -52,32 +52,23 @@
   const BAG =
     'M8.2 7.2V6.6a3.8 3.8 0 0 1 7.6 0v.6h2.1c.8 0 1.4.6 1.5 1.4l.9 10.2a2 2 0 0 1-2 2.2H5.7a2 2 0 0 1-2-2.2l.9-10.2c.1-.8.7-1.4 1.5-1.4Zm1.8 0h4V6.6a2 2 0 0 0-4 0Z'
 
-  const boxStyle = (b: Box) =>
-    `left:${b.l}px;top:${b.t}px;width:${b.w}px;height:${b.h}px;border-radius:${b.r}px`
+  const boxStyle = (b: Box, grow: boolean) =>
+    `left:${b.l}px;top:${b.t}px;width:${b.w}px;height:${b.h}px;border-radius:${b.r}px;transition-duration:${grow ? GROW.ms : SHRINK.ms}ms;transition-timing-function:${grow ? GROW.ease : SHRINK.ease};transition-delay:${grow ? '0ms' : '120ms'}`
 
   const min = (n: number) => `${n} min`
 
   // Spring by direction: overshoot only when growing (an overshoot while
-  // shrinking would dip the shape inside the bezel's own island). The shape's
-  // transition timing follows the island's data-mode, in the same tick.
-  function islandTransition(node: HTMLElement) {
-    const shape = node.querySelector<HTMLElement>('.di-island__shape')
-    let last = (node.dataset.mode ?? START.mode) as Mode
-    const apply = (grow: boolean) => {
-      if (!shape) return
-      shape.style.transitionDuration = `${grow ? GROW.ms : SHRINK.ms}ms`
-      shape.style.transitionTimingFunction = grow ? GROW.ease : SHRINK.ease
-      shape.style.transitionDelay = grow ? '0ms' : '120ms'
+  // shrinking would dip the shape inside the bezel's own island). The
+  // direction is read during render, so geometry and timing land in one style
+  // attribute; set imperatively afterwards, the transition runs at 0s first.
+  let lastIslandMode: Mode = START.mode
+  let islandGrow = true
+  function modeGrow(mode: Mode): boolean {
+    if (mode !== lastIslandMode) {
+      islandGrow = SIZE[mode] > SIZE[lastIslandMode]
+      lastIslandMode = mode
     }
-    apply(true)
-    const observer = new MutationObserver(() => {
-      const mode = (node.dataset.mode ?? START.mode) as Mode
-      const grow = SIZE[mode] > SIZE[last]
-      last = mode
-      apply(grow)
-    })
-    observer.observe(node, { attributes: true, attributeFilter: ['data-mode'] })
-    return { destroy: () => observer.disconnect() }
+    return islandGrow
   }
 
   /**
@@ -148,11 +139,12 @@
     {@const pw = compact ? 326 : 470}
     {@const w = compact ? 358 : 640}
     {@const budLeft = s.mode === 'split' ? BUD.l : s.mode === 'idle' ? BASE.l + BASE.w - BUD.d : BUD.l - 30}
+    {@const grow = modeGrow(s.mode)}
     <div class="di-device" style={`left:${Math.round((w - pw) / 2)}px;top:${compact ? 16 : 40}px`}>
       <Phone width={pw} frame="pro" island={false} time="" dark wallpaper="var(--di-wall)">
         <LockScreen className="di-lock" data-obscured={s.mode === 'open' || undefined} date="Sunday, October 25" time="9:41" controls={false} />
         <span class="di-hit" data-target="island" style={`left:${BASE.l}px;top:${BASE.t}px;width:${BASE.w}px;height:${BASE.h}px`}></span>
-        <div class="di-island" data-mode={s.mode} data-press={s.press || undefined} use:islandTransition>
+        <div class="di-island" data-mode={s.mode} data-press={s.press || undefined}>
           <svg width="0" height="0" class="di-island__defs" aria-hidden="true">
             <filter id="di-goo" x="-20%" y="-50%" width="140%" height="200%">
               <!-- The neck reaches only between nearby shapes. A wider blur keeps
@@ -162,7 +154,7 @@
             </filter>
           </svg>
           <div class="di-island__shapes" style="filter:url(#di-goo)">
-            <span class="di-island__shape" style={boxStyle(GEO[s.mode])}></span>
+            <span class="di-island__shape" style={boxStyle(GEO[s.mode], grow)}></span>
             <span
               class="di-island__bud"
               data-on={s.mode === 'split' || undefined}

@@ -1,3 +1,12 @@
+/* The kit is designed against the host reset its own stage.css names:
+   border-box everywhere. Without it, every scene that pads a max-width box
+   (the bento copies) measures 56px wide and wraps differently. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   color-scheme: light;
   font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;

@@ -42,8 +42,12 @@
     // The invoice remains the anchor. Hide only the changing figures before
     // preparing the next cycle; consumed tokens never count backwards in view.
     await a.set({ show: 1 })
+    // Mark the exit a beat into the hold: the still recorder's capture lands
+    // ~200ms later on the port than on the upstream dev page, and this puts
+    // both cameras on the same frame of the (unchanged) 900ms exit.
+    await a.wait(220)
     a.mark('exit')
-    await a.wait(900)
+    await a.wait(680)
     await a.set({ resetting: true })
     await a.wait(220)
     await a.snap({ ...START, resetting: true })

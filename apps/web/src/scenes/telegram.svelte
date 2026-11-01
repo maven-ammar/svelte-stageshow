@@ -126,34 +126,28 @@
       <Thread className="tg-thread">
         <Stamp className="tg-date">Yesterday</Stamp>
         <Bubble from="them">
-          Did the new boots come?
-          {@render meta('21:04')}
+          Did the new boots come?{@render meta('21:04')}
         </Bubble>
         <Bubble from="me">
-          Yes! Breaking them in
-          {@render meta('21:10', 'read')}
+          Yes! Breaking them in{@render meta('21:10', 'read')}
         </Bubble>
         <Stamp className="tg-date">Today</Stamp>
         <Bubble from="them">
-          Free this weekend?
-          {@render meta('8:12')}
+          Free this weekend?{@render meta('8:12')}
         </Bubble>
         <Bubble from="me">
-          Should be, why?
-          {@render meta('8:20', 'read')}
+          Should be, why?{@render meta('8:20', 'read')}
         </Bubble>
         <Bubble from="them" className="tg-photo">
           <img class="tg-photo__img" src={kawaguchiko} width={252} height={168} alt="Mount Fuji above Lake Kawaguchi" />
           <span class="tg-photo__time">9:38</span>
         </Bubble>
         <Bubble from="them">
-          Sunrise hike on Saturday?
-          {@render meta('9:38')}
+          Sunrise hike on Saturday?{@render meta('9:38')}
         </Bubble>
         {#if s.sent}
           <Bubble from="me" source="draft">
-            {MINE}
-            {@render meta('9:41', s.tick)}
+            {MINE}{@render meta('9:41', s.tick)}
           </Bubble>
         {/if}
         {#if s.reply}

@@ -169,10 +169,7 @@
           <span class="sg-stat-lead">This year you went</span>
           <span class="sg-stat-number">
             <span class="sg-stat-value">
-              <span class="sg-stat-sizer" aria-hidden="true">38,604</span>
-              <Count value={distanceSeen || reduced ? 38604 : 0} duration={1600} />
-            </span>
-            <span class="sg-stat-unit">km</span>
+              <span class="sg-stat-sizer" aria-hidden="true">38,604</span><Count value={distanceSeen || reduced ? 38604 : 0} duration={1600} /></span><span class="sg-stat-unit">km</span>
           </span>
           <span class="sg-stat-label">measured from where your photos were taken.</span>
         </div>

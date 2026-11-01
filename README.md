@@ -41,6 +41,16 @@ The Stage puts `className` on the outer `.ss-fit`; the scene's own CSS goes
 under `.ss-stage`. The stage is the shot: give it a ground and let the window
 bleed, rather than wrapping it in another card.
 
+The kit assumes the standard host reset:
+
+```css
+*, *::before, *::after { box-sizing: border-box; }
+```
+
+Without it, padded max-width boxes (the bento copies) render 56px wide and
+wrap differently from the reference; the gallery's `app.css` carries it, and a
+consumer should too.
+
 ## API
 
 ```ts

@@ -205,8 +205,7 @@
       <div class="kb-stat" use:revealOnView={LEAD + STEP}>
         <span class="kb-stat-lead">Month-end close in</span>
         <span class="kb-stat-number">
-          <Count value={seen || reduced ? 2 : 9} duration={1100} />
-          <span class="kb-stat-unit"> days</span>
+          <Count value={seen || reduced ? 2 : 9} duration={1100} /><span class="kb-stat-unit">{' days'}</span>
         </span>
         <span class="kb-stat-label">down from nine for the average team in its first quarter.</span>
       </div>

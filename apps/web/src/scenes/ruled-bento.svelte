@@ -140,8 +140,7 @@
         <span class="dim">Migrating</span>
         <Meter className="rb-meter" value={fill ? 1 : 0} />
         <span class="rb-count">
-          <Count value={fill ? 14 : 0} duration={1000} />
-          <span class="dim">/14</span>
+          <Count value={fill ? 14 : 0} duration={1000} /><span class="dim">/14</span>
         </span>
       </div>
       <div class="rb-out rb-ready" style="--i:2">
@@ -190,8 +189,7 @@
         Reads in
       </span>
       <span class="rb-stat-number">
-        <Count value={readsSeen || reduced ? 4 : 0} duration={1300} />
-        <span class="rb-stat-unit">ms</span>
+        <Count value={readsSeen || reduced ? 4 : 0} duration={1300} /><span class="rb-stat-unit">ms</span>
       </span>
       <span class="rb-stat-label">at the median, from the replica nearest each user.</span>
     </div>
