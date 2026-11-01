@@ -1,0 +1,71 @@
+started 2026-11-01T13:07:45.2814155+05:30
+ai-cards :: [stage-1] uneven inset: div.ss-window__bar holds its children 15px from its left edge and 51px from its right; a bar, pill or row of controls keeps one inset at both ends (still) | film: issues; still capture only, motion was not judged
+ai-chat :: [stage-1] uneven inset: div.ss-window__bar holds its children 15px from its left edge and 51px from its right; a bar, pill or row of controls keeps one inset at both ends (still) | film: issues; still capture only, motion was not judged
+annotations :: [stage-1] uneven gutters: section.an-usage-monitor sits 322px from the left of div.ss-stage, 50px from the right and 228px from the bottom; bleed it off an edge, or keep one gutter on every side it doesn't bleed (still) | film: issues; still capture only, motion was not judged
+backgrounds :: 
+bento ::   [2m- navigating to "http://127.0.0.1:5173/?capture=bento", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+brand-marks ::   [2m- navigating to "http://127.0.0.1:5173/?capture=brand-marks", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+calendar ::   [2m- navigating to "http://127.0.0.1:5173/?capture=calendar", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+chart-scrub ::   [2m- navigating to "http://127.0.0.1:5173/?capture=chart-scrub", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+choreography ::   [2m- navigating to "http://127.0.0.1:5173/?capture=choreography", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+chrome ::   [2m- navigating to "http://127.0.0.1:5173/?capture=chrome", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+close-up ::   [2m- navigating to "http://127.0.0.1:5173/?capture=close-up", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+controls ::   [2m- navigating to "http://127.0.0.1:5173/?capture=controls", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+corner-chip ::   [2m- navigating to "http://127.0.0.1:5173/?capture=corner-chip", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+cursor-morph ::   [2m- navigating to "http://127.0.0.1:5173/?capture=cursor-morph", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+cursor-resize ::   [2m- navigating to "http://127.0.0.1:5173/?capture=cursor-resize", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+cursors ::   [2m- navigating to "http://127.0.0.1:5173/?capture=cursors", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+dark-bento ::   [2m- navigating to "http://127.0.0.1:5173/?capture=dark-bento", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+dark-hero ::   [2m- navigating to "http://127.0.0.1:5173/?capture=dark-hero", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+device-pair ::   [2m- navigating to "http://127.0.0.1:5173/?capture=device-pair", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+dynamic-island ::   [2m- navigating to "http://127.0.0.1:5173/?capture=dynamic-island", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+excel ::   [2m- navigating to "http://127.0.0.1:5173/?capture=excel", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+fade-crop ::   [2m- navigating to "http://127.0.0.1:5173/?capture=fade-crop", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+figma ::   [2m- navigating to "http://127.0.0.1:5173/?capture=figma", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+finder ::   [2m- navigating to "http://127.0.0.1:5173/?capture=finder", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+finder-glass ::   [2m- navigating to "http://127.0.0.1:5173/?capture=finder-glass", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+form-error ::   [2m- navigating to "http://127.0.0.1:5173/?capture=form-error", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+freeform-drag ::   [2m- navigating to "http://127.0.0.1:5173/?capture=freeform-drag", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+glass ::   [2m- navigating to "http://127.0.0.1:5173/?capture=glass", waiting until "networkidle"[22m | System.Management.Automation.RemoteException
+gmail :: [stage-1] touching: span.ss-text "Maya Chen" is 0px from span.gm-row__icons; text never touches a neighboring box, so hold the pair apart with a fixed gap (gap: 8-12px), not leftover space (still) | film: issues; still capture only, motion was not judged
+google-calendar :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+google-docs :: [stage-1] touching: placeholder span.ss-bar in div.gd-toolbar is 4px from svg.gd-sym; a bar is text, so size it to the room left beside its neighbor or put both in a flex row with a gap (still) | film: issues; still capture only, motion was not judged
+hero-demo :: [stage-1] manual: Layout checks remain deferred: div.hd-toolbar-btn: control geometry is moving. Capture a settled state. | film: inconclusive; still capture only, motion was not judged
+hero-grid :: coverage stage-5: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: issues; still capture only, motion was not judged
+imessage :: [stage-1] touching: span.im-name "Maya" is 2px from svg; text never touches a neighboring box, so hold the pair apart with a fixed gap (gap: 8-12px), not leftover space (still) | film: issues; still capture only, motion was not judged
+kit-extras :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+linear :: [stage-1] touching: placeholder span.ss-bar in span.ln-chip is 6px from span.ln-chip__dot; a bar is text, so size it to the room left beside its neighbor or put both in a flex row with a gap (still) | film: issues; still capture only, motion was not judged
+loading :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+looks :: coverage stage-9: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: issues; still capture only, motion was not judged
+many-of-one :: [stage-1] uneven gutters: div.mo-thumb sits 8px from the left of div.mo-tile, 8px from the right and 63px from the bottom; bleed it off an edge, or keep one gutter on every side it doesn't bleed (5 frames from still) | film: issues; still capture only, motion was not judged
+messages :: [stage-1] uneven gutters: div.ss-phone sits 47px from the left of div.ss-stage, 47px from the right and 16px from the bottom; bleed it off an edge, or keep one gutter on every side it doesn't bleed (still) | film: issues; still capture only, motion was not judged
+monochrome :: [stage-1] framing: div.mn-site ends 22px short of the right edge; give it a full gutter or run it well past so it is masked (still) | film: issues; still capture only, motion was not judged
+notion :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+opposite-corners :: [stage-1] manual: Layout checks remain deferred: div.ss-bubble: bottom content geometry is moving. Capture a settled state. | film: inconclusive; still capture only, motion was not judged
+overlap :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+panel-annotation :: [stage-1] framing: satellite section.pa-panel sits 40px from the right edge where the gutter is 32px; satellites keep the one gutter (still) | film: issues; still capture only, motion was not judged
+parts :: [stage-1] manual: Layout checks remain deferred: span.pt-button: text is moving; checked minimum line fit, deferred combined bounds. Capture a settled state. | film: inconclusive; still capture only, motion was not judged
+payout-flow :: [stage-1] manual: Layout checks remain deferred: div.sp-head: bottom content geometry is moving; section.sp-instant: bottom content geometry is moving. Capture a settled state. | film: inconclusive; still capture only, motion was not judged
+phone-touch :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+phones :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+powerpoint :: [stage-1] cut by the crop: div.pp-thumb-box runs off the stage's bottom edge (37px of its 55px); filler can bleed but an action reads whole or not at all, so bring it inside the crop or remove it (still) | film: issues; still capture only, motion was not judged
+presence :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+raycast :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+reorder :: [stage-1] uneven inset: div.ss-window__bar holds its children 15px from its left edge and 51px from its right; a bar, pill or row of controls keeps one inset at both ends (still) | film: issues; still capture only, motion was not judged
+ruled-bento :: coverage stage-4: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+share :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+slack :: [stage-1] touching: placeholder span.ss-bar in div.sl-panel is 6px from span.sl-tab__glyph; a bar is text, so size it to the room left beside its neighbor or put both in a flex row with a gap (still) | film: issues; still capture only, motion was not judged
+spotify :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+stacked-cards :: [stage-1] uneven gutters: section.sk-card sits 90px from the left of div.ss-stage, 90px from the right and 225px from the bottom; bleed it off an edge, or keep one gutter on every side it doesn't bleed (still) | film: issues; still capture only, motion was not judged
+staggered-bento :: coverage stage-4: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+static-card :: [stage-1] lopsided: div.ss-row "JJackson Hot Yoga" has 15px on the left and 8px on the right (still) | film: issues; still capture only, motion was not judged
+story :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+subscriptions :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+swipe :: [stage-1] touching: span.sw-time "8:30" is 3px from svg.lucide; text never touches a neighboring box, so hold the pair apart with a fixed gap (gap: 8-12px), not leftover space (still) | film: issues; still capture only, motion was not judged
+table-edit :: coverage stage-1: 1 frames, 0.00s, largest gap 0.0ms (complete) | film: no-issues-detected; still capture only, motion was not judged
+telegram :: [stage-1] touching: span.tg-meta "8:20" is 2px from svg.tg-ticks; text never touches a neighboring box, so hold the pair apart with a fixed gap (gap: 8-12px), not leftover space (still) | film: issues; still capture only, motion was not judged
+tilted-stack :: [stage-1] onion skin: span.ss-bar and span.ss-bar overlap with a see-through fill, so the overlap paints darker; a pile of faces is the kit's Facepile, and anything else that overlaps takes an opaque fill (--ss-fill) (still) | film: issues; still capture only, motion was not judged
+upload :: [stage-1] framing: corner bleed with a 40px gutter above div.ss-window but 184px to its left, as seen in the final crop; one gutter, the same on both (check any wrapper that trims the stage) (still) | film: issues; still capture only, motion was not judged
+wikipedia :: [stage-1] half-pixel glyph: a 12px svg.wk-icon centered in the 139x22 span.wk-lang sits on a half pixel, so it draws there while div.wk-pg moves and hops sideways when it settles; size it 12px in an even box (even inside even) (still) | film: issues; still capture only, motion was not judged
+window-row :: [stage-1] clipped: span.ss-text "Tests passing, 48 of 48" clipped top by 1px by span.ss-row__title (still) | film: issues; still capture only, motion was not judged
+finished 2026-11-01T13:18:33.0930676+05:30

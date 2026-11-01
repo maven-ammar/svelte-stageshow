@@ -139,6 +139,65 @@ input {
   padding: 0;
 }
 
+/* Upstream preview.css: the capture route is one 100%-wide example box,
+   the stage centred at its design size. The skill's film.mjs selects
+   `#example`, so this must match the original preview exactly. */
+.capture-example {
+  width: 100%;
+  min-height: 1px;
+  background: #fff;
+}
+
+.capture-example > .ss-fit {
+  margin-inline: auto;
+}
+
+.capture-example .ss-fit {
+  margin-inline: auto;
+}
+
+.capture-example > [role='alert'],
+.capture-missing {
+  padding: 24px;
+  font-size: 13px;
+  color: #a42a2a;
+}
+
+.scene-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 2px 16px;
+  margin: 36px 0 0;
+  padding: 18px 0 20px;
+  border-top: 1px solid #e9e8e5;
+  border-bottom: 1px solid #e9e8e5;
+}
+
+.scene-link {
+  padding: 4px 0;
+  color: #646469;
+  font-size: 11.5px;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scene-link:hover {
+  color: #1b1b1d;
+}
+
+.scene-link[aria-current='page'] {
+  color: #1b1b1d;
+  font-weight: 600;
+}
+
+.scene-stage {
+  width: 100%;
+  overflow: hidden;
+}
+
 /* The skill's film wrapper: 900 CSS px wide, 8px above and below the stage,
    the stage centered. `--select '#example'` screenshots exactly this box. */
 .film-example {

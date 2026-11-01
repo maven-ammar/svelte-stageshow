@@ -1,0 +1,3 @@
+/* phones: the upstream example has no stylesheet of its own; every frame and
+   layout rule comes from the kit. Kept here so the scene's import stays paired
+   with a file, as the other scenes do. */

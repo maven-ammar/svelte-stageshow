@@ -1,0 +1,761 @@
+[
+  {
+    "slug": "ai-cards",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 540,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "ai-chat",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 420,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "annotations",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 600,
+      "h": 464,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "backgrounds",
+    "stages": 20,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 440,
+      "h": 252,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "bento",
+    "stages": 4,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 595,
+      "h": 300,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "brand-marks",
+    "stages": 2,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 900,
+      "h": 910,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "calendar",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 358,
+      "h": 380,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "chart-scrub",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "choreography",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 656,
+      "h": 468,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "chrome",
+    "stages": 12,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 332,
+      "h": 224,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "close-up",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 400,
+      "h": 300,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "controls",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 760,
+      "h": 460,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "corner-chip",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 520,
+      "h": 360,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "cursor-morph",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 550,
+      "h": 200,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "cursor-resize",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 440,
+      "h": 300,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "cursors",
+    "stages": 4,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 340,
+      "h": 240,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "dark-bento",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 360,
+      "h": 280,
+      "theme": "dark"
+    }
+  },
+  {
+    "slug": "dark-hero",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 760,
+      "h": 440,
+      "theme": "dark"
+    }
+  },
+  {
+    "slug": "device-pair",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "dynamic-island",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "excel",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 860,
+      "h": 480,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "fade-crop",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 360,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "figma",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 860,
+      "h": 480,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "finder",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 820,
+      "h": 420,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "finder-glass",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 860,
+      "h": 440,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "form-error",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 560,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "freeform-drag",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 560,
+      "h": 340,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "glass",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 400,
+      "theme": "glass"
+    }
+  },
+  {
+    "slug": "gmail",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 760,
+      "h": 420,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "google-calendar",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 800,
+      "h": 460,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "google-docs",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 940,
+      "h": 600,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "hero-demo",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 720,
+      "h": 340,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "hero-grid",
+    "stages": 5,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 480,
+      "h": 270,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "imessage",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 420,
+      "h": 620,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "kit-extras",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 760,
+      "h": 460,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "linear",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 920,
+      "h": 470,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "loading",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 600,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "looks",
+    "stages": 9,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 358,
+      "h": 360,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "many-of-one",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 360,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "messages",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 420,
+      "h": 340,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "monochrome",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 720,
+      "h": 320,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "notion",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 720,
+      "h": 538,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "opposite-corners",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 400,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "overlap",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "panel-annotation",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 440,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "parts",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 760,
+      "h": 460,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "payout-flow",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "phone-touch",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 400,
+      "h": 520,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "phones",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 720,
+      "h": 860,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "powerpoint",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 920,
+      "h": 540,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "presence",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 660,
+      "h": 420,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "raycast",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 760,
+      "h": 440,
+      "theme": "dark"
+    }
+  },
+  {
+    "slug": "reorder",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 520,
+      "h": 360,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "ruled-bento",
+    "stages": 4,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 598,
+      "h": 300,
+      "theme": "dark"
+    }
+  },
+  {
+    "slug": "share",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 480,
+      "h": 340,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "slack",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 940,
+      "h": 540,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "spotify",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 860,
+      "h": 600,
+      "theme": "dark"
+    }
+  },
+  {
+    "slug": "stacked-cards",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 520,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "staggered-bento",
+    "stages": 4,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 600,
+      "h": 600,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "static-card",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 400,
+      "h": 300,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "story",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 640,
+      "h": 452,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "subscriptions",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 720,
+      "h": 440,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "swipe",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 400,
+      "h": 480,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "table-edit",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 660,
+      "h": 400,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "telegram",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 400,
+      "h": 520,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "tilted-stack",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 480,
+      "h": 360,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "upload",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 760,
+      "h": 420,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "wikipedia",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 800,
+      "h": 560,
+      "theme": "light"
+    }
+  },
+  {
+    "slug": "window-row",
+    "stages": 1,
+    "missing": "",
+    "errors": [],
+    "size": {
+      "w": 720,
+      "h": 300,
+      "theme": "light"
+    }
+  }
+]

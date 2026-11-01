@@ -9,10 +9,9 @@
 //     --out shots/example-static.png --size 900x400 --select '#example' --still
 //
 // --select screenshots the element, not the viewport (the skill films its
-// 900px #example wrapper this way). --still adds still=1 (no script, no
-// cursor, the opening frame) and does not force reduced motion. --reduce
-// forces the reduced-motion poster, so a still never catches a transition
-// mid-flight.
+// 900px #example wrapper this way). --still mirrors the skill's flag: it sets
+// window.__ssStill before load, which makes a Stage freeze at its opening
+// frame (not the reduced-motion poster). --reduce forces the poster.
 
 import { mkdir } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
@@ -37,20 +36,14 @@ const [width, height] = flag('size', '720x340').split('x').map(Number)
 const scale = Number(flag('scale', '2'))
 const select = flag('select', '')
 const still = has('still')
-const reduce = has('reduce') || (!has('no-reduce') && !still)
-
-let target = url
-if (still) {
-  const u = new URL(url)
-  u.searchParams.set('still', '1')
-  target = u.toString()
-}
+const reduce = has('reduce')
 
 const browser = await chromium.launch({ executablePath: CHROME, headless: true })
 const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: scale })
+if (still) await page.addInitScript(() => { window.__ssStill = true })
 if (reduce) await page.emulateMedia({ reducedMotion: 'reduce' })
 
-await page.goto(target, { waitUntil: 'networkidle' })
+await page.goto(url, { waitUntil: 'networkidle' })
 await page.evaluate(async () => {
   await document.fonts.ready
   await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
