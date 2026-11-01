@@ -47,6 +47,8 @@ bleed, rather than wrapping it in another card.
 import {
   // stage and runtime
   Stage, Cursor, Keycaps, useLook, getLook, capsOf, EASE, bezier, easeCss,
+  MacPointer, MacIbeam, MacCrosshair, MacPointingHand, MacOpenHand, MacGrab,
+  MacWait, MacResize, MacResizeNS, MacResizeEW, MacResizeNWSE, MacResizeNESW,
   // frames
   Window, Bar, Text, Row, Phone, Avatar, Chip,
   Prompt, Caret, LockScreen, Notification, WALLPAPER,

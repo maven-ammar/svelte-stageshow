@@ -14,7 +14,10 @@ feature. Source: `benjitaylor/skills/stageshow` (MIT, commit `8020574`).
 | `Phone` | Ported | pro/photo/bezel/silver/clay/soft/bare/outline/android |
 | `Avatar` | Ported | initials, tones, ring states |
 | `Chip` | Ported | remove callback |
-| `Cursor` | Ported | all pointer/I-beam/hand/wait/resize/touch/circle styles; open and grab share the hand glyph |
+| `Cursor` | Ported | all pointer/I-beam/hand/wait/resize/touch/circle styles; uses the macOS glyph components below |
+| `MacPointer`, `MacIbeam`, `MacCrosshair`, `MacPointingHand`, `MacOpenHand`, `MacGrab`, `MacWait`, `MacResize*` | Ported | upstream `cursors.tsx` module split into typed Svelte glyphs; `cursors.ts` re-exports the same names |
+| `messages.ts` module | Ported | Thread, Bubble, Stamp, Receipt with the same props |
+| `ios.ts` module | Ported | Keyboard with the same props |
 | `Camera` | Ported | zoom/feather; measurement via `$effect` + ResizeObserver |
 | `Collapse` | Ported | clip/drop, above/below, solid, tall |
 | `Connector` | Ported | h/v/straight/step/curve, arrow/dots/label/dash |
