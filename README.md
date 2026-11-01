@@ -129,6 +129,8 @@ CSS transitions and text rasterisation are outside the DOM-hash contract.
 | Examples | 69/69 registered | all upstream example folders plus `static-card` and `hero-demo`; every scene has copied CSS |
 | Cross-browser | Chromium only | Firefox/Safari deferred by owner |
 
+Full per-component status and deviations: [`docs/port-status.md`](docs/port-status.md).
+
 ### Known deviations
 
 - `Icon` stroke scaling differs from lucide-react's `absoluteStrokeWidth` below
