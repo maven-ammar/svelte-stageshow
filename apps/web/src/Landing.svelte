@@ -7,263 +7,380 @@
   }
 
   let { scenes, Hero }: Props = $props()
-  const featured = $derived(
-    scenes.filter((name) =>
-      ['static-card', 'hero-demo', 'bento', 'phones', 'google-calendar', 'messages', 'spotify', 'stacked-cards'].includes(name)
-    )
-  )
+
+  const index = [
+    'static-card',
+    'hero-demo',
+    'bento',
+    'phones',
+    'google-calendar',
+    'messages',
+    'stacked-cards',
+    'spotify'
+  ].filter((name) => scenes.includes(name))
+
+  const facts = [
+    ['69', 'scene slugs ported, every one'],
+    ['42', 'stylesheets, byte-identical to upstream'],
+    ['13', 'motion primitives'],
+    ['0', 'React, react-dom or lucide in the bundle']
+  ]
 </script>
 
-<main class="landing">
-  <header class="masthead">
-    <span class="mark">STAGESHOW</span>
-    <span class="tag">for Svelte 5</span>
+<main class="page">
+  <header class="bar">
+    <a class="mark" href="/">Stageshow</a>
+    <span class="rule"></span>
+    <span class="sub">A Svelte 5 port of Benji Taylor's Stageshow</span>
+    <a class="src" href="https://benji.org/stageshow" target="_blank" rel="noreferrer">original</a>
   </header>
 
   <section class="hero">
-    <div class="pitch">
-      <h1>Product illustrations that look like the product.</h1>
-      <p>
-        A Svelte 5 port of the Stageshow kit: framed faux UI, real chrome, a scripted cursor, and
-        sixty-nine worked examples to start from. React-free, one peer dependency, no animation
-        runtime.
+    <div class="lead">
+      <p class="eyebrow">Specimen 01 — the port</p>
+      <h1>Product shots that hold up as product.</h1>
+      <p class="body">
+        The Stageshow kit, rewritten for Svelte 5: window frames with real chrome, a cursor that
+        types and clicks under a script, and sixty-nine worked scenes to start from. The design
+        rules travel with it. No React in the bundle, one peer dependency, no animation runtime.
       </p>
-      <pre><code>pnpm add svelte-stageshow</code></pre>
-      <nav>
-        <a class="button" href="?scene=static-card">Browse the gallery</a>
-        <a class="quiet" href="#scenes">See the scenes</a>
-      </nav>
-    </div>
-
-    <div class="showcase">
-      <div class="frame">
-        <Hero />
+      <div class="actions">
+        <code>pnpm add svelte-stageshow</code>
+        <a class="go" href="?scene=static-card">Open the gallery</a>
       </div>
     </div>
+
+    <figure class="plate">
+      <div class="plate__stage">
+        <Hero />
+      </div>
+      <figcaption>
+        <span>static-card</span>
+        <span class="dots"></span>
+        <span class="mono">900 × 316</span>
+      </figcaption>
+    </figure>
   </section>
 
-  <section class="facts">
-    <div><strong>69</strong><span>scene slugs, every one ported</span></div>
-    <div><strong>42</strong><span>stylesheets, byte-identical to upstream</span></div>
-    <div><strong>13</strong><span>motion primitives</span></div>
-    <div><strong>0</strong><span>React, react-dom or lucide in the bundle</span></div>
+  <section class="ledger">
+    {#each facts as [value, label] (label)}
+      <div>
+        <span class="n">{value}</span>
+        <span class="l">{label}</span>
+      </div>
+    {/each}
   </section>
 
-  <section id="scenes" class="scenes">
+  <section class="index" id="scenes">
     <h2>Start from one of these</h2>
-    <ul>
-      {#each featured as name (name)}
-        <li><a href={`?scene=${name}`}>{name}</a></li>
+    <ol>
+      {#each index as name, position (name)}
+        <li>
+          <a href={`?scene=${name}`}>
+            <span class="num">{String(position + 1).padStart(2, '0')}</span>
+            <span class="name">{name}</span>
+          </a>
+        </li>
       {/each}
-    </ul>
-    <a class="quiet" href="?scene=static-card">All {scenes.length} scenes</a>
+    </ol>
+    <a class="all" href="?scene=static-card">All {scenes.length} scenes</a>
   </section>
 
   <footer>
-    <span>MIT. Ported from Benji Taylor's Stageshow; the original licence and notices travel with it.</span>
+    <p>
+      Ported from <a href="https://benji.org/stageshow" target="_blank" rel="noreferrer">Stageshow</a>
+      by Benji Taylor. The original is MIT licensed; its licence, notices and third-party
+      attributions travel with this port unchanged.
+    </p>
     <span class="mono">svelte-stageshow / 0.2.0</span>
   </footer>
 </main>
 
 <style>
-  .landing {
+  .page {
     --ink: #14120f;
     --paper: #f4f1e6;
+    --line: rgba(244, 241, 230, 0.14);
+    --dim: rgba(244, 241, 230, 0.58);
     --orange: #e8622a;
     min-height: 100dvh;
     background: #0b0908;
     color: var(--paper);
-    padding: 28px clamp(18px, 4vw, 56px) 40px;
+    padding: 22px clamp(18px, 4vw, 64px) 32px;
     display: grid;
-    gap: 40px;
+    gap: clamp(28px, 4vw, 48px);
     align-content: start;
     font-family: var(--ss-font, system-ui, sans-serif);
   }
 
-  .masthead {
+  .bar {
     display: flex;
     align-items: baseline;
-    gap: 10px;
-    border-bottom: 1px solid rgba(244, 241, 230, 0.16);
-    padding-bottom: 12px;
+    gap: 14px;
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
   .mark {
-    font-family: var(--ss-display, 'Bahnschrift', 'Arial Narrow', sans-serif);
-    font-size: 15px;
-    letter-spacing: 0.22em;
+    color: var(--paper);
+    text-decoration: none;
+    letter-spacing: 0.24em;
   }
 
-  .tag {
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11px;
-    color: rgba(244, 241, 230, 0.55);
+  .rule {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+    transform: translateY(-3px);
+  }
+
+  .sub {
+    color: var(--dim);
+    text-transform: none;
+    letter-spacing: 0.02em;
+  }
+
+  .src {
+    color: var(--orange);
+    text-decoration: none;
   }
 
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: clamp(20px, 4vw, 56px);
-    align-items: center;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(24px, 4vw, 64px);
+    align-items: start;
+  }
+
+  .eyebrow {
+    margin: 0 0 18px;
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
   }
 
   h1 {
-    margin: 0 0 14px;
-    font-family: var(--ss-display, 'Bahnschrift', 'Arial Narrow', sans-serif);
-    font-size: clamp(30px, 4.4vw, 52px);
-    line-height: 0.96;
-    letter-spacing: -0.015em;
-    text-transform: uppercase;
-  }
-
-  .pitch p {
     margin: 0 0 18px;
-    max-width: 46ch;
-    font-size: 14px;
-    line-height: 1.6;
-    color: rgba(244, 241, 230, 0.72);
+    font-family: var(--ss-display, 'Bahnschrift', 'Arial Narrow', sans-serif);
+    font-size: clamp(34px, 4.6vw, 60px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    max-width: 15ch;
   }
 
-  pre {
-    margin: 0 0 20px;
-    padding: 10px 14px;
-    border: 1px solid rgba(244, 241, 230, 0.18);
-    border-radius: 4px;
-    background: rgba(244, 241, 230, 0.04);
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 12.5px;
-    color: rgba(244, 241, 230, 0.86);
-    width: fit-content;
+  .body {
+    margin: 0 0 26px;
+    max-width: 44ch;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: rgba(244, 241, 230, 0.78);
   }
 
-  nav {
+  .actions {
     display: flex;
     align-items: center;
     gap: 16px;
+    flex-wrap: wrap;
   }
 
-  .button {
-    display: inline-block;
-    padding: 10px 16px;
-    border-radius: 999px;
-    background: var(--paper);
-    color: var(--ink);
+  code {
+    padding: 9px 13px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
     font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11.5px;
-    letter-spacing: 0.06em;
+    font-size: 12px;
+    color: rgba(244, 241, 230, 0.9);
+  }
+
+  .go {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 11px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    color: var(--paper);
     text-decoration: none;
+    border-bottom: 1px solid var(--orange);
+    padding-bottom: 3px;
   }
 
-  .quiet {
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11.5px;
-    color: rgba(244, 241, 230, 0.62);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(244, 241, 230, 0.28);
-    padding-bottom: 2px;
-  }
-
-  .showcase {
-    display: grid;
-    place-items: center;
-    padding: clamp(14px, 3vw, 28px);
-    border: 1px solid rgba(244, 241, 230, 0.12);
-    border-radius: 8px;
-    background: radial-gradient(120% 120% at 30% 0%, rgba(232, 98, 42, 0.12), transparent 60%), #0f0d0c;
+  .plate {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 5px;
     overflow: hidden;
+    background: #0f0d0c;
   }
 
-  .frame {
-    width: 100%;
+  .plate__stage {
     display: grid;
     place-items: center;
+    padding: clamp(16px, 3vw, 34px);
+    background:
+      linear-gradient(180deg, rgba(232, 98, 42, 0.07), transparent 55%),
+      repeating-linear-gradient(90deg, rgba(244, 241, 230, 0.04) 0 1px, transparent 1px 64px);
   }
 
-  .facts {
+  figcaption {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border-top: 1px solid var(--line);
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    color: var(--dim);
+  }
+
+  .dots {
+    flex: 1;
+    height: 1px;
+    background-image: linear-gradient(90deg, var(--line) 50%, transparent 50%);
+    background-size: 6px 1px;
+  }
+
+  .ledger {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
-    border-top: 1px solid rgba(244, 241, 230, 0.16);
-    border-bottom: 1px solid rgba(244, 241, 230, 0.16);
-    padding: 18px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
 
-  .facts div {
+  .ledger div {
+    padding: 16px 18px 16px 0;
     display: grid;
-    gap: 4px;
+    gap: 6px;
+    border-right: 1px solid var(--line);
   }
 
-  .facts strong {
+  .ledger div:last-child {
+    border-right: 0;
+  }
+
+  .n {
     font-family: var(--ss-display, 'Bahnschrift', 'Arial Narrow', sans-serif);
-    font-size: 26px;
+    font-size: 30px;
     line-height: 1;
   }
 
-  .facts span {
+  .l {
     font-size: 11.5px;
-    color: rgba(244, 241, 230, 0.55);
-    max-width: 22ch;
+    line-height: 1.4;
+    color: var(--dim);
+    max-width: 24ch;
   }
 
-  .scenes h2 {
-    margin: 0 0 14px;
-    font-family: var(--ss-display, 'Bahnschrift', 'Arial Narrow', sans-serif);
-    font-size: 18px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .scenes ul {
-    list-style: none;
+  .index h2 {
     margin: 0 0 16px;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .scenes a {
-    display: inline-block;
-    padding: 7px 12px;
-    border: 1px solid rgba(244, 241, 230, 0.2);
-    border-radius: 999px;
     font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11.5px;
-    color: rgba(244, 241, 230, 0.86);
-    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dim);
+    font-weight: 400;
   }
 
-  .scenes a:hover {
-    border-color: var(--orange);
+  .index ol {
+    list-style: none;
+    margin: 0 0 18px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .index li {
+    border-top: 1px solid var(--line);
+  }
+
+  .index a {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 12px 12px 12px 0;
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  .num {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    color: var(--orange);
+  }
+
+  .name {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    letter-spacing: 0.02em;
+  }
+
+  .index a:hover .name {
+    border-bottom: 1px solid var(--orange);
+  }
+
+  .all {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
   }
 
   footer {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
-    border-top: 1px solid rgba(244, 241, 230, 0.16);
-    padding-top: 14px;
+    gap: 28px;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+
+  footer p {
+    margin: 0;
+    max-width: 62ch;
     font-size: 11.5px;
-    color: rgba(244, 241, 230, 0.5);
+    line-height: 1.6;
+    color: var(--dim);
+  }
+
+  footer a {
+    color: rgba(244, 241, 230, 0.9);
   }
 
   .mono {
     font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    color: var(--dim);
+    white-space: nowrap;
   }
 
-  @media (max-width: 820px) {
+  @media (max-width: 900px) {
     .hero {
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .facts {
+    .ledger {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ledger div:nth-child(2n) {
+      border-right: 0;
+    }
+
+    .index ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bar .sub {
+      display: none;
     }
 
     footer {
       flex-direction: column;
+      gap: 10px;
     }
   }
 </style>
-
