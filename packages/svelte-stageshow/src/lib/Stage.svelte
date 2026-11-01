@@ -2,8 +2,10 @@
   import type { Snippet } from 'svelte'
   import { tick, untrack } from 'svelte'
   import Cursor from './Cursor.svelte'
+  import Keycaps from './Keycaps.svelte'
   import { createAct, Stopped } from './act.js'
   import { realClock, VirtualClock, type Clock } from './clock.js'
+  import type { Keys } from './keys.js'
   import { setLook, type Fidelity, type Layout, type Palette, type Theme } from './look.js'
   import { EMPTY, layoutRectOf, nameOf, rectOf, sameRects, stageSpace, targetRectOf, type Point, type Rect, type Target } from './measure.js'
   import type { CompactConfig, CursorConfig, CursorKind, Ground, KeysAt, LookTokens, Play, Script } from './types.js'
@@ -86,6 +88,8 @@
 
   let reduced = $state(false)
   let hoverNone = $state(false)
+  let keys = $state<Keys>({ id: 0, caps: [], show: false, down: false })
+  let lastKeys = $state<Keys | null>(null)
 
   $effect(() => {
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -102,10 +106,17 @@
     }
   })
 
+  // Upstream `film.mjs --still` sets window.__ssStill for its checks but does
+  // not stop a scene's script; the reference stills are early script frames.
+  // A stage is still only when it has no script or the viewer asked for
+  // reduced motion, exactly as the React Stage does.
   const still = $derived(!script || reduced)
   const play: Play = $derived(playProp === 'hover' && hoverNone ? 'once' : playProp)
 
   let scene = $state<S>(untrack(() => (initial ?? {}) as S))
+  // Reduced motion/no script means the poster (or initial when a scene has no
+  // poster), never a running script. A normal still capture runs the script,
+  // as the upstream film recorder does.
   const display = $derived<S>((still && !deterministic ? (poster ?? initial ?? {}) : scene) as S)
 
   const film =
@@ -329,6 +340,9 @@
       setHover,
       setPressed: (v) => (cursorPressed = v),
       setTouching: (v) => (cursorTouching = v),
+      getKeys: () => keys,
+      setKeys: (k) => (keys = k),
+      setLastKeys: (k) => (lastKeys = k),
       targetEl,
       rect: rectAt,
       flashInstant,
@@ -350,6 +364,8 @@
     })
     root?.removeAttribute('data-mark')
     root?.removeAttribute('data-instant')
+    keys = { ...keys, show: false, down: false }
+    lastKeys = null
     await flush()
     if (cursor) cursorAt = resolve(restAt())
   }
@@ -359,6 +375,61 @@
    * rendered stage for each frame, frame 0 through `count`. Called by the
    * determinism test; CSS transitions are off, so a frame is a settled state.
    */
+  // The video path: start the script on a virtual clock, step one frame at a
+  // time under a driver's control (scripts/record.mjs screenshots between
+  // steps), then stop. Same clock and reset as runFrames, so a recording is
+  // deterministic frame by frame.
+  let recording: { clock: VirtualClock; ctrl: AbortController; run: Promise<void> } | null = null
+
+  export async function startRecording(): Promise<void> {
+    if (!script) throw new Error('Stage has no script to record')
+    if (recording) await stopRecording()
+    if (document.fonts) await document.fonts.ready
+    while (settling) await new Promise((resolve) => requestAnimationFrame(resolve))
+    const clock = new VirtualClock()
+    const ctrl = new AbortController()
+    await resetScene()
+    await flush()
+    const act = makeAct(clock, ctrl.signal)
+    const run = script(act).catch((error) => {
+      if (!(error instanceof Stopped)) console.error('[stageshow] recording script error', error)
+    })
+    recording = { clock, ctrl, run }
+    await flush()
+  }
+
+  export async function stepRecording(frames = 1): Promise<boolean> {
+    if (!recording) return false
+    for (let i = 0; i < frames; i++) {
+      recording.clock.advanceFrame()
+      await flush()
+    }
+    return true
+  }
+
+  export async function stopRecording(): Promise<void> {
+    const rec = recording
+    recording = null
+    if (!rec) return
+    rec.ctrl.abort()
+    await rec.run.catch(() => {})
+  }
+
+  $effect(() => {
+    if (typeof window === 'undefined') return
+    const api = {
+      start: startRecording,
+      step: stepRecording,
+      stop: stopRecording,
+      stage: () => stageEl,
+    }
+    ;(window as unknown as { __ssRecorder?: typeof api }).__ssRecorder = api
+    return () => {
+      const w = window as unknown as { __ssRecorder?: typeof api }
+      if (w.__ssRecorder === api) delete w.__ssRecorder
+    }
+  })
+
   export async function runFrames(count = 240): Promise<string[]> {
     if (!script) throw new Error('Stage has no script to step')
     if (document.fonts) await document.fonts.ready
@@ -407,14 +478,20 @@
     return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('')
   }
 
+  let didStillReset = false
   $effect(() => {
     if (!script || deterministic) return
     const root = stageEl
     if (!root) return
     if (still) {
+      // A resize/rect update must not re-enter resetScene: that would write
+      // state, remeasure and loop. One reset per entry into the still path.
+      if (didStillReset) return
+      didStillReset = true
       void resetScene()
       return
     }
+    didStillReset = false
     let ctrl: AbortController | null = null
     let done = false
     let hovering = false
@@ -556,6 +633,9 @@
       <div class="ss-ground" aria-hidden="true" style={groundStyle}></div>
     {/if}
     {#if children}{@render children(display, rectFor, layout)}{/if}
+    {#if script}
+      <Keycaps rows={[lastKeys, keys]} at={typeof keysAt === 'string' ? keysAt : keysAt[layout]} />
+    {/if}
     {#if showCursor && cursor}
       <Cursor x={cursorAt.x} y={cursorAt.y} kind={cursorKind} style={cursor.style} pressed={cursorPressed} touching={cursorTouching} />
     {/if}

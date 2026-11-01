@@ -6,6 +6,7 @@
 
 import { bezier } from './ease.js'
 import type { Clock } from './clock.js'
+import { capsOf, type Keys } from './keys.js'
 import type { Layout } from './look.js'
 import { EMPTY, layoutRectOf, nameOf, rectOf, thumb, type Point, type Rect, type Target } from './measure.js'
 import type { Act, CursorConfig, CursorKind } from './types.js'
@@ -31,6 +32,9 @@ export interface ActEnv<S> {
   setHover: (el: Element | null) => void
   setPressed: (v: boolean) => void
   setTouching: (v: boolean) => void
+  getKeys: () => Keys
+  setKeys: (k: Keys) => void
+  setLastKeys: (k: Keys | null) => void
   targetEl: (t: Target) => Element | null
   rect: (name: string, opts?: { layout?: boolean }) => Rect
   flashInstant: (on: boolean) => void
@@ -39,8 +43,9 @@ export interface ActEnv<S> {
 }
 
 export function createAct<S>(signal: AbortSignal, env: ActEnv<S>): Act<S> {
-  const { clock, speed, layout, cursor, stage, getPoint, getHovered, getKind, resolve, place, setScene, setKind, setHover, setPressed, setTouching, targetEl, rect, flashInstant, remeasure, flush } = env
+  const { clock, speed, layout, cursor, stage, getPoint, getHovered, getKind, resolve, place, setScene, setKind, setHover, setPressed, setTouching, getKeys, setKeys, setLastKeys, targetEl, rect, flashInstant, remeasure, flush } = env
   const entering = bezier('enter')
+  let keyId = 0
   const check = () => {
     if (signal.aborted) throw new Stopped()
   }
@@ -264,10 +269,30 @@ export function createAct<S>(signal: AbortSignal, env: ActEnv<S>): Act<S> {
     },
     async key(combo) {
       check()
-      // Keycaps are not ported yet; the key still resolves when a real app
-      // would react, so a script's timing is correct.
-      void combo
-      await wait(320)
+      const caps = capsOf(combo)
+      const id = ++keyId
+      const k = getKeys()
+      setLastKeys(k.caps.length ? { ...k, show: false, down: false } : null)
+      setKeys({ id, caps, show: false, down: false })
+      await frame()
+      await frame()
+      check()
+      setKeys({ id, caps, show: true, down: false })
+      await wait(180)
+      check()
+      setKeys({ id, caps, show: true, down: true })
+      await wait(140)
+      check()
+      setKeys({ id, caps, show: true, down: false })
+      // The caps linger and fade without holding up the script.
+      void wait(600).then(
+        () => {
+          if (keyId === id && !signal.aborted) setKeys({ id, caps, show: false, down: false })
+        },
+        (error) => {
+          if (!(error instanceof Stopped)) console.error('[stageshow] script error', error)
+        },
+      )
     },
     async stagger(items, fn, gap = 60) {
       await Promise.all(
