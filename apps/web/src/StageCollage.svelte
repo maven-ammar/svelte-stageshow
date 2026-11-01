@@ -24,19 +24,20 @@
 
 <style>
   .fit {
-    display: grid;
-    place-items: center;
+    --k: 0.7;
+    position: relative;
     width: 100%;
+    height: calc(560px * var(--k));
   }
 
   .collage {
-    --k: 0.66;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 50%;
     width: 720px;
     height: 560px;
-    flex: none;
-    transform: scale(var(--k));
-    transform-origin: center center;
+    transform: translateX(-50%) scale(var(--k));
+    transform-origin: top center;
   }
 
   .window,
@@ -95,20 +96,20 @@
   }
 
   @media (max-width: 1240px) {
-    .collage {
-      --k: 0.58;
+    .fit {
+      --k: 0.6;
     }
   }
 
   @media (max-width: 1080px) {
-    .collage {
-      --k: 0.62;
+    .fit {
+      --k: 0.66;
     }
   }
 
   @media (max-width: 760px) {
-    .collage {
-      --k: 0.4;
+    .fit {
+      --k: 0.44;
     }
   }
 </style>
