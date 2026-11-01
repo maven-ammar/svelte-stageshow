@@ -106,7 +106,8 @@
 {:else}
   <main class="gallery">
     <header class="gallery-head">
-      <p class="eyebrow">Svelte 5 Ãƒâ€šÃ‚Â· runes Ãƒâ€šÃ‚Â· MIT</p>
+      <a class="gallery-back" href="/">← back to the landing page</a>
+      <p class="eyebrow">Svelte 5 / runes / MIT</p>
       <h1>Stageshow</h1>
       <p class="lede">
         The whole Stageshow kit, ported from Benji Taylor's React source. {sceneNames.length} scenes. Pick one;
@@ -125,7 +126,7 @@
     <section class="scene-block">
       <div class="scene-head">
         <h2>{selectedSlug}</h2>
-        <p>Capture: <code>?capture={selectedSlug}</code> Ãƒâ€šÃ‚Â· design size as authored in the scene.</p>
+        <p>Capture: <code>?capture={selectedSlug}</code> / design size as authored in the scene.</p>
       </div>
       <div class="scene-stage">
         {#if current}
@@ -139,7 +140,7 @@
 
     <footer class="gallery-foot">
       <p>
-        Ported from the MIT-licensed Stageshow kit, Ãƒâ€šÃ‚Â© 2026 Benji Taylor. Every scene keeps the upstream
+        Ported from the MIT-licensed Stageshow kit, (c) 2026 Benji Taylor. Every scene keeps the upstream
         design size, copy, DOM order and Act script. See <code>REHEARSAL.md</code> and the diff table in
         <code>README.md</code>.
       </p>
