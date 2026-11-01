@@ -4,6 +4,7 @@
   import DeterminismTest from './scenes/DeterminismTest.svelte'
   import HeroDemo from './scenes/HeroDemo.svelte'
   import StaticCard from './scenes/StaticCard.svelte'
+  import Landing from './Landing.svelte'
 
   const params = new URLSearchParams(window.location.search)
   const capture = params.get('capture')
@@ -38,6 +39,9 @@
   const sceneNames = entries.map((entry) => entry.slug).sort((a, b) => a.localeCompare(b))
 
   const selectedSlug = params.get('scene') ?? 'static-card'
+  // A visitor at the bare URL gets the landing page; the gallery lives behind a scene
+  // link, so the capture route keeps working unchanged.
+  const landing = !capture && !test && !params.get('scene') && !width
   const loadSlug = capture ?? selectedSlug
   let current = $state<Component<Record<string, never>> | null>(null)
   let loadError = $state('')
@@ -66,11 +70,13 @@
 </script>
 
 <svelte:head>
-  <title>{capture ? `${capture} – svelte-stageshow` : 'svelte-stageshow – gallery'}</title>
+  <title>{capture ? `${capture} â€“ svelte-stageshow` : 'svelte-stageshow â€“ gallery'}</title>
   <link rel="icon" href="data:," />
 </svelte:head>
 
-{#if test === 'determinism'}
+{#if landing}
+  <Landing scenes={sceneNames} Hero={StaticCard} />
+{:else if test === 'determinism'}
   <main class="capture" style="width:720px">
     <DeterminismTest />
   </main>
@@ -100,7 +106,7 @@
 {:else}
   <main class="gallery">
     <header class="gallery-head">
-      <p class="eyebrow">Svelte 5 · runes · MIT</p>
+      <p class="eyebrow">Svelte 5 Â· runes Â· MIT</p>
       <h1>Stageshow</h1>
       <p class="lede">
         The whole Stageshow kit, ported from Benji Taylor's React source. {sceneNames.length} scenes. Pick one;
@@ -119,7 +125,7 @@
     <section class="scene-block">
       <div class="scene-head">
         <h2>{selectedSlug}</h2>
-        <p>Capture: <code>?capture={selectedSlug}</code> · design size as authored in the scene.</p>
+        <p>Capture: <code>?capture={selectedSlug}</code> Â· design size as authored in the scene.</p>
       </div>
       <div class="scene-stage">
         {#if current}
@@ -133,10 +139,11 @@
 
     <footer class="gallery-foot">
       <p>
-        Ported from the MIT-licensed Stageshow kit, © 2026 Benji Taylor. Every scene keeps the upstream
+        Ported from the MIT-licensed Stageshow kit, Â© 2026 Benji Taylor. Every scene keeps the upstream
         design size, copy, DOM order and Act script. See <code>REHEARSAL.md</code> and the diff table in
         <code>README.md</code>.
       </p>
     </footer>
   </main>
 {/if}
+
