@@ -86,6 +86,23 @@ kept unless a row above says otherwise.
   Expand, States, Stream. Each one solves a specific transition; reach for the named one rather
   than animating raw CSS.
 
+## Small formats: a second composition, not a squeeze
+
+At 358–390 the card is not the wide card scaled down. Redesign it: move the claim, change what
+is cropped, drop the satellite, let one element run off the edge.
+
+The one hard rule: **a crop has to still read as the thing it is.** A keyboard cropped to two
+rows of keys stops being a keyboard and becomes a pattern of rectangles; a window cropped to its
+title bar stops being a window. Cut where the form is still unmistakable — the top row plus one
+row, a window with its whole title bar and one line of content — and let the cut fall on
+something the eye completes.
+
+Worked example from a real attempt: at 390 the wide composition (claim, then a full keyboard)
+was cropped to the claim plus two keyboard rows. It scored well and read badly — the keys were
+no longer a keyboard. The fix is to lead with the object at that width: keep five keys and the
+space bar, crop the rest off the right edge, and let the claim sit under it. One object, still
+recognisable, one claim.
+
 ## Verification, and the trap
 
 Film the reference **in the same run** as your own capture. A reference filmed before a rebuild
