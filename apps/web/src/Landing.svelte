@@ -79,7 +79,6 @@
     </div>
 
     <table class="parity">
-      <caption>what came across</caption>
       <tbody>
         <tr><th scope="row">scenes</th><td>69 slugs, each one ported</td></tr>
         <tr><th scope="row">stylesheets</th><td>42, byte-identical to upstream</td></tr>
@@ -92,11 +91,13 @@
   <section class="showcase" id="scenes">
     <div class="head">
       <h2>Six of the seventy</h2>
-      <p>
-        Every scene is a working Svelte component — a frame, real chrome, and one moment worth
-        showing. The rest of them, and the design rules behind them, live on
-        <a href="https://benji.org/stageshow" target="_blank" rel="noreferrer">Benji Taylor's site</a>.
-      </p>
+      <div class="aside">
+        <p>
+          Every scene is a working Svelte component — a frame, real chrome, and one moment worth
+          showing.
+        </p>
+        <a class="all" href="?scene=static-card">All {scenes.length} scenes →</a>
+      </div>
     </div>
 
     <div class="carousel">
@@ -127,10 +128,10 @@
 
   <section class="snippet">
     <div class="head">
-      <h2>This is the whole API</h2>
+      <h2>Two components and a stylesheet.</h2>
       <p>
-        One component for the stage, one for the frame, and your product's own markup inside it. The
-        stylesheet carries the tokens.
+        <code>Stage</code> sets the design size, <code>Window</code> draws the browser chrome, and
+        your product's own markup goes inside it. The stylesheet carries the tokens.
       </p>
     </div>
     <pre><code>{code}</code></pre>
@@ -139,7 +140,6 @@
 </main>
 
   <section class="cta">
-    <p class="kicker">A port, not an original</p>
     <h2>Everything Stageshow does, in Svelte.</h2>
     <p class="lede">
       The design language, the kit and the scenes were made by
@@ -171,9 +171,12 @@
       </div>
       <p class="caveat">
         Not on npm yet. Until it is,
-        <a href="https://github.com/maven-ammar/svelte-stageshow" target="_blank" rel="noreferrer"
-          >install it from the repo</a
-        >.
+        <a
+          href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0"
+          target="_blank"
+          rel="noreferrer">the 0.2.0 tarball installs today</a
+        >
+        — 185 KB, no build step.
       </p>
     </div>
   </section>
@@ -200,7 +203,11 @@
       <div>
         <span class="mono">package</span>
         <a href="https://github.com/maven-ammar/svelte-stageshow" target="_blank" rel="noreferrer">GitHub</a>
-        <a href="https://www.npmjs.com/package/svelte-stageshow" target="_blank" rel="noreferrer">npm</a>
+        <a
+          href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0"
+          target="_blank"
+          rel="noreferrer">Release 0.2.0</a
+        >
       </div>
     </div>
     <div class="legal">
@@ -311,16 +318,6 @@
     font-size: 12.5px;
   }
 
-  .parity caption {
-    text-align: left;
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 9.5px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(244, 241, 230, 0.38);
-    padding-bottom: 10px;
-  }
-
   .parity th,
   .parity td {
     text-align: left;
@@ -348,6 +345,30 @@
     gap: 24px;
     align-items: baseline;
     margin-bottom: 20px;
+  }
+
+  .head .aside {
+    display: grid;
+    gap: 12px;
+    justify-items: start;
+  }
+
+  .head .aside p {
+    margin: 0;
+  }
+
+  .all {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    color: var(--orange);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232, 98, 42, 0.45);
+    padding-bottom: 2px;
+  }
+
+  .all:hover {
+    border-bottom-color: var(--orange);
   }
 
   h2 {
@@ -468,15 +489,6 @@
     gap: 14px;
     text-align: center;
     border-top: 1px solid var(--line);
-  }
-
-  .kicker {
-    margin: 0;
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 10.5px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(244, 241, 230, 0.45);
   }
 
   .cta h2 {

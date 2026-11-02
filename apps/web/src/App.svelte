@@ -107,8 +107,6 @@
   <main class="gallery">
     <header class="gallery-head">
       <a class="gallery-back" href="/">← back to the landing page</a>
-      <p class="eyebrow">Svelte 5 / runes / MIT</p>
-      <h1>Stageshow</h1>
       <p class="lede">
         The whole Stageshow kit, ported from Benji Taylor's React source. {sceneNames.length} scenes. Pick one;
         the stage is the shot.

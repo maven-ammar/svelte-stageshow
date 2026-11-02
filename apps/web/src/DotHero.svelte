@@ -13,7 +13,6 @@
 
   <div class="dot-hero__inner">
     <div class="dot-hero__copy">
-      <p class="dot-hero__eyebrow">A Svelte 5 port of Stageshow</p>
       <h1>Product shots that hold up as product.</h1>
       <p class="dot-hero__sub">
         Window frames with real chrome, a cursor that types and clicks under a script, sixty-nine
@@ -23,6 +22,12 @@
         <code>pnpm add svelte-stageshow</code>
         <a href="?scene=static-card">Open the gallery</a>
       </div>
+      <p class="dot-hero__pending">
+        Not on npm yet —
+        <a href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0"
+          >the 0.2.0 tarball installs today</a
+        >.
+      </p>
     </div>
 
     <div class="dot-hero__stage">

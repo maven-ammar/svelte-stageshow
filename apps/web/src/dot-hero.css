@@ -56,17 +56,8 @@
 
 .dot-hero__copy {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   align-content: center;
-}
-
-.dot-hero__eyebrow {
-  margin: 0;
-  font-family: var(--ss-mono, ui-monospace, monospace);
-  font-size: 10.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(244, 241, 230, 0.5);
 }
 
 .dot-hero h1 {
@@ -116,6 +107,25 @@
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 122, 74, 0.8);
   padding-bottom: 3px;
+}
+
+.dot-hero__pending {
+  margin: 0;
+  font-family: var(--ss-mono, ui-monospace, monospace);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  color: rgba(244, 241, 230, 0.4);
+}
+
+.dot-hero__pending a {
+  color: rgba(244, 241, 230, 0.72);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(244, 241, 230, 0.25);
+}
+
+.dot-hero__pending a:hover {
+  color: #f6f1e7;
+  border-bottom-color: rgba(232, 98, 42, 0.8);
 }
 
 .dot-hero__stage {
