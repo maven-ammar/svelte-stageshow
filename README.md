@@ -216,13 +216,6 @@ Consumer gate: packed **0.2.0** tarball **189,191 bytes**, installed into a
 throwaway SvelteKit app, production build wrote **19 files** and completed.
 The throwaway consumer preview was closed after the build.
 
-## Git
-
-Local commits only. No remote, no GitHub repository, no push.
-
-- `f782169` - full kit: motion, parts, controls, modules, looks, brands
-- `59db499` - all 69 scenes, capture gallery, smoke/recorder/marks, parity evidence
-
 ## Licence and source
 
 Ported from the public **`benjitaylor/skills`** Stageshow source, MIT,
