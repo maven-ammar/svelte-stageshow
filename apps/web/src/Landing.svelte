@@ -180,13 +180,8 @@
             </figcaption>
           </figure>
         {/each}
-        <figure class="more">
-          <a class="rail-more" href="/scenes/static-card">
-            <span>All {scenes.length} scenes</span>
-            <span class="rail-more__arrow" aria-hidden="true">→</span>
-          </a>
-        </figure>
       </div>
+      <a class="rail-more" href="/scenes/static-card">All {scenes.length} scenes →</a>
     </div>
   </section>
 
@@ -522,46 +517,21 @@
     display: block;
   }
 
-  /* The way out of the rail is a button, not another card. */
-  .carousel figure.more {
-    display: grid;
-    place-items: center;
-    padding-bottom: 24px;
-  }
-
+  /* The way out is a line of text in the rail's own caption language, not a
+     button: no new shape, no tint, nothing the page has not already used. */
   .rail-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 18px;
-    border-radius: 999px;
-    border: 1px solid rgba(232, 98, 42, 0.45);
-    background: rgba(232, 98, 42, 0.1);
-    color: #f0a382;
-    text-decoration: none;
-    white-space: nowrap;
+    display: inline-block;
+    margin-top: 2px;
     font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition:
-      background-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
-      border-color 220ms ease,
-      color 220ms ease;
+    font-size: 10.5px;
+    color: rgba(244, 241, 230, 0.8);
+    text-decoration: none;
   }
 
   .rail-more:hover {
-    background: rgba(232, 98, 42, 0.2);
-    border-color: rgba(232, 98, 42, 0.8);
-    color: #ffd9c6;
-  }
-
-  .rail-more__arrow {
-    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .rail-more:hover .rail-more__arrow {
-    transform: translateX(3px);
+    text-decoration: underline;
+    text-decoration-color: rgba(232, 98, 42, 0.7);
+    text-underline-offset: 3px;
   }
 
   .carousel figcaption {
