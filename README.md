@@ -26,6 +26,19 @@ Once it is on npm, that becomes:
 pnpm add svelte-stageshow
 ```
 
+## Use it as an agent skill
+
+Stageshow is, upstream, a skill an agent reads. This port keeps that: `stageshow/` is the
+skill, with the same rules and the same fifteen references, rewritten for Svelte. Install it
+into an agent the same way you would his:
+
+```sh
+npx skills add maven-ammar/svelte-stageshow --skill stageshow
+```
+
+The agent then reads `stageshow/SKILL.md`, builds the scene from the kit, and films it to check
+its own work.
+
 ```svelte
 <script lang="ts">
   import { Avatar, Row, Stage, Window } from 'svelte-stageshow'

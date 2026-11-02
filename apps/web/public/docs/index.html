@@ -254,6 +254,18 @@
       <pre><code>pnpm add https://github.com/maven-ammar/svelte-stageshow/releases/download/v0.2.0/svelte-stageshow-0.2.0.tgz</code></pre>
       <p>Once the registry publish lands, that becomes <code>pnpm add svelte-stageshow</code>.</p>
 
+      <h2>Install it as an agent skill</h2>
+      <p>
+        Upstream, Stageshow is a skill an agent reads rather than a library you call. This port
+        keeps that: <code>stageshow/</code> in the repository is the skill, with the same rules and
+        the same fifteen references, rewritten for Svelte.
+      </p>
+      <pre><code>npx skills add maven-ammar/svelte-stageshow --skill stageshow</code></pre>
+      <p>
+        The agent reads <code>stageshow/SKILL.md</code>, builds the scene from the kit, films it and
+        checks its own work against the frames.
+      </p>
+
       <h2>Quick start</h2>
       <p>
         Two components and a stylesheet. <code>Stage</code> sets the design size and scales to its
