@@ -2,8 +2,8 @@
 
 > A complete Svelte 5 port of Stageshow, Benji Taylor's MIT kit for framed faux
 > product UI: a believable interface, cropped with intent, as one still or a short
-> scripted demo. 69 scenes, 42 stylesheets carried over unchanged, 44 brand marks,
-> and no React at runtime.
+> scripted demo. 69 scenes, the kit's 42 stylesheets carried over unchanged, his 44 brand
+> marks, and no React at runtime.
 
 It is a port, not an original. The design language, kit and scenes are Benji
 Taylor's; the Svelte implementation is the port. Licence: MIT, notices kept.
