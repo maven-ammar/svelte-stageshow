@@ -55,7 +55,7 @@
       <div class="dot-hero__actions">
         <button class="dot-hero__command" type="button" onclick={copy} data-copied={copied}>
           <code>{command}</code>
-          <span>{copied ? 'copied' : 'copy'}</span>
+          <span>{copied ? 'Copied' : 'Copy'}</span>
         </button>
         <a href="/scenes/static-card">Open the gallery</a>
       </div>

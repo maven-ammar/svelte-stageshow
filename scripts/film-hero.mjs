@@ -44,6 +44,10 @@ const fps = Number(flag('fps', '25'))
 const quality = Number(flag('quality', '92'))
 const dpr = Number(flag('dpr', '1'))
 const scaleTo = flag('scale-to', '')
+// --fit keeps the scene's own aspect ratio inside a fixed frame instead of stretching it:
+// scenes are authored at 420x340, 640x400 or 720x440, so one viewport cannot frame them all.
+const fit = flag('fit', '')
+const fitColour = flag('fit-colour', '0x0a0a0b')
 const startDelay = Number(flag('start', '800'))
 
 const scratch = mkdtempSync(join(tmpdir(), 'film-hero-'))
@@ -131,9 +135,16 @@ const run = async () => {
       '-y', '-v', 'error',
       '-framerate', String(fps),
       '-i', join(slotDir, 's%05d.jpg'),
-      '-vf', scaleTo
-        ? `scale=${scaleTo.split('x')[0]}:${scaleTo.split('x')[1]}:flags=lanczos,pad=ceil(iw/2)*2:ceil(ih/2)*2`
-        : 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
+      '-vf',
+      fit
+        ? [
+            `scale=${fit.split('x')[0]}:${fit.split('x')[1]}:force_original_aspect_ratio=decrease:flags=lanczos`,
+            `pad=${fit.split('x')[0]}:${fit.split('x')[1]}:(ow-iw)/2:(oh-ih)/2:color=${fitColour}`,
+            'pad=ceil(iw/2)*2:ceil(ih/2)*2',
+          ].join(',')
+        : scaleTo
+          ? `scale=${scaleTo.split('x')[0]}:${scaleTo.split('x')[1]}:flags=lanczos,pad=ceil(iw/2)*2:ceil(ih/2)*2`
+          : 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
       '-c:v', 'libx264',
       '-preset', 'slow',
       '-crf', '20',
