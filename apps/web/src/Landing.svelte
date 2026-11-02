@@ -8,13 +8,6 @@
 
   let { scenes }: Props = $props()
 
-  const facts = [
-    ['69', 'scene slugs ported, every one', 'https://github.com/maven-ammar/svelte-stageshow/blob/main/shots/acceptance.md'],
-    ['42', 'stylesheets, byte-identical to upstream', 'https://github.com/maven-ammar/svelte-stageshow/blob/main/REHEARSAL.md'],
-    ['13', 'motion primitives', 'https://github.com/maven-ammar/svelte-stageshow#readme'],
-    ['0', 'React, react-dom or lucide in the bundle', 'https://github.com/maven-ammar/svelte-stageshow/blob/main/packages/svelte-stageshow/package.json']
-  ]
-
   // static-card is mounted live above the strip, so it must not appear again in it.
   const strip = [
     'hero-demo',
@@ -70,14 +63,30 @@
 
   <DotHero />
 
-  <section class="ledger">
-    {#each facts as [value, label, href] (label)}
-      <a href={href} target="_blank" rel="noreferrer">
-        <span class="n">{value}</span>
-        <span class="l">{label}</span>
-        <span class="proof">evidence →</span>
-      </a>
-    {/each}
+  <section class="port">
+    <div class="claim">
+      <h2>A complete port, not a subset.</h2>
+      <p>
+        Benji Taylor's whole kit, rebuilt in Svelte 5 — then every scene rendered and compared against
+        his own output, so the claim is checkable rather than promised.
+      </p>
+      <a
+        class="evidence"
+        href="https://github.com/maven-ammar/svelte-stageshow/blob/main/shots/acceptance.md"
+        target="_blank"
+        rel="noreferrer">71 comparisons, 71 matched — the acceptance table →</a
+      >
+    </div>
+
+    <table class="parity">
+      <caption>what came across</caption>
+      <tbody>
+        <tr><th scope="row">scenes</th><td>69 slugs, each one ported</td></tr>
+        <tr><th scope="row">stylesheets</th><td>42, byte-identical to upstream</td></tr>
+        <tr><th scope="row">brand marks</th><td>44 SVGs</td></tr>
+        <tr><th scope="row">runtime deps</th><td>none — no React, react-dom or lucide</td></tr>
+      </tbody>
+    </table>
   </section>
 
   <section class="showcase" id="scenes">
@@ -260,61 +269,77 @@
     text-decoration: none;
   }
 
-  .ledger {
+  .port {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(24px, 5vw, 72px);
     border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    padding-top: 26px;
+    align-items: start;
   }
 
-  .ledger a {
-    padding: 18px 22px 18px 0;
-    display: grid;
-    gap: 6px;
-    border-right: 1px solid var(--line);
+  .claim h2 {
+    margin: 0 0 12px;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(26px, 2.6vw, 38px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  .claim p {
+    margin: 0 0 14px;
+    max-width: 46ch;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--dim);
+  }
+
+  .evidence {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    color: var(--orange);
     text-decoration: none;
-    color: inherit;
+    border-bottom: 1px solid rgba(232, 98, 42, 0.45);
+    padding-bottom: 2px;
   }
 
-  /* Text sits clear of the rules instead of touching them: the first column is
-     flush with the page edge, every later column is inset from its rule. */
-  .ledger a + a {
-    padding-left: 22px;
+  .parity {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12.5px;
   }
 
-  .ledger a:last-child {
-    border-right: 0;
-  }
-
-  .proof {
+  .parity caption {
+    text-align: left;
     font-family: var(--ss-mono, ui-monospace, monospace);
     font-size: 9.5px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(232, 98, 42, 0.85);
-    opacity: 0;
-    transition: opacity 140ms ease;
+    color: rgba(244, 241, 230, 0.38);
+    padding-bottom: 10px;
   }
 
-  .ledger a:hover .proof,
-  .ledger a:focus-visible .proof {
-    opacity: 1;
+  .parity th,
+  .parity td {
+    text-align: left;
+    font-weight: 400;
+    padding: 9px 0;
+    border-top: 1px solid var(--line);
+    vertical-align: baseline;
   }
 
-  .n {
-    font-family: var(--serif);
-    font-size: 38px;
-    line-height: 1;
-    color: #f6f1e7;
+  .parity th {
+    width: 38%;
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 11px;
+    color: rgba(244, 241, 230, 0.45);
+    padding-right: 16px;
   }
 
-  .l {
-    font-size: 11.5px;
-    line-height: 1.4;
-    color: var(--dim);
-    /* Was 24ch — a 154px box inside a 331px cell, so every label wrapped at a
-       different point and one never wrapped at all. Let the cell width decide. */
-    max-width: 44ch;
+  .parity td {
+    color: rgba(244, 241, 230, 0.88);
   }
 
   .head {
@@ -640,22 +665,9 @@
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .ledger {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .ledger a:nth-child(2n) {
-      border-right: 0;
-      padding-left: 22px;
-    }
-
-    .ledger a:nth-child(odd) {
-      padding-left: 0;
-    }
-
-    /* Two rows need a rule between them, or the grid reads as four loose cells. */
-    .ledger a:nth-child(n + 3) {
-      border-top: 1px solid var(--line);
+    .port {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 22px;
     }
 
     .bar .sub {
