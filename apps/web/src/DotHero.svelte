@@ -47,10 +47,10 @@
 
   <div class="dot-hero__inner">
     <div class="dot-hero__copy">
-      <h1>Product shots that hold up as product.</h1>
+      <h1>svelte stageshow</h1>
       <p class="dot-hero__sub">
-        Window frames with real chrome, a cursor that types and clicks under a script, sixty-nine
-        worked scenes to start from.
+        Framed product-shot UI for Svelte 5: real window chrome, a cursor that types and clicks
+        under a script, and sixty-nine worked scenes to start from.
       </p>
       <div class="dot-hero__actions">
         <button class="dot-hero__command" type="button" onclick={copy} data-copied={copied}>
