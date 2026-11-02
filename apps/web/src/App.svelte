@@ -29,12 +29,13 @@
   // wins and every scene page advertises the landing page.
   $effect(() => {
     if (capture || test) return
+    // Whatever host actually served the page is the canonical one, so the site is
+    // correct on vercel.app and on the custom domain without a rebuild.
+    const origin = window.location.origin
     const description = landing
       ? "A complete Svelte 5 port of Benji Taylor's Stageshow kit: 69 framed product-shot scenes, real browser chrome, scripted cursors, and no React at runtime."
       : `The ${selectedSlug} scene from Benji Taylor's Stageshow kit, ported to Svelte 5. Working component, authored design size, compared against his own render.`
-    const canonical = landing
-      ? 'https://svelte-stageshow.vercel.app/'
-      : `https://svelte-stageshow.vercel.app/scenes/${selectedSlug}`
+    const canonical = landing ? `${origin}/` : `${origin}/scenes/${selectedSlug}`
 
     let meta = document.head.querySelector<HTMLMetaElement>('meta[name="description"]')
     if (!meta) {

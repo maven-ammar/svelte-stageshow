@@ -17,6 +17,24 @@
     'messages'
   ].filter((name) => scenes.includes(name))
 
+  // The rail fades at its right edge while there is more to scroll, so the cut
+  // card reads as "keep going" rather than as a mistake.
+  let railEl = $state<HTMLDivElement | null>(null)
+  let atEnd = $state(false)
+
+  function syncRail() {
+    const el = railEl
+    if (!el) return
+    atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 8
+  }
+
+  $effect(() => {
+    syncRail()
+    const onResize = () => syncRail()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  })
+
   const managers = [
     { id: 'pnpm', cmd: 'pnpm add svelte-stageshow' },
     { id: 'npm', cmd: 'npm install svelte-stageshow' },
@@ -137,35 +155,38 @@
       </div>
     </div>
 
-    <div class="carousel">
-      <figure class="live">
-        <a class="card" href="/scenes/static-card">
-          <span class="stage-slot" aria-hidden="true">
-            <StaticCard />
-          </span>
-          <span class="sr-only">static-card, live — open the scene</span>
-        </a>
-        <figcaption>
-          <span>static-card · live</span>
-          <a href="/scenes/static-card">open</a>
-        </figcaption>
-      </figure>
-      {#each strip as name (name)}
-        <figure>
-          <a class="card" href={`/scenes/${name}`}>
-            <img src={`/scenes/${name}.webp`} alt={`The ${name} scene`} loading="lazy" />
+    <div class="rail" data-more={!atEnd}>
+      <div class="carousel" bind:this={railEl} onscroll={syncRail}>
+        <figure class="live">
+          <a class="card" href="/scenes/static-card">
+            <span class="stage-slot" aria-hidden="true">
+              <StaticCard />
+            </span>
+            <span class="sr-only">static-card, live — open the scene</span>
           </a>
           <figcaption>
-            <span>{name}</span>
-            <a href={`/scenes/${name}`}>open</a>
+            <span>static-card · live</span>
+            <a href="/scenes/static-card">open</a>
           </figcaption>
         </figure>
-      {/each}
-      <figure class="more">
-        <a class="card more-card" href="/scenes/static-card">
-          <span>Explore all {scenes.length} scenes →</span>
-        </a>
-      </figure>
+        {#each strip as name (name)}
+          <figure>
+            <a class="card" href={`/scenes/${name}`}>
+              <img src={`/scenes/${name}.webp`} alt={`The ${name} scene`} loading="lazy" />
+            </a>
+            <figcaption>
+              <span>{name}</span>
+              <a href={`/scenes/${name}`}>open</a>
+            </figcaption>
+          </figure>
+        {/each}
+        <figure class="more">
+          <a class="rail-more" href="/scenes/static-card">
+            <span>All {scenes.length} scenes</span>
+            <span class="rail-more__arrow" aria-hidden="true">→</span>
+          </a>
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -430,6 +451,28 @@
     max-width: 52ch;
   }
 
+  .rail {
+    position: relative;
+  }
+
+  /* The fade says "there is more"; it disappears at the end of the rail. */
+  .rail::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 12px;
+    width: 96px;
+    background: linear-gradient(to right, rgba(11, 9, 8, 0) 0%, #0b0908 78%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  .rail[data-more='true']::after {
+    opacity: 1;
+  }
+
   .carousel {
     display: grid;
     grid-auto-flow: column;
@@ -479,29 +522,46 @@
     display: block;
   }
 
-  /* Last card of the strip: the way out to all of them. */
-  .more-card {
+  /* The way out of the rail is a button, not another card. */
+  .carousel figure.more {
     display: grid;
     place-items: center;
-    text-align: center;
-    padding: 18px;
-    background: rgba(232, 98, 42, 0.06);
-    border-color: rgba(232, 98, 42, 0.32);
+    padding-bottom: 24px;
+  }
+
+  .rail-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(232, 98, 42, 0.45);
+    background: rgba(232, 98, 42, 0.1);
+    color: #f0a382;
     text-decoration: none;
-  }
-
-  .more-card span {
+    white-space: nowrap;
     font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11.5px;
-    line-height: 1.5;
-    letter-spacing: 0.04em;
-    color: var(--orange);
-    max-width: 18ch;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition:
+      background-color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 220ms ease,
+      color 220ms ease;
   }
 
-  .more-card:hover {
-    background: rgba(232, 98, 42, 0.12);
-    border-color: rgba(232, 98, 42, 0.6);
+  .rail-more:hover {
+    background: rgba(232, 98, 42, 0.2);
+    border-color: rgba(232, 98, 42, 0.8);
+    color: #ffd9c6;
+  }
+
+  .rail-more__arrow {
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .rail-more:hover .rail-more__arrow {
+    transform: translateX(3px);
   }
 
   .carousel figcaption {

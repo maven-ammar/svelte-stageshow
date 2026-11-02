@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5173",
-    "build": "vite build && node scripts/prerender-scenes.mjs",
+    "build": "vite build && node scripts/prerender-scenes.mjs && node scripts/rewrite-origin.mjs",
     "preview": "vite preview --host 127.0.0.1 --port 4173",
     "check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings"
   },

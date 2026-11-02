@@ -4,10 +4,12 @@
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
+import { SITE_ORIGIN } from './site-origin.mjs'
+
 const root = process.cwd()
 const dist = join(root, 'dist')
 const scenesDir = join(root, 'src', 'scenes')
-const BASE = 'https://svelte-stageshow.vercel.app'
+const BASE = SITE_ORIGIN
 const SKIP = /Determinism|HeroIcon|HeroToolbar|zz-/
 
 const slugify = (name) => name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
