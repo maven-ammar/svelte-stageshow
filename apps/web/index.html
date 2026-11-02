@@ -11,6 +11,7 @@
       name="description"
       content="A complete Svelte 5 port of Benji Taylor's Stageshow kit: 69 framed product-shot scenes, real browser chrome, scripted cursors, and no React at runtime."
     />
+    <link rel="canonical" href="https://svelte-stageshow.vercel.app/" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0b0908" />
     <meta property="og:type" content="website" />
@@ -20,15 +21,68 @@
       property="og:description"
       content="Every scene, stylesheet and brand mark from Benji Taylor's kit, rebuilt in Svelte 5 and checked against his own renders."
     />
+    <meta property="og:url" content="https://svelte-stageshow.vercel.app/" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="svelte-stageshow: a Svelte 5 port of Stageshow" />
     <meta
       name="twitter:description"
       content="A complete Svelte 5 port of Benji Taylor's Stageshow kit. 71 comparisons against his renders, 71 matched."
     />
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareSourceCode",
+          "name": "svelte-stageshow",
+          "version": "0.2.0",
+          "description": "A complete Svelte 5 port of Benji Taylor's Stageshow kit for framed faux product UI: 69 scenes, real browser chrome, scripted cursors, and no React at runtime.",
+          "codeRepository": "https://github.com/maven-ammar/svelte-stageshow",
+          "programmingLanguage": { "@type": "ComputerLanguage", "name": "Svelte" },
+          "runtimePlatform": "Svelte 5",
+          "license": "https://opensource.org/licenses/MIT",
+          "isBasedOn": "https://benji.org/stageshow",
+          "author": {
+            "@type": "Person",
+            "name": "Benji Taylor",
+            "url": "https://benji.org/stageshow"
+          },
+          "dateModified": "2026-11-02"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "svelte-stageshow",
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Any",
+          "url": "https://svelte-stageshow.vercel.app/",
+          "license": "https://opensource.org/licenses/MIT",
+          "isAccessibleForFree": true,
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      ]
+    </script>
   </head>
   <body>
     <div id="app"></div>
+    <noscript>
+      <h1>svelte-stageshow: a Svelte 5 port of Stageshow</h1>
+      <p>
+        Stageshow is Benji Taylor's MIT kit for framed faux product UI: a believable interface,
+        cropped with intent, as one still or a short scripted demo. This is the whole kit ported
+        to Svelte 5 — 69 scenes, 42 stylesheets byte-identical to upstream, 44 brand SVGs, and no
+        React at runtime. Every scene was rendered and compared against his own output: 71
+        comparisons, 71 matched.
+      </p>
+      <p>
+        The interactive gallery needs JavaScript.
+        <a href="https://github.com/maven-ammar/svelte-stageshow">Source and docs on GitHub</a>;
+        until the npm publish lands, the 0.2.0 tarball installs today:
+        <a
+          href="https://github.com/maven-ammar/svelte-stageshow/releases/download/v0.2.0/svelte-stageshow-0.2.0.tgz"
+          >svelte-stageshow-0.2.0.tgz</a
+        >.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

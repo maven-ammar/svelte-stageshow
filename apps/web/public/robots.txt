@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Capture and determinism routes are for screenshots, not readers.
+Disallow: /?capture=
+Disallow: /?test=
+
+Sitemap: https://svelte-stageshow.vercel.app/sitemap.xml
