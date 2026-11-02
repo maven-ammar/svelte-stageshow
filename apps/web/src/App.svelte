@@ -119,7 +119,7 @@
         ? 'svelte-stageshow: a Svelte 5 port of Stageshow'
         : `${selectedSlug} - a Stageshow scene in Svelte 5`}</title
   >
-  <link rel="icon" href="data:," />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 </svelte:head>
 
 {#if landing}
@@ -154,7 +154,7 @@
 {:else}
   <main class="gallery">
     <header class="gallery-head">
-      <a class="gallery-back" href="/">← back to the landing page</a>
+      <a class="gallery-back" href="/">← back to home</a>
       <h1>{selectedSlug}</h1>
       <p class="lede">
         One of {sceneNames.length} scenes in the whole Stageshow kit, ported from Benji Taylor's React

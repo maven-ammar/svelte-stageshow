@@ -7,6 +7,41 @@
   box-sizing: border-box;
 }
 
+/* Cross-document view transitions: moving between the landing page, the scene
+   pages and the docs fades instead of snapping. Browsers without support just
+   navigate normally, and reduced motion turns it off entirely. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: page-out 160ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: page-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
 :root {
   color-scheme: light;
   font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
