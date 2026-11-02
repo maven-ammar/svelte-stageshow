@@ -3,7 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>svelte-stageshow - gallery</title>
+    <!-- These are the values link-preview bots and crawlers read. The app rewrites
+         the title per route at runtime, but a client-rendered page has to ship a
+         correct default or X, Slack and search see whatever is in this file. -->
+    <title>svelte-stageshow: a Svelte 5 port of Stageshow</title>
+    <meta
+      name="description"
+      content="A complete Svelte 5 port of Benji Taylor's Stageshow kit: 69 framed product-shot scenes, real browser chrome, scripted cursors, and no React at runtime."
+    />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0908" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="svelte-stageshow" />
+    <meta property="og:title" content="svelte-stageshow: a Svelte 5 port of Stageshow" />
+    <meta
+      property="og:description"
+      content="Every scene, stylesheet and brand mark from Benji Taylor's kit, rebuilt in Svelte 5 and checked against his own renders."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="svelte-stageshow: a Svelte 5 port of Stageshow" />
+    <meta
+      name="twitter:description"
+      content="A complete Svelte 5 port of Benji Taylor's Stageshow kit. 71 comparisons against his renders, 71 matched."
+    />
   </head>
   <body>
     <div id="app"></div>
