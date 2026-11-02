@@ -196,7 +196,14 @@
 
 {#if Inspector}
   {@const InspectorComponent = Inspector}
-  <InspectorComponent />
+  <InspectorComponent
+    copyToClipboard={false}
+    onCopy={(markdown: string) => {
+      // The clipboard is unavailable over plain HTTP, so hand the notes to the dev
+      // server, which writes them where the agent can pick them up.
+      fetch('/__notes', { method: 'POST', body: markdown }).catch(() => {})
+    }}
+  />
 {/if}
 
 

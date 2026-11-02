@@ -42,14 +42,36 @@
   let timer: ReturnType<typeof setTimeout> | undefined
 
   async function copy() {
+    // navigator.clipboard only exists in a secure context. The dev server is served
+    // over plain HTTP on a tailnet IP, where it is undefined, so fall back to the
+    // old selection-based copy instead of failing silently.
+    let ok = false
     try {
-      await navigator.clipboard.writeText(command)
-      copied = true
-      clearTimeout(timer)
-      timer = setTimeout(() => (copied = false), 1800)
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(command)
+        ok = true
+      }
     } catch {
-      copied = false
+      ok = false
     }
+    if (!ok) {
+      try {
+        const area = document.createElement('textarea')
+        area.value = command
+        area.setAttribute('readonly', '')
+        area.style.position = 'fixed'
+        area.style.opacity = '0'
+        document.body.appendChild(area)
+        area.select()
+        ok = document.execCommand('copy')
+        document.body.removeChild(area)
+      } catch {
+        ok = false
+      }
+    }
+    copied = ok
+    clearTimeout(timer)
+    timer = setTimeout(() => (copied = false), 1800)
   }
 </script>
 

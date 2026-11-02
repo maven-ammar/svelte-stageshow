@@ -12,3 +12,4 @@ shots/video/
 shots/debug*
 .vercel
 shots/*.png
+apps/web/.feedback/
