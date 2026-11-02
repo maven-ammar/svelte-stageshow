@@ -17,7 +17,7 @@
       <h1>Product shots that hold up as product.</h1>
       <p class="dot-hero__sub">
         Window frames with real chrome, a cursor that types and clicks under a script, sixty-nine
-        worked scenes to start from. The design rules travel with it.
+        worked scenes to start from.
       </p>
       <div class="dot-hero__actions">
         <code>pnpm add svelte-stageshow</code>

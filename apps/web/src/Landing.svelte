@@ -9,10 +9,10 @@
   let { scenes }: Props = $props()
 
   const facts = [
-    ['69', 'scene slugs ported, every one'],
-    ['42', 'stylesheets, byte-identical to upstream'],
-    ['13', 'motion primitives'],
-    ['0', 'React, react-dom or lucide in the bundle']
+    ['69', 'scene slugs ported, every one', 'https://github.com/maven-ammar/svelte-stageshow/blob/main/shots/acceptance.md'],
+    ['42', 'stylesheets, byte-identical to upstream', 'https://github.com/maven-ammar/svelte-stageshow/blob/main/REHEARSAL.md'],
+    ['13', 'motion primitives', 'https://github.com/maven-ammar/svelte-stageshow#readme'],
+    ['0', 'React, react-dom or lucide in the bundle', 'https://github.com/maven-ammar/svelte-stageshow/blob/main/packages/svelte-stageshow/package.json']
   ]
 
   const strip = [
@@ -33,6 +33,17 @@
 
   let manager = $state('pnpm')
   const command = $derived(managers.find((entry) => entry.id === manager)?.cmd ?? managers[0].cmd)
+
+  const code = `<script lang="ts">
+  import { Stage, Window } from 'svelte-stageshow'
+  import 'svelte-stageshow/style.css'
+<\\/script>
+
+<Stage width={720} height={340}>
+  <Window url="acme - invoices">
+    <!-- your product, built from the kit's parts -->
+  </Window>
+</Stage>`
 
   let copied = $state(false)
   let timer: ReturnType<typeof setTimeout> | undefined
@@ -60,11 +71,12 @@
   <DotHero />
 
   <section class="ledger">
-    {#each facts as [value, label] (label)}
-      <div>
+    {#each facts as [value, label, href] (label)}
+      <a href={href} target="_blank" rel="noreferrer">
         <span class="n">{value}</span>
         <span class="l">{label}</span>
-      </div>
+        <span class="proof">evidence →</span>
+      </a>
     {/each}
   </section>
 
@@ -104,6 +116,17 @@
     </div>
   </section>
 
+  <section class="snippet">
+    <div class="head">
+      <h2>This is the whole API</h2>
+      <p>
+        One component for the stage, one for the frame, and your product's own markup inside it. The
+        stylesheet carries the tokens.
+      </p>
+    </div>
+    <pre><code>{code}</code></pre>
+  </section>
+
 </main>
 
   <section class="cta">
@@ -137,6 +160,12 @@
         </button>
         <a class="secondary" href="?scene=static-card">See the demos</a>
       </div>
+      <p class="caveat">
+        Not on npm yet. Until it is,
+        <a href="https://github.com/maven-ammar/svelte-stageshow" target="_blank" rel="noreferrer"
+          >install it from the repo</a
+        >.
+      </p>
     </div>
   </section>
 
@@ -233,15 +262,32 @@
     border-bottom: 1px solid var(--line);
   }
 
-  .ledger div {
+  .ledger a {
     padding: 16px 18px 16px 0;
     display: grid;
     gap: 6px;
     border-right: 1px solid var(--line);
+    text-decoration: none;
+    color: inherit;
   }
 
-  .ledger div:last-child {
+  .ledger a:last-child {
     border-right: 0;
+  }
+
+  .proof {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(232, 98, 42, 0.85);
+    opacity: 0;
+    transition: opacity 140ms ease;
+  }
+
+  .ledger a:hover .proof,
+  .ledger a:focus-visible .proof {
+    opacity: 1;
   }
 
   .n {
@@ -351,6 +397,30 @@
     text-decoration: none;
   }
 
+  .snippet {
+    border-top: 1px solid var(--line);
+    padding-top: 26px;
+    display: grid;
+    gap: 16px;
+  }
+
+  .snippet pre {
+    margin: 0;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: rgba(244, 241, 230, 0.03);
+    overflow-x: auto;
+  }
+
+  .snippet code {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 12px;
+    line-height: 1.7;
+    color: rgba(244, 241, 230, 0.86);
+    white-space: pre;
+  }
+
   .cta {
     background: #0b0908;
     color: var(--paper);
@@ -448,6 +518,9 @@
   .primary code {
     font-family: var(--ss-mono, ui-monospace, monospace);
     font-size: 12px;
+    color: #16130f;
+    background: none;
+    padding: 0;
   }
 
   .primary span {
@@ -467,6 +540,17 @@
     color: #f6f1e7;
     border-color: rgba(244, 241, 230, 0.28);
     text-decoration: none;
+  }
+
+  .caveat {
+    margin: 2px 0 0;
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 10.5px;
+    color: rgba(244, 241, 230, 0.45);
+  }
+
+  .caveat a {
+    color: rgba(244, 241, 230, 0.8);
   }
 
   .site-footer {
@@ -547,7 +631,7 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .ledger div:nth-child(2n) {
+    .ledger a:nth-child(2n) {
       border-right: 0;
     }
 
