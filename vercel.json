@@ -5,16 +5,301 @@
   "outputDirectory": "apps/web/dist",
   "framework": "vite",
   "rewrites": [
-    { "source": "/scenes/(.*)", "destination": "/index.html" }
+    {
+      "source": "/scenes/ai-cards",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/ai-chat",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/annotations",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/backgrounds",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/bento",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/brand-marks",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/calendar",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/chart-scrub",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/choreography",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/chrome",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/close-up",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/controls",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/corner-chip",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/cursor-morph",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/cursor-resize",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/cursors",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/dark-bento",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/dark-hero",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/device-pair",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/dynamic-island",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/excel",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/fade-crop",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/figma",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/finder",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/finder-glass",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/form-error",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/freeform-drag",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/glass",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/gmail",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/google-calendar",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/google-docs",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/hero-demo",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/hero-grid",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/imessage",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/kit-extras",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/linear",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/loading",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/looks",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/many-of-one",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/messages",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/monochrome",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/notion",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/opposite-corners",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/overlap",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/panel-annotation",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/parts",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/payout-flow",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/phone-touch",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/phones",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/powerpoint",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/presence",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/raycast",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/reorder",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/ruled-bento",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/share",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/slack",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/spotify",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/stacked-cards",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/staggered-bento",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/static-card",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/story",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/subscriptions",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/swipe",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/table-edit",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/telegram",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/tilted-stack",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/upload",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/wikipedia",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scenes/window-row",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
-      "headers": [{ "key": "X-Content-Type-Options", "value": "nosniff" }]
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
     },
     {
       "source": "/assets/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ]
 }

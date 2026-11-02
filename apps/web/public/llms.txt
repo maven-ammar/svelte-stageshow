@@ -17,12 +17,12 @@ Taylor's; the Svelte implementation is the port. Licence: MIT, notices kept.
 ## Components
 
 Stage sets the design size and scales to its container. Window draws the chrome.
-Also exported: Bar, Text, Phone, Row, Avatar, Chip, Cursor, StillProvider,
-Connectors and motion parts (Count, Roll, Swap, Collapse, Fly, Follow, States,
-Stream, Popover, Camera, Scroll, Expand), parts (BrandMark, Check, Facepile,
-Icon, Menu, Meter, Pin, Spinner, Toast, Tooltip), controls (Badge, Field,
-Segmented, Slot, Tabs, Toggle), and modules (Code, Chart, Keyboard, Thread,
-Bubble, Stamp, Receipt, Prompt, Caret, LockScreen, Notification).
+Also exported: Bar, Text, Phone, Row, Avatar, Chip, Cursor, StillProvider, and
+motion parts (Count, Roll, Swap, Collapse, Fly, Follow, States, Stream, Popover,
+Camera, Scroll, Expand), parts (BrandMark, Check, Facepile, Icon, Menu, Meter,
+Pin, Spinner, Toast, Tooltip), controls (Badge, Field, Segmented, Slot, Tabs,
+Toggle), and modules (Code, Chart, Keyboard, Thread, Bubble, Stamp, Receipt,
+Prompt, Caret, LockScreen, Notification).
 
 ## Scenes
 

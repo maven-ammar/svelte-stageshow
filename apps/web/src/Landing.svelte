@@ -103,10 +103,11 @@
 
     <div class="carousel">
       <figure class="live">
-        <a class="card" href="/scenes/static-card" aria-label="Open the static-card scene">
-          <span class="stage-slot">
+        <a class="card" href="/scenes/static-card">
+          <span class="stage-slot" aria-hidden="true">
             <StaticCard />
           </span>
+          <span class="sr-only">static-card, live — open the scene</span>
         </a>
         <figcaption>
           <span>static-card · live</span>
@@ -116,7 +117,7 @@
       {#each strip as name (name)}
         <figure>
           <a class="card" href={`/scenes/${name}`}>
-            <img src={`/scenes/${name}.png`} alt={`The ${name} scene`} loading="lazy" />
+            <img src={`/scenes/${name}.webp`} alt={`The ${name} scene`} loading="lazy" />
           </a>
           <figcaption>
             <span>{name}</span>
@@ -344,8 +345,21 @@
     width: 38%;
     font-family: var(--ss-mono, ui-monospace, monospace);
     font-size: 11px;
-    color: rgba(244, 241, 230, 0.45);
+    /* Was 0.45 alpha — 4.08:1, just under the 4.5 floor for 11px text. */
+    color: rgba(244, 241, 230, 0.62);
     padding-right: 16px;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   .parity td {
