@@ -39,5 +39,6 @@ table is in the repository.
 ## Source
 
 - Repository: https://github.com/maven-ammar/svelte-stageshow
-- Release tarball: https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0
+- npm: https://www.npmjs.com/package/svelte-stageshow (pnpm add svelte-stageshow)
+- Agent skill: npx skills add maven-ammar/svelte-stageshow --skill stageshow
 - Upstream: https://benji.org/stageshow
