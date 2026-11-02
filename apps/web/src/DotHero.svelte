@@ -60,10 +60,8 @@
         <a href="/scenes/static-card">Open the gallery</a>
       </div>
       <p class="dot-hero__pending">
-        Not on npm yet —
-        <a href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0"
-          >download from source</a
-        >.
+        Or install it as an agent skill —
+        <a href="/docs/">npx skills add</a>.
       </p>
     </div>
 

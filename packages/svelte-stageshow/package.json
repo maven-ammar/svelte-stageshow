@@ -1,8 +1,35 @@
 {
   "name": "svelte-stageshow",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Svelte 5 port of the Stageshow kit: framed faux product UI for stills and scripted demos.",
+  "keywords": [
+    "svelte",
+    "svelte5",
+    "svelte-kit",
+    "stageshow",
+    "faux-ui",
+    "mockup",
+    "product-shot",
+    "screenshot",
+    "demo",
+    "animation",
+    "cursor",
+    "landing-page",
+    "design-system",
+    "components"
+  ],
   "license": "MIT",
+  "author": "Ammar (maven-ammar)",
+  "contributors": ["Benji Taylor (original Stageshow, MIT)"],
+  "homepage": "https://svelte-stageshow.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maven-ammar/svelte-stageshow.git",
+    "directory": "packages/svelte-stageshow"
+  },
+  "bugs": {
+    "url": "https://github.com/maven-ammar/svelte-stageshow/issues"
+  },
   "type": "module",
   "svelte": "./dist/index.js",
   "types": "./dist/index.d.ts",

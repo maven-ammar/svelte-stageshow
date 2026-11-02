@@ -30,6 +30,14 @@ The full README in the repository has the prop mapping (72 React prop names,
 0 missing), the diff table, the deterministic `runFrames()` contract and the
 verification record (`REHEARSAL.md`).
 
-- Intended repository: `maven-ammar/svelte-stageshow` (private, not pushed yet)
-- Licence: MIT, © 2026 Benji Taylor; Svelte port by Ammar (maven-ammar), 2026
-- Peer: `svelte` ^5. No React, react-dom or icon dependency.
+## Links
+
+- [Repository](https://github.com/maven-ammar/svelte-stageshow)
+- [Docs and the 69 scenes](https://svelte-stageshow.vercel.app/docs/)
+- [Upstream, by Benji Taylor](https://benji.org/stageshow)
+
+## Licence
+
+MIT. Stageshow is Benji Taylor's; this port keeps his licence and notices. Peer
+dependency is `svelte` ^5 — no React, react-dom or icon library at runtime.
+

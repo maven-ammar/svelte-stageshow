@@ -237,12 +237,8 @@
         <a class="secondary" href="/scenes/static-card">See the demos</a>
       </div>
       <p class="caveat">
-        Not on npm yet —
-        <a
-          href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0"
-          target="_blank"
-          rel="noreferrer">download from source</a
-        >.
+        Or install the skill instead of the package —
+        <a href="/docs/">npx skills add maven-ammar/svelte-stageshow --skill stageshow</a>.
       </p>
     </div>
   </section>
@@ -276,11 +272,7 @@
         <div>
           <span class="mono">package</span>
           <a href="https://github.com/maven-ammar/svelte-stageshow" target="_blank" rel="noreferrer">GitHub</a>
-          <a
-            href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0"
-            target="_blank"
-            rel="noreferrer">Release 0.2.0</a
-          >
+          <a href="https://www.npmjs.com/package/svelte-stageshow" target="_blank" rel="noreferrer">npm</a>
         </div>
       </div>
     </div>
