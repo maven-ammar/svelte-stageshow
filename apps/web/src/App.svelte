@@ -199,8 +199,10 @@
   <InspectorComponent
     copyToClipboard={false}
     onCopy={(markdown: string) => {
-      // The clipboard is unavailable over plain HTTP, so hand the notes to the dev
-      // server, which writes them where the agent can pick them up.
+      // Log first: with the clipboard unavailable over plain HTTP, devtools is the
+      // one place the notes can be copied by hand.
+      console.log('[stageshow feedback]\n' + markdown)
+      // Then hand them to the dev server, which writes them where the agent can read.
       fetch('/__notes', { method: 'POST', body: markdown }).catch(() => {})
     }}
   />

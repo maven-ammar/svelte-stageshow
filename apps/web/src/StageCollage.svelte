@@ -124,7 +124,11 @@
 
   @media (max-width: 560px) {
     .fit {
-      --k: 0.41;
+      --k: 0.36;
+      /* Crop a little off the bottom on a phone: the composition reads better
+         sitting closer to the copy. */
+      overflow: hidden;
+      height: calc(452px * var(--k) - 22px);
     }
   }
 </style>

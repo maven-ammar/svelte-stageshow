@@ -24,8 +24,32 @@
     { id: 'bun', cmd: 'bun add svelte-stageshow' }
   ]
 
-  let manager = $state('pnpm')
+  let manager = $state('npm')
   const command = $derived(managers.find((entry) => entry.id === manager)?.cmd ?? managers[0].cmd)
+
+  // The active pill slides between tabs instead of the highlight jumping.
+  let tabsEl = $state<HTMLDivElement | null>(null)
+  const tabButtons: Record<string, HTMLButtonElement | undefined> = {}
+  let pillX = $state(0)
+  let pillW = $state(0)
+
+  function syncPill() {
+    const el = tabButtons[manager]
+    if (!el) return
+    pillX = el.offsetLeft
+    pillW = el.offsetWidth
+  }
+
+  $effect(() => {
+    manager
+    syncPill()
+  })
+
+  $effect(() => {
+    const onResize = () => syncPill()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  })
 
   const code = `<script lang="ts">
   import { Stage, Window } from 'svelte-stageshow'
@@ -77,7 +101,7 @@
 
 <main class="page">
   <header class="bar">
-    <a class="mark" href="/">Stageshow</a>
+    <a class="mark" href="/">svelte stageshow</a>
     <span class="rule"></span>
     <span class="sub">A Svelte 5 port of Benji Taylor's Stageshow</span>
     <a class="src" href="/docs/">docs</a>
@@ -88,10 +112,10 @@
 
   <section class="port">
     <div class="claim">
-      <h2>A complete port, not a subset.</h2>
+      <h2>A complete port.</h2>
       <p>
-        Benji Taylor's whole kit, rebuilt in Svelte 5 — then every scene rendered and compared against
-        his own output, so the claim is checkable rather than promised.
+        Benji Taylor's whole kit, rebuilt in Svelte 5 — every scene rendered and compared against his
+        own output, with no React, react-dom or lucide at runtime.
       </p>
       <a
         class="evidence"
@@ -100,26 +124,16 @@
         rel="noreferrer">71 comparisons, 71 matched — the acceptance table →</a
       >
     </div>
-
-    <table class="parity">
-      <tbody>
-        <tr><th scope="row">scenes</th><td>69 slugs, each one ported</td></tr>
-        <tr><th scope="row">stylesheets</th><td>42, unchanged from his</td></tr>
-        <tr><th scope="row">brand marks</th><td>44 SVGs</td></tr>
-        <tr><th scope="row">runtime deps</th><td>none — no React, react-dom or lucide</td></tr>
-      </tbody>
-    </table>
   </section>
 
   <section class="showcase" id="scenes">
     <div class="head">
-      <h2>Six of the seventy</h2>
+      <h2>Explore demos</h2>
       <div class="aside">
         <p>
           Every scene is a working Svelte component — a frame, real chrome, and one moment worth
           showing.
         </p>
-        <a class="all" href="/scenes/static-card">All {scenes.length} scenes →</a>
       </div>
     </div>
 
@@ -147,16 +161,23 @@
           </figcaption>
         </figure>
       {/each}
+      <figure class="more">
+        <a class="card more-card" href="/scenes/static-card">
+          <span>Explore all {scenes.length} scenes →</span>
+        </a>
+      </figure>
     </div>
   </section>
 
   <section class="snippet">
     <div class="head">
-      <h2>Two components and a stylesheet.</h2>
-      <p>
-        <code>Stage</code> sets the design size, <code>Window</code> draws the browser chrome, and
-        your product's own markup goes inside it. The stylesheet carries the tokens.
-      </p>
+      <h2>Drop it into any Svelte 5 app.</h2>
+      <div class="aside">
+        <p>
+          <code>Stage</code> sets the design size, <code>Window</code> draws the browser chrome, and
+          your product's own markup goes inside it. The stylesheet carries the tokens.
+        </p>
+      </div>
     </div>
     <pre><code>{code}</code></pre>
   </section>
@@ -173,13 +194,19 @@
     </p>
 
     <div class="install">
-      <div class="tabs" role="tablist" aria-label="Package manager">
+      <div class="tabs" role="tablist" aria-label="Package manager" bind:this={tabsEl}>
+        <span
+          class="tab-pill"
+          aria-hidden="true"
+          style={`transform: translateX(${pillX}px); width: ${pillW}px`}
+        ></span>
         {#each managers as entry (entry.id)}
           <button
             type="button"
             role="tab"
             aria-selected={manager === entry.id}
             data-on={manager === entry.id}
+            bind:this={tabButtons[entry.id]}
             onclick={() => (manager = entry.id)}
           >
             {entry.id}
@@ -194,13 +221,12 @@
         <a class="secondary" href="/scenes/static-card">See the demos</a>
       </div>
       <p class="caveat">
-        Not on npm yet. Until it is,
+        Not on npm yet —
         <a
           href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0"
           target="_blank"
-          rel="noreferrer">the 0.2.0 tarball installs today</a
-        >
-        — 185 KB, no build step.
+          rel="noreferrer">download from source</a
+        >.
       </p>
     </div>
   </section>
@@ -208,7 +234,7 @@
   <footer class="site-footer">
     <div class="foot-main">
       <div class="foot-brand">
-        <a class="foot-mark" href="/">Stageshow</a>
+        <a class="foot-mark" href="/">svelte stageshow</a>
         <p>A Svelte 5 port of Benji Taylor's kit. MIT, notices kept.</p>
       </div>
 
@@ -245,10 +271,17 @@
 
     <div class="legal">
       <span>
-        svelte-stageshow / 0.2.0 — MIT. Stageshow is Benji Taylor's; this port keeps his licence and
-        notices.
+        svelte-stageshow / 0.2.0 —
+        <a href="https://github.com/maven-ammar/svelte-stageshow/blob/main/LICENSE" target="_blank" rel="noreferrer">MIT</a>.
+        Stageshow is
+        <a href="https://benji.org/stageshow" target="_blank" rel="noreferrer">Benji Taylor's</a>; this
+        port keeps his licence and notices.
       </span>
-      <span class="mono">ported by Maven</span>
+      <span class="mono"
+        >ported with ♥ by
+        <a href="https://github.com/maven-ammar" target="_blank" rel="noreferrer">Maven</a> and
+        <a href="https://github.com/Amm4r03" target="_blank" rel="noreferrer">Ammar</a></span
+      >
     </div>
 
     <div class="dunes-wrap" aria-hidden="true">
@@ -348,30 +381,6 @@
     padding-bottom: 2px;
   }
 
-  .parity {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 12.5px;
-  }
-
-  .parity th,
-  .parity td {
-    text-align: left;
-    font-weight: 400;
-    padding: 9px 0;
-    border-top: 1px solid var(--line);
-    vertical-align: baseline;
-  }
-
-  .parity th {
-    width: 38%;
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11px;
-    /* Was 0.45 alpha — 4.08:1, just under the 4.5 floor for 11px text. */
-    color: rgba(244, 241, 230, 0.62);
-    padding-right: 16px;
-  }
-
   .sr-only {
     position: absolute;
     width: 1px;
@@ -384,40 +393,23 @@
     border: 0;
   }
 
-  .parity td {
-    color: rgba(244, 241, 230, 0.88);
-  }
-
   .head {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     gap: 24px;
-    align-items: baseline;
+    align-items: start;
     margin-bottom: 20px;
   }
 
   .head .aside {
     display: grid;
     gap: 12px;
-    justify-items: start;
+    justify-items: end;
+    text-align: right;
   }
 
   .head .aside p {
     margin: 0;
-  }
-
-  .all {
-    font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 10.5px;
-    letter-spacing: 0.08em;
-    color: var(--orange);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(232, 98, 42, 0.45);
-    padding-bottom: 2px;
-  }
-
-  .all:hover {
-    border-bottom-color: var(--orange);
   }
 
   h2 {
@@ -436,10 +428,6 @@
     line-height: 1.65;
     color: var(--dim);
     max-width: 52ch;
-  }
-
-  .head a {
-    color: rgba(244, 241, 230, 0.9);
   }
 
   .carousel {
@@ -491,6 +479,31 @@
     display: block;
   }
 
+  /* Last card of the strip: the way out to all of them. */
+  .more-card {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 18px;
+    background: rgba(232, 98, 42, 0.06);
+    border-color: rgba(232, 98, 42, 0.32);
+    text-decoration: none;
+  }
+
+  .more-card span {
+    font-family: var(--ss-mono, ui-monospace, monospace);
+    font-size: 11.5px;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    color: var(--orange);
+    max-width: 18ch;
+  }
+
+  .more-card:hover {
+    background: rgba(232, 98, 42, 0.12);
+    border-color: rgba(232, 98, 42, 0.6);
+  }
+
   .carousel figcaption {
     display: flex;
     justify-content: space-between;
@@ -530,7 +543,12 @@
   }
 
   .cta {
-    background: #0b0908;
+    /* The page ends here, so the ground lifts into a soft warm bloom instead of
+       stopping flat. */
+    background:
+      radial-gradient(58% 72% at 50% 118%, rgba(232, 98, 42, 0.16) 0%, rgba(232, 98, 42, 0) 68%),
+      radial-gradient(46% 60% at 78% 8%, rgba(120, 78, 190, 0.12) 0%, rgba(120, 78, 190, 0) 62%),
+      linear-gradient(180deg, #0b0908 0%, #120c09 62%, #0b0908 100%);
     color: var(--paper);
     padding: clamp(48px, 6vw, 86px) clamp(18px, 4vw, 64px);
     display: grid;
@@ -565,6 +583,7 @@
   }
 
   .tabs {
+    position: relative;
     display: flex;
     gap: 4px;
     padding: 3px;
@@ -572,7 +591,22 @@
     border-radius: 999px;
   }
 
+  .tab-pill {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: calc(100% - 6px);
+    border-radius: 999px;
+    background: #f4f1e6;
+    transition:
+      transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 0;
+  }
+
   .tabs button {
+    position: relative;
+    z-index: 1;
     border: 0;
     background: transparent;
     border-radius: 999px;
@@ -581,10 +615,15 @@
     font-size: 11px;
     color: rgba(244, 241, 230, 0.55);
     cursor: pointer;
+    transition: color 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .tabs button:hover {
+    color: rgba(244, 241, 230, 0.9);
   }
 
   .tabs button[data-on='true'] {
-    background: #f4f1e6;
+    background: transparent;
     color: #16130f;
   }
 
@@ -604,6 +643,10 @@
     border-radius: 999px;
     cursor: pointer;
     border: 1px solid transparent;
+    transition:
+      background-color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      color 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 200ms ease;
   }
 
   .primary {
@@ -620,6 +663,7 @@
     color: #16130f;
     background: none;
     padding: 0;
+    transition: color 260ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .primary span {
@@ -627,11 +671,23 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     opacity: 0.6;
+    transition:
+      opacity 200ms ease,
+      transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .primary[data-copied='true'] {
     background: #2f7a4a;
     color: #f6f1e7;
+  }
+
+  .primary[data-copied='true'] code {
+    color: #f6f1e7;
+  }
+
+  .primary[data-copied='true'] span {
+    opacity: 1;
+    transform: translateY(-1px);
   }
 
   .secondary {
@@ -653,6 +709,10 @@
   }
 
   .site-footer {
+    /* The footer sits outside .page, so the tokens defined there do not reach it:
+       --serif and --paper were silently falling back to the inherited sans. */
+    --paper: #f4f1e6;
+    --serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
     position: relative;
     background: #0b0908;
     color: var(--paper);
@@ -721,8 +781,11 @@
     text-decoration: none;
   }
 
+  /* A border sat under the whole grid cell; underline only the words. */
   .foot-links a:hover {
-    border-bottom: 1px solid rgba(232, 98, 42, 0.7);
+    text-decoration: underline;
+    text-decoration-color: rgba(232, 98, 42, 0.7);
+    text-underline-offset: 3px;
   }
 
   .legal {
@@ -738,6 +801,15 @@
     color: rgba(244, 241, 230, 0.55);
     position: relative;
     z-index: 1;
+  }
+
+  .legal a {
+    color: rgba(244, 241, 230, 0.82);
+    text-underline-offset: 3px;
+  }
+
+  .legal a:hover {
+    color: #f6f1e7;
   }
 
   .legal .mono {
