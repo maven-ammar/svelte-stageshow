@@ -113,3 +113,29 @@ code {
 .gallery-back:hover {
   color: var(--g-ink);
 }
+
+/* On a phone the index of 69 scene links sat between the reader and the scene
+   they came for. Put the scene first and the index after it. */
+@media (max-width: 900px) {
+  .gallery {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gallery-head {
+    order: 0;
+  }
+
+  .scene-block {
+    order: 1;
+  }
+
+  .scene-nav {
+    order: 2;
+    margin-top: 34px;
+  }
+
+  .gallery-foot {
+    order: 3;
+  }
+}
