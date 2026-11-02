@@ -9,9 +9,18 @@ the Code/Chart/Keyboard/Messages/Prompt/Caret/LockScreen/Notification modules,
 35 brand marks, all four looks, and all 69 example scenes.** No React,
 react-dom or lucide runtime is shipped; `svelte` is the only peer.
 
-Version **0.2.0**. Local repository only; no remote and no publish.
+Version **0.2.0**. Public repository at `maven-ammar/svelte-stageshow`. The npm
+publish is pending; the release tarball installs today.
 
 ## Install
+
+Until the registry publish lands, install the 0.2.0 tarball:
+
+```sh
+pnpm add https://github.com/maven-ammar/svelte-stageshow/releases/download/v0.2.0/svelte-stageshow-0.2.0.tgz
+```
+
+Once it is on npm, that becomes:
 
 ```sh
 pnpm add svelte-stageshow
