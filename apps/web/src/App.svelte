@@ -47,11 +47,15 @@
   const loaders = Object.fromEntries(entries.map((entry) => [entry.slug, entry.loader]))
   const sceneNames = entries.map((entry) => entry.slug).sort((a, b) => a.localeCompare(b))
 
-  const selectedSlug = params.get('scene') ?? 'static-card'
+  // Scenes get real paths, not query parameters, so each one is its own page for
+  // search engines, link previews and analytics. ?scene= keeps working.
+  const pathSlug = window.location.pathname.match(/^\/scenes\/([a-z0-9-]+)\/?$/)?.[1]
+  const selectedSlug = pathSlug ?? params.get('scene') ?? 'static-card'
   // A visitor at the bare URL gets the landing page; the gallery lives behind a scene
   // link, so the capture route keeps working unchanged.
-  const landing = !capture && !test && !params.get('scene') && !width
+  const landing = !capture && !test && !pathSlug && !params.get('scene') && !width
   const loadSlug = capture ?? selectedSlug
+  const sceneHref = (slug: string) => `/scenes/${slug}`
   let current = $state<Component<Record<string, never>> | null>(null)
   let loadError = $state('')
 
@@ -84,14 +88,27 @@
       ? `${capture} - svelte-stageshow`
       : landing
         ? 'svelte-stageshow: a Svelte 5 port of Stageshow'
-        : 'Scenes - svelte-stageshow'}</title
+        : `${selectedSlug} - a Stageshow scene in Svelte 5`}</title
   >
   <meta
     name="description"
-    content="A complete Svelte 5 port of Benji Taylor's Stageshow kit: 69 framed product-shot scenes, real browser chrome, scripted cursors, and no React at runtime."
+    content={landing
+      ? "A complete Svelte 5 port of Benji Taylor's Stageshow kit: 69 framed product-shot scenes, real browser chrome, scripted cursors, and no React at runtime."
+      : `The ${selectedSlug} scene from Benji Taylor's Stageshow kit, ported to Svelte 5. Working component, authored design size, compared against his own render.`}
+  />
+  <link
+    rel="canonical"
+    href={landing
+      ? 'https://svelte-stageshow.vercel.app/'
+      : `https://svelte-stageshow.vercel.app/scenes/${selectedSlug}`}
   />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="svelte-stageshow: a Svelte 5 port of Stageshow" />
+  <meta
+    property="og:title"
+    content={landing
+      ? 'svelte-stageshow: a Svelte 5 port of Stageshow'
+      : `${selectedSlug} — a Stageshow scene in Svelte 5`}
+  />
   <meta
     property="og:description"
     content="Every scene, stylesheet and brand mark from Benji Taylor's kit, rebuilt in Svelte 5 and checked against his own renders."
@@ -140,7 +157,7 @@
 
     <nav class="scene-nav" aria-label="Scenes">
       {#each sceneNames as slug}
-        <a class="scene-link" href={`?scene=${slug}`} aria-current={slug === selectedSlug ? 'page' : undefined}>
+        <a class="scene-link" href={sceneHref(slug)} aria-current={slug === selectedSlug ? 'page' : undefined}>
           {slug}
         </a>
       {/each}

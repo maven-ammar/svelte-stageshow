@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Docs — svelte-stageshow, a Svelte 5 port of Stageshow</title>
+    <meta
+      name="description"
+      content="Reference for svelte-stageshow: install, a quick start with Stage and Window, the Stage and Window props, every exported component, looks and design tokens, and the 69 ported scenes."
+    />
+    <link rel="canonical" href="https://svelte-stageshow.vercel.app/docs/" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0908" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="svelte-stageshow docs" />
+    <meta
+      property="og:description"
+      content="Install, the Stage and Window props, every exported component, and the design tokens behind the kit."
+    />
+    <meta property="og:image" content="https://svelte-stageshow.vercel.app/og.png" />
+    <style>
+      @font-face {
+        font-family: 'Instrument Serif';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('/fonts/instrument-serif-latin.woff2') format('woff2');
+      }
+      :root {
+        --bg: #0b0908;
+        --ink: #f4f1e6;
+        --dim: rgba(244, 241, 230, 0.64);
+        --faint: rgba(244, 241, 230, 0.38);
+        --line: rgba(244, 241, 230, 0.14);
+        --accent: #e8622a;
+        --serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+        --mono: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        font-size: 15px;
+        line-height: 1.65;
+      }
+      a {
+        color: var(--ink);
+        text-underline-offset: 3px;
+      }
+      a:hover {
+        color: #fff;
+      }
+      .wrap {
+        max-width: 1020px;
+        margin: 0 auto;
+        padding: 0 clamp(18px, 4vw, 48px) 96px;
+      }
+      header.bar {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 22px 0 0;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      header.bar .mark {
+        letter-spacing: 0.24em;
+        text-decoration: none;
+        color: var(--ink);
+      }
+      header.bar .rule {
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+        transform: translateY(-3px);
+      }
+      header.bar .sub {
+        color: var(--dim);
+        text-transform: none;
+        letter-spacing: 0.02em;
+      }
+      header.bar a.src {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      h1 {
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: clamp(38px, 5vw, 62px);
+        line-height: 0.98;
+        letter-spacing: -0.015em;
+        margin: 54px 0 14px;
+      }
+      h2 {
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: clamp(24px, 2.6vw, 32px);
+        line-height: 1.1;
+        margin: 54px 0 14px;
+        padding-top: 22px;
+        border-top: 1px solid var(--line);
+      }
+      h3 {
+        font-size: 13px;
+        font-family: var(--mono);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--faint);
+        margin: 30px 0 10px;
+        font-weight: 400;
+      }
+      p {
+        margin: 0 0 14px;
+        color: var(--dim);
+        max-width: 68ch;
+      }
+      .lead {
+        font-size: 17px;
+        color: var(--ink);
+      }
+      code {
+        font-family: var(--mono);
+        font-size: 0.88em;
+        background: rgba(244, 241, 230, 0.07);
+        padding: 1px 5px;
+        border-radius: 3px;
+        color: rgba(244, 241, 230, 0.92);
+      }
+      pre {
+        margin: 0 0 16px;
+        padding: 16px 18px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: rgba(244, 241, 230, 0.03);
+        overflow-x: auto;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+        font-size: 12.5px;
+        line-height: 1.75;
+        white-space: pre;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 0 20px;
+        font-size: 13.5px;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        padding: 9px 12px 9px 0;
+        border-top: 1px solid var(--line);
+      }
+      th {
+        font-family: var(--mono);
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--faint);
+        font-weight: 400;
+      }
+      td:first-child {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--ink);
+        white-space: nowrap;
+      }
+      td.type {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--faint);
+      }
+      td p {
+        margin: 0;
+        color: var(--dim);
+        max-width: none;
+      }
+      ul.exports {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 18px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      ul.exports li {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--ink);
+        border: 1px solid var(--line);
+        border-radius: 3px;
+        padding: 3px 8px;
+      }
+      .note {
+        border-left: 2px solid var(--accent);
+        padding: 2px 0 2px 14px;
+        margin: 0 0 18px;
+        color: var(--dim);
+        max-width: 68ch;
+      }
+      footer {
+        margin-top: 70px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        font-size: 11.5px;
+        color: var(--faint);
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      footer a {
+        color: var(--dim);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="bar">
+        <a class="mark" href="/">Stageshow</a>
+        <span class="rule"></span>
+        <span class="sub">Docs</span>
+        <a class="src" href="/?scene=static-card">Gallery</a>
+        <a class="src" href="https://github.com/maven-ammar/svelte-stageshow">GitHub</a>
+      </header>
+
+      <h1>svelte-stageshow</h1>
+      <p class="lead">
+        A Svelte 5 port of Stageshow, Benji Taylor's MIT kit for framed faux product UI: a
+        believable interface, cropped with intent, as one still or a short scripted demo.
+      </p>
+      <p>
+        Everything upstream is here: 69 scenes, 42 stylesheets carried over unchanged, 44 brand
+        marks, and the design tokens the whole kit is built on. Nothing from React ships — <code
+          >svelte</code
+        >
+        is the only peer dependency.
+      </p>
+
+      <h2>Install</h2>
+      <p class="note">
+        Not published to npm yet. The 0.2.0 tarball installs today and is the same build that
+        would be published:
+      </p>
+      <pre><code>pnpm add https://github.com/maven-ammar/svelte-stageshow/releases/download/v0.2.0/svelte-stageshow-0.2.0.tgz</code></pre>
+      <p>Once the registry publish lands, that becomes <code>pnpm add svelte-stageshow</code>.</p>
+
+      <h2>Quick start</h2>
+      <p>
+        Two components and a stylesheet. <code>Stage</code> sets the design size and scales to its
+        container; <code>Window</code> draws the chrome. Your product's own markup goes inside.
+      </p>
+      <pre><code>&lt;script lang="ts"&gt;
+  import { Stage, Window } from 'svelte-stageshow'
+  import 'svelte-stageshow/style.css'
+&lt;/script&gt;
+
+&lt;Stage width={720} height={340}&gt;
+  &lt;Window url="acme - invoices"&gt;
+    &lt;!-- your product, built from the kit's parts --&gt;
+  &lt;/Window&gt;
+&lt;/Stage&gt;</code></pre>
+      <p>
+        Add a <code>script</code> and the stage plays it on a loop: an <code>Act</code> aims at
+        elements by name, changes state, waits for paint, and moves the cursor.
+      </p>
+      <pre><code>async function script(a: Act&lt;State&gt;) {
+  await a.click({ at: 'share' })   // the cursor arcs there and presses
+  await a.set({ open: true })      // resolves once it has painted
+  await a.wait(2000)               // the payoff holds
+  await a.click({ at: 'close' })
+  await a.set({ open: false })
+}</code></pre>
+
+      <h2>Stage props</h2>
+      <p>
+        <code>width</code> and <code>height</code> are the design size. The stage scales down to
+        fit its container and only grows past the design size with <code>fill</code>.
+      </p>
+      <table>
+        <thead>
+          <tr><th>prop</th><th>type</th><th>default</th><th>what it does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>width</td><td class="type">number</td><td class="type">required</td><td><p>Design width.</p></td></tr>
+          <tr><td>height</td><td class="type">number</td><td class="type">required</td><td><p>Design height.</p></td></tr>
+          <tr><td>initial</td><td class="type">S</td><td class="type">—</td><td><p>Scene state at the start of each loop. Statics can leave it out.</p></td></tr>
+          <tr><td>script</td><td class="type">Script&lt;S&gt;</td><td class="type">—</td><td><p>Loops while on screen. Leave it out for a static illustration.</p></td></tr>
+          <tr><td>poster</td><td class="type">S</td><td class="type">initial</td><td><p>The still frame shown under reduced motion, or with no script.</p></td></tr>
+          <tr><td>play</td><td class="type">Play</td><td class="type">loop</td><td><p>How the script runs.</p></td></tr>
+          <tr><td>cursor</td><td class="type">CursorConfig</td><td class="type">—</td><td><p>Which pointer the scene uses, and how it behaves.</p></td></tr>
+          <tr><td>compact</td><td class="type">CompactConfig</td><td class="type">—</td><td><p>A second, smaller design for narrow containers.</p></td></tr>
+          <tr><td>keys</td><td class="type">KeysAt</td><td class="type">bottom</td><td><p>Where keycaps from <code>act.key</code> appear.</p></td></tr>
+          <tr><td>hover</td><td class="type">string[]</td><td class="type">—</td><td><p>Targets shown hovered in a still.</p></td></tr>
+          <tr><td>theme</td><td class="type">Theme</td><td class="type">light</td><td><p>Light or dark, from the same scene code.</p></td></tr>
+          <tr><td>palette</td><td class="type">Palette</td><td class="type">accent</td><td><p>One accent, or mono.</p></td></tr>
+          <tr><td>fidelity</td><td class="type">Fidelity</td><td class="type">standard</td><td><p>How many real words a look uses.</p></td></tr>
+          <tr><td>greys</td><td class="type">'warm' | 'cool'</td><td class="type">—</td><td><p>Swaps the warm canvas and well for cool ones. Light theme only.</p></td></tr>
+          <tr><td>tokens</td><td class="type">LookTokens</td><td class="type">—</td><td><p>A look as values: any <code>--ss-*</code> token.</p></td></tr>
+          <tr><td>accent</td><td class="type">string</td><td class="type">—</td><td><p>The accent colour for this stage.</p></td></tr>
+          <tr><td>ground</td><td class="type">Ground</td><td class="type">—</td><td><p>What the scene sits on. <code>orbs</code> is a pale tile lit by soft colour orbs.</p></td></tr>
+          <tr><td>fill</td><td class="type">boolean</td><td class="type">false</td><td><p>Grow past the design size to fill the container, up to 2x.</p></td></tr>
+          <tr><td>speed</td><td class="type">number</td><td class="type">1</td><td><p>Plays the script faster above 1, slower below.</p></td></tr>
+          <tr><td>specimen</td><td class="type">boolean</td><td class="type">false</td><td><p>Renders the stage as a specimen rather than a scene.</p></td></tr>
+          <tr><td>unframed</td><td class="type">boolean</td><td class="type">false</td><td><p>Drops the stage's own frame.</p></td></tr>
+          <tr><td>deterministic</td><td class="type">boolean</td><td class="type">false</td><td><p>CSS transitions off, a virtual 60fps clock drives waits, tweens and typing, so the same frame index renders the same DOM.</p></td></tr>
+        </tbody>
+      </table>
+
+      <h2>Window props</h2>
+      <p>
+        There is no <code>kind</code> prop: the chrome follows from what you pass, and the traffic
+        lights sit in the same place in every window.
+      </p>
+      <table>
+        <thead>
+          <tr><th>prop</th><th>type</th><th>what it does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>url</td><td class="type">string | Snippet</td><td><p>The address. A string, or a snippet.</p></td></tr>
+          <tr><td>tabs</td><td class="type">Url[]</td><td><p>Tab titles; the first is the active tab.</p></td></tr>
+          <tr><td>nav</td><td class="type">boolean</td><td><p>Back and forward buttons before the address.</p></td></tr>
+          <tr><td>title</td><td class="type">string</td><td><p>App windows: the title.</p></td></tr>
+          <tr><td>sidebar</td><td class="type">Snippet</td><td><p>A full-height sidebar. The traffic lights sit in its top.</p></td></tr>
+          <tr><td>sidebarStyle</td><td class="type">'flush' | 'floating'</td><td><p>How the sidebar meets the window edge.</p></td></tr>
+          <tr><td>toolbar</td><td class="type">Snippet</td><td><p>Controls on the right of the bar.</p></td></tr>
+          <tr><td>lead</td><td class="type">Snippet</td><td><p>Controls on the left of the bar, after the title.</p></td></tr>
+          <tr><td>chrome</td><td class="type">'native' | 'glass' | 'terminal' | 'card' | 'hairline'</td><td><p>Which chrome to draw.</p></td></tr>
+          <tr><td>lights</td><td class="type">'color' | 'grey' | 'white'</td><td><p>Traffic light treatment.</p></td></tr>
+          <tr><td>lightsSize</td><td class="type">'standard' | 'large'</td><td><p>Bigger lights for the newer macOS window.</p></td></tr>
+          <tr><td>barSize</td><td class="type">'standard' | 'tall'</td><td><p>Bar height.</p></td></tr>
+          <tr><td>receded</td><td class="type">boolean</td><td><p>Draws the window as if it were behind another.</p></td></tr>
+          <tr><td>body</td><td class="type">object</td><td><p>Props for the content column; <code>class</code> merges with the body class.</p></td></tr>
+        </tbody>
+      </table>
+
+      <h2>What is exported</h2>
+      <h3>Stage and runtime</h3>
+      <ul class="exports">
+        <li>Stage</li><li>Cursor</li><li>StillProvider</li><li>Keycaps</li><li>getLook</li
+        ><li>setLook</li><li>useLook</li><li>capsOf</li><li>inset</li><li>box</li><li>between</li
+        ><li>contains</li><li>EMPTY</li><li>EASE</li><li>bezier</li><li>easeCss</li><li>version</li>
+      </ul>
+      <h3>Frames</h3>
+      <ul class="exports">
+        <li>Window</li><li>Bar</li><li>Text</li><li>Phone</li><li>Row</li><li>Avatar</li><li>Chip</li>
+      </ul>
+      <h3>Motion</h3>
+      <ul class="exports">
+        <li>Connector</li><li>Count</li><li>Roll</li><li>Swap</li><li>Collapse</li><li>Fly</li
+        ><li>Follow</li><li>cellOf</li><li>States</li><li>Stream</li><li>Popover</li><li>Camera</li
+        ><li>Scroll</li><li>Expand</li>
+      </ul>
+      <h3>Parts</h3>
+      <ul class="exports">
+        <li>BrandMark</li><li>Check</li><li>Facepile</li><li>Icon</li><li>Menu</li><li>Meter</li
+        ><li>Pin</li><li>Spinner</li><li>Toast</li><li>Tooltip</li><li>brandMarks</li>
+      </ul>
+      <h3>Controls</h3>
+      <ul class="exports">
+        <li>Badge</li><li>Field</li><li>Segmented</li><li>Slot</li><li>Tabs</li><li>Toggle</li>
+      </ul>
+      <h3>Modules</h3>
+      <ul class="exports">
+        <li>Code</li><li>Chart</li><li>chartPoints</li><li>Keyboard</li><li>Thread</li><li>Bubble</li
+        ><li>Stamp</li><li>Receipt</li><li>Prompt</li><li>Caret</li><li>LockScreen</li
+        ><li>Notification</li><li>WALLPAPER</li>
+      </ul>
+
+      <h2>Looks and tokens</h2>
+      <p>
+        A look is a theme, a palette and how many real words the scene uses. The kit's colours,
+        type, radii and spacing are all design tokens, so you can map your own design system onto
+        them and the demo will use your real colours and corner radii instead of looking like a
+        mock-up.
+      </p>
+      <p>
+        Pass a theme from a prop, or any <code>--ss-*</code> token through <code>tokens</code>.
+        <code>getLook</code>, <code>setLook</code> and <code>useLook</code> read and write the
+        surrounding look when a scene is nested inside another.
+      </p>
+
+      <h2>Scenes</h2>
+      <p>
+        All 69 scenes are working Svelte components and live in the gallery — <a
+          href="/?scene=static-card"
+          >open the first one</a
+        >. Each was rendered and compared against Benji's own output: 71 comparisons, 71 matched,
+        scored at a named settled mark rather than the last frame of the animation.
+      </p>
+
+      <h2>Licence</h2>
+      <p>
+        MIT. Stageshow is Benji Taylor's; this port keeps his licence and notices. The design
+        language, the kit and the scenes are his. Ported by Maven —
+        <a href="https://github.com/maven-ammar/svelte-stageshow">source</a>,
+        <a href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0">release</a>,
+        <a href="https://benji.org/stageshow">upstream</a>.
+      </p>
+
+      <footer>
+        <span>svelte-stageshow 0.2.0 — MIT. Stageshow is Benji Taylor's.</span>
+        <span
+          ><a href="/">Landing</a> · <a href="/?scene=static-card">Gallery</a> ·
+          <a href="https://github.com/maven-ammar/svelte-stageshow">GitHub</a></span
+        >
+      </footer>
+    </div>
+  </body>
+</html>

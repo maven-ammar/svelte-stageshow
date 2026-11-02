@@ -20,7 +20,7 @@
       </p>
       <div class="dot-hero__actions">
         <code>pnpm add svelte-stageshow</code>
-        <a href="?scene=static-card">Open the gallery</a>
+        <a href="/scenes/static-card">Open the gallery</a>
       </div>
       <p class="dot-hero__pending">
         Not on npm yet —

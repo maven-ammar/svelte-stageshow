@@ -1,0 +1,43 @@
+# svelte-stageshow
+
+> A complete Svelte 5 port of Stageshow, Benji Taylor's MIT kit for framed faux
+> product UI: a believable interface, cropped with intent, as one still or a short
+> scripted demo. 69 scenes, 42 stylesheets carried over unchanged, 44 brand marks,
+> and no React at runtime.
+
+It is a port, not an original. The design language, kit and scenes are Benji
+Taylor's; the Svelte implementation is the port. Licence: MIT, notices kept.
+
+## Docs
+
+- [Docs](https://svelte-stageshow.vercel.app/docs/): install, quick start, the Stage and Window props, every
+  exported component, looks and design tokens.
+- [Landing page](https://svelte-stageshow.vercel.app/): what it is and what is verified.
+
+## Components
+
+Stage sets the design size and scales to its container. Window draws the chrome.
+Also exported: Bar, Text, Phone, Row, Avatar, Chip, Cursor, StillProvider,
+Connectors and motion parts (Count, Roll, Swap, Collapse, Fly, Follow, States,
+Stream, Popover, Camera, Scroll, Expand), parts (BrandMark, Check, Facepile,
+Icon, Menu, Meter, Pin, Spinner, Toast, Tooltip), controls (Badge, Field,
+Segmented, Slot, Tabs, Toggle), and modules (Code, Chart, Keyboard, Thread,
+Bubble, Stamp, Receipt, Prompt, Caret, LockScreen, Notification).
+
+## Scenes
+
+All 69 scenes are working components, each at https://svelte-stageshow.vercel.app/scenes/<slug>:
+
+ai-cards, ai-chat, annotations, backgrounds, bento, brand-marks, calendar, chart-scrub, choreography, chrome, close-up, controls, corner-chip, cursor-morph, cursor-resize, cursors, dark-bento, dark-hero, device-pair, dynamic-island, excel, fade-crop, figma, finder, finder-glass, form-error, freeform-drag, glass, gmail, google-calendar, google-docs, hero-demo, hero-grid, imessage, kit-extras, linear, loading, looks, many-of-one, messages, monochrome, notion, opposite-corners, overlap, panel-annotation, parts, payout-flow, phone-touch, phones, powerpoint, presence, raycast, reorder, ruled-bento, share, slack, spotify, stacked-cards, staggered-bento, static-card, story, subscriptions, swipe, table-edit, telegram, tilted-stack, upload, wikipedia, window-row
+
+## Verification
+
+Each scene was rendered at a named settled mark in its own Act script and
+compared against Benji's own output: 71 comparisons, 71 matched. The acceptance
+table is in the repository.
+
+## Source
+
+- Repository: https://github.com/maven-ammar/svelte-stageshow
+- Release tarball: https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0
+- Upstream: https://benji.org/stageshow

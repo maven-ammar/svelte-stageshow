@@ -58,6 +58,7 @@
     <a class="mark" href="/">Stageshow</a>
     <span class="rule"></span>
     <span class="sub">A Svelte 5 port of Benji Taylor's Stageshow</span>
+    <a class="src" href="/docs/">docs</a>
     <a class="src" href="https://benji.org/stageshow" target="_blank" rel="noreferrer">original</a>
   </header>
 
@@ -96,30 +97,30 @@
           Every scene is a working Svelte component — a frame, real chrome, and one moment worth
           showing.
         </p>
-        <a class="all" href="?scene=static-card">All {scenes.length} scenes →</a>
+        <a class="all" href="/scenes/static-card">All {scenes.length} scenes →</a>
       </div>
     </div>
 
     <div class="carousel">
       <figure class="live">
-        <a class="card" href="?scene=static-card" aria-label="Open the static-card scene">
+        <a class="card" href="/scenes/static-card" aria-label="Open the static-card scene">
           <span class="stage-slot">
             <StaticCard />
           </span>
         </a>
         <figcaption>
           <span>static-card · live</span>
-          <a href="?scene=static-card">open</a>
+          <a href="/scenes/static-card">open</a>
         </figcaption>
       </figure>
       {#each strip as name (name)}
         <figure>
-          <a class="card" href={`?scene=${name}`}>
+          <a class="card" href={`/scenes/${name}`}>
             <img src={`/scenes/${name}.png`} alt={`The ${name} scene`} loading="lazy" />
           </a>
           <figcaption>
             <span>{name}</span>
-            <a href={`?scene=${name}`}>open</a>
+            <a href={`/scenes/${name}`}>open</a>
           </figcaption>
         </figure>
       {/each}
@@ -167,7 +168,7 @@
           <code>{command}</code>
           <span>{copied ? 'copied' : 'copy'}</span>
         </button>
-        <a class="secondary" href="?scene=static-card">See the demos</a>
+        <a class="secondary" href="/scenes/static-card">See the demos</a>
       </div>
       <p class="caveat">
         Not on npm yet. Until it is,
@@ -191,15 +192,16 @@
       <div class="foot-links">
         <div>
           <span class="mono">this port</span>
-          <a href="?scene=static-card">Gallery</a>
-          <a href="?scene=hero-demo">Hero demo</a>
-          <a href="?scene=bento">Bento</a>
+          <a href="/scenes/static-card">Gallery</a>
+          <a href="/docs/">Docs</a>
+          <a href="/scenes/hero-demo">Hero demo</a>
+          <a href="/scenes/bento">Bento</a>
         </div>
         <div>
           <span class="mono">the kit</span>
-          <a href="?scene=phones">Phones</a>
-          <a href="?scene=google-calendar">Calendar</a>
-          <a href="?scene=messages">Messages</a>
+          <a href="/scenes/phones">Phones</a>
+          <a href="/scenes/google-calendar">Calendar</a>
+          <a href="/scenes/messages">Messages</a>
         </div>
         <div>
           <span class="mono">upstream</span>
