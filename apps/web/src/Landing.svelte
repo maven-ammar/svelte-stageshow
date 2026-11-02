@@ -81,7 +81,7 @@
     <table class="parity">
       <tbody>
         <tr><th scope="row">scenes</th><td>69 slugs, each one ported</td></tr>
-        <tr><th scope="row">stylesheets</th><td>42, byte-identical to upstream</td></tr>
+        <tr><th scope="row">stylesheets</th><td>42, unchanged from his</td></tr>
         <tr><th scope="row">brand marks</th><td>44 SVGs</td></tr>
         <tr><th scope="row">runtime deps</th><td>none — no React, react-dom or lucide</td></tr>
       </tbody>
