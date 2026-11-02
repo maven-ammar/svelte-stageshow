@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How we proved the port — svelte-stageshow</title>
+    <meta
+      name="description"
+      content="Porting a React design kit to Svelte 5 is the easy part. Proving the port is faithful is the work: 71 comparisons at settled marks, a determinism harness, and the traps that make a screenshot test lie."
+    />
+    <link rel="canonical" href="https://svelte-stageshow.vercel.app/notes/porting-stageshow/" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0908" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="How we proved the port" />
+    <meta
+      property="og:description"
+      content="71 comparisons at settled marks, a determinism harness, and the traps that make a screenshot test lie."
+    />
+    <meta property="og:image" content="https://svelte-stageshow.vercel.app/og.png" />
+    <style>
+      @font-face {
+        font-family: 'Instrument Serif';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('/fonts/instrument-serif-latin.woff2') format('woff2');
+      }
+      :root {
+        --bg: #0b0908;
+        --ink: #f4f1e6;
+        --dim: rgba(244, 241, 230, 0.66);
+        --faint: rgba(244, 241, 230, 0.4);
+        --line: rgba(244, 241, 230, 0.14);
+        --accent: #e8622a;
+        --serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+        --mono: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        font-size: 16px;
+        line-height: 1.7;
+      }
+      a {
+        color: var(--ink);
+        text-underline-offset: 3px;
+      }
+      .wrap {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 0 24px 96px;
+      }
+      header.bar {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding: 22px 0 0;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      header.bar .mark {
+        letter-spacing: 0.24em;
+        text-decoration: none;
+      }
+      header.bar .rule {
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+        transform: translateY(-3px);
+      }
+      header.bar a.src {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      h1 {
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: clamp(36px, 6vw, 56px);
+        line-height: 1;
+        letter-spacing: -0.02em;
+        margin: 56px 0 10px;
+      }
+      .standfirst {
+        font-size: 17px;
+        color: var(--ink);
+        margin: 0 0 10px;
+      }
+      .byline {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--faint);
+        margin: 0 0 34px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line);
+      }
+      h2 {
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 1.15;
+        margin: 44px 0 12px;
+      }
+      p {
+        margin: 0 0 16px;
+        color: var(--dim);
+      }
+      p strong {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      ul {
+        margin: 0 0 16px;
+        padding-left: 20px;
+        color: var(--dim);
+      }
+      li {
+        margin-bottom: 8px;
+      }
+      code {
+        font-family: var(--mono);
+        font-size: 0.88em;
+        background: rgba(244, 241, 230, 0.07);
+        padding: 1px 5px;
+        border-radius: 3px;
+        color: rgba(244, 241, 230, 0.92);
+      }
+      blockquote {
+        margin: 0 0 16px;
+        padding: 2px 0 2px 16px;
+        border-left: 2px solid var(--accent);
+        color: var(--dim);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 0 20px;
+        font-size: 14px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 9px 12px 9px 0;
+        border-top: 1px solid var(--line);
+        vertical-align: top;
+      }
+      th {
+        font-family: var(--mono);
+        font-size: 10.5px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--faint);
+        font-weight: 400;
+      }
+      td {
+        color: var(--dim);
+      }
+      td:first-child {
+        color: var(--ink);
+        white-space: nowrap;
+      }
+      footer {
+        margin-top: 64px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        font-size: 12px;
+        color: var(--faint);
+      }
+      footer a {
+        color: var(--dim);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="bar">
+        <a class="mark" href="/">Stageshow</a>
+        <span class="rule"></span>
+        <a class="src" href="/docs/">Docs</a>
+        <a class="src" href="/scenes/static-card">Gallery</a>
+      </header>
+
+      <h1>How we proved the port</h1>
+      <p class="standfirst">
+        Moving a React design kit to Svelte 5 is the easy part. Proving the result is faithful
+        is the work.
+      </p>
+      <p class="byline">Notes · svelte-stageshow</p>
+
+      <p>
+        Stageshow is Benji Taylor's kit for making faux product UI that reads as a real
+        screenshot: browser chrome, a cursor that types under a script, 69 worked scenes. It
+        shipped as React. This is a port to Svelte 5, and the interesting question was never
+        "does it compile" — it was "is it the same thing".
+      </p>
+
+      <h2>A port has two possible failure modes</h2>
+      <p>
+        The obvious one is that it does not work. The subtle one is that it works and looks
+        almost right: a 3px gap where there should be 4, a cursor that lands a character early,
+        a card that pops instead of flying. Almost right is worse, because it looks finished.
+      </p>
+      <p>
+        So the port needed a test that could tell "almost right" from "right", on all 69 scenes,
+        without a human staring at two screenshots for an afternoon.
+      </p>
+
+      <h2>Compare at a settled mark, not at the end</h2>
+      <p>
+        The first version of the test captured each scene's final frame and diffed it against
+        the original. It produced failures that were not real.
+      </p>
+      <p>
+        Animated scenes do not settle all at once. A scene can finish its last beat and still be
+        mid-fade, mid-spring, mid-scroll. Diffing the last frame compares a settled original
+        against a port that is one frame behind, and the score collapses for a reason that has
+        nothing to do with the port.
+      </p>
+      <p>
+        Three scenes failed this way and then passed untouched: a cursor raycast, a dynamic
+        island, and a slide transition. That is the point where you stop trusting the test.
+      </p>
+      <blockquote>
+        Score at a named, settled mark in the scene's own script. Never at the last frame.
+      </blockquote>
+      <p>
+        Every scene now declares a mark where it is visually at rest — after the transition
+        finishes, before the next one starts. The gate reads that mark for both sides. The table
+        of marks is in the repository, one row per scene.
+      </p>
+
+      <h2>Frames have to be reproducible before they can be compared</h2>
+      <p>
+        A comparison is meaningless if the same scene renders differently on two loads. The kit
+        drives its animations from a script, so the port exposes a mode where CSS transitions are
+        off and a virtual 60fps clock drives every wait, tween and keystroke. Advancing the clock
+        to frame <code>n</code> must produce identical DOM, every time.
+      </p>
+      <p>
+        That harness ran <strong>1,501 frames</strong> across the scenes and reported no
+        mismatch. Only then was a screen comparison worth anything.
+      </p>
+
+      <h2>What the numbers actually are</h2>
+      <table>
+        <thead>
+          <tr><th>measure</th><th>result</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>scene slugs</td><td>69, every one ported</td></tr>
+          <tr><td>stylesheets</td><td>42, carried over unchanged</td></tr>
+          <tr><td>brand marks</td><td>44 SVGs</td></tr>
+          <tr><td>comparisons</td><td>71, all matched at their settled mark</td></tr>
+          <tr><td>determinism</td><td>1,501 frames, no mismatch</td></tr>
+          <tr><td>runtime</td><td>no React, react-dom or lucide</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Seventy-one comparisons for 69 scenes, because two of them are compared twice: once at
+        the mark, once as a still.
+      </p>
+
+      <h2>The port itself, briefly</h2>
+      <p>
+        Keeping the stylesheets unchanged was a deliberate constraint. If the CSS is the same,
+        any visual difference is the port's fault, which makes the comparison mean something. It
+        also means the design language stays Benji's rather than becoming a looser
+        interpretation of it.
+      </p>
+      <p>
+        The code follows the same rule: same prop names, same defaults, CSS custom properties
+        for the tokens. React's node props became Svelte snippets, and React's event props became
+        callback props, because those are the language's native equivalents rather than a
+        translation layer.
+      </p>
+
+      <h2>What this method does not catch</h2>
+      <p>
+        A scene can match its reference and still be a bad demo. The comparison says the port is
+        faithful; it says nothing about whether the original was worth making. That judgment is
+        still a person looking at the thing and deciding.
+      </p>
+      <p>
+        It also cannot tell you the port is <em>usable</em>. Matching pixels is not the same as a
+        component that behaves well in someone else's app, with someone else's state and their
+        own content inside it. That takes people using it, which is the next stage and the reason
+        the package is public.
+      </p>
+
+      <h2>If you port something</h2>
+      <ul>
+        <li>Find the mark where the thing is at rest, and score there.</li>
+        <li>Make the frames reproducible before you compare any of them.</li>
+        <li>Keep the CSS identical if you can, so every difference is yours to explain.</li>
+        <li>Treat a pass as "faithful", never as "good".</li>
+      </ul>
+
+      <footer>
+        <p>
+          Stageshow is Benji Taylor's, MIT licensed. This port keeps his licence and notices.
+          <a href="/docs/">Docs</a> · <a href="/">Landing</a> ·
+          <a href="https://github.com/maven-ammar/svelte-stageshow">Source</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
