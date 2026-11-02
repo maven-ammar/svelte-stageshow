@@ -11,3 +11,4 @@ shots/*.log
 shots/video/
 shots/debug*
 .vercel
+shots/*.png
