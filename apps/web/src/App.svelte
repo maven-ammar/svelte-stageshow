@@ -70,7 +70,23 @@
 </script>
 
 <svelte:head>
-  <title>{capture ? `${capture} - svelte-stageshow` : 'svelte-stageshow - gallery'}</title>
+  <title
+    >{capture
+      ? `${capture} - svelte-stageshow`
+      : landing
+        ? 'svelte-stageshow: a Svelte 5 port of Stageshow'
+        : 'Scenes - svelte-stageshow'}</title
+  >
+  <meta
+    name="description"
+    content="A complete Svelte 5 port of Benji Taylor's Stageshow kit: 69 framed product-shot scenes, real browser chrome, scripted cursors, and no React at runtime."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="svelte-stageshow: a Svelte 5 port of Stageshow" />
+  <meta
+    property="og:description"
+    content="Every scene, stylesheet and brand mark from Benji Taylor's kit, rebuilt in Svelte 5 and checked against his own renders."
+  />
   <link rel="icon" href="data:," />
 </svelte:head>
 
