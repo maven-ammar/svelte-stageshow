@@ -24,20 +24,22 @@
 
 <style>
   .fit {
-    --k: 0.7;
+    /* The composition's content is 452px tall (window 300 + the card's overhang),
+       not 560 — the extra 108px was reserved empty space under the card. */
+    --k: 1.04;
     position: relative;
     width: 100%;
-    height: calc(560px * var(--k));
+    height: calc(452px * var(--k));
   }
 
   .collage {
     position: absolute;
     top: 0;
-    left: 50%;
+    right: 0;
     width: 720px;
-    height: 560px;
-    transform: translateX(-50%) scale(var(--k));
-    transform-origin: top center;
+    height: 452px;
+    transform: scale(var(--k));
+    transform-origin: top right;
   }
 
   .window,
@@ -97,19 +99,32 @@
 
   @media (max-width: 1240px) {
     .fit {
-      --k: 0.6;
+      --k: 0.92;
     }
   }
 
   @media (max-width: 1080px) {
     .fit {
-      --k: 0.66;
+      --k: 0.9;
+    }
+
+    .collage {
+      right: auto;
+      left: 50%;
+      transform: translateX(-50%) scale(var(--k));
+      transform-origin: top center;
     }
   }
 
-  @media (max-width: 760px) {
+  @media (max-width: 860px) {
     .fit {
-      --k: 0.44;
+      --k: 0.78;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .fit {
+      --k: 0.41;
     }
   }
 </style>

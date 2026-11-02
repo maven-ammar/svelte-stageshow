@@ -15,8 +15,8 @@
     ['0', 'React, react-dom or lucide in the bundle', 'https://github.com/maven-ammar/svelte-stageshow/blob/main/packages/svelte-stageshow/package.json']
   ]
 
+  // static-card is mounted live above the strip, so it must not appear again in it.
   const strip = [
-    'static-card',
     'hero-demo',
     'bento',
     'phones',
@@ -206,6 +206,11 @@
 
 <style>
   .page {
+    /* A single implicit grid column is sized by its widest child's min-content, and
+       every sibling then stretches to that width — the page scrolled 1962px on a
+       1440 viewport because of it. Clamp the track so the page can never outgrow
+       the viewport, whatever a child asks for. */
+    grid-template-columns: minmax(0, 1fr);
     --ink: #14120f;
     --paper: #f4f1e6;
     --line: rgba(244, 241, 230, 0.14);
@@ -263,12 +268,18 @@
   }
 
   .ledger a {
-    padding: 16px 18px 16px 0;
+    padding: 18px 22px 18px 0;
     display: grid;
     gap: 6px;
     border-right: 1px solid var(--line);
     text-decoration: none;
     color: inherit;
+  }
+
+  /* Text sits clear of the rules instead of touching them: the first column is
+     flush with the page edge, every later column is inset from its rule. */
+  .ledger a + a {
+    padding-left: 22px;
   }
 
   .ledger a:last-child {
@@ -301,7 +312,9 @@
     font-size: 11.5px;
     line-height: 1.4;
     color: var(--dim);
-    max-width: 24ch;
+    /* Was 24ch — a 154px box inside a 331px cell, so every label wrapped at a
+       different point and one never wrapped at all. Let the cell width decide. */
+    max-width: 44ch;
   }
 
   .head {
@@ -633,6 +646,16 @@
 
     .ledger a:nth-child(2n) {
       border-right: 0;
+      padding-left: 22px;
+    }
+
+    .ledger a:nth-child(odd) {
+      padding-left: 0;
+    }
+
+    /* Two rows need a rule between them, or the grid reads as four loose cells. */
+    .ledger a:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
     }
 
     .bar .sub {

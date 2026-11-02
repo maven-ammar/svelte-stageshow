@@ -15,7 +15,12 @@
   overflow: hidden;
   border-radius: 8px;
   background: #08080a;
-  padding: clamp(28px, 4vw, 56px);
+  /* --pad is the band's inset; --bleed is how far the composition runs past the
+     band's edge on the two-up layout. The stage reclaims both, so the window is
+     clipped by the band instead of floating inside it. */
+  --pad: clamp(24px, 3.2vw, 44px);
+  --bleed: clamp(16px, 4vw, 56px);
+  padding: var(--pad);
 }
 
 .dot-hero__wash {
@@ -119,15 +124,23 @@
   place-items: center;
 }
 
+/* Two-up: the composition runs to the band's edge and past it, so the window is
+   clipped by the band rather than floating inside it. Below 1080 the hero stacks
+   and the collage centres instead. */
+@media (min-width: 1081px) {
+  .dot-hero__stage {
+    justify-self: stretch;
+    margin-right: calc(-1 * (var(--pad) + var(--bleed)));
+  }
+}
+
 @media (max-width: 1080px) {
   .dot-hero__inner {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .dot-hero__stage {
-    order: -1;
-  }
-
+  /* Headline first, then the product shot. A screenshot above the claim is the
+     odd reading; the claim earns the next scroll. */
   .dot-hero h1 {
     max-width: 20ch;
   }
