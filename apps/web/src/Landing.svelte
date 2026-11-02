@@ -232,7 +232,7 @@
       <div class="actions">
         <button class="primary" type="button" onclick={copy} data-copied={copied}>
           <code>{command}</code>
-          <span>{copied ? 'copied' : 'copy'}</span>
+          <span>{copied ? 'Copied' : 'Copy'}</span>
         </button>
         <a class="secondary" href="/scenes/static-card">See the demos</a>
       </div>
@@ -324,7 +324,14 @@
     align-items: baseline;
     gap: 14px;
     font-family: var(--ss-mono, ui-monospace, monospace);
-    font-size: 11px;
+    font-size: 11.5px;
+    letter-spacing: 0.01em;
+  }
+
+  /* The wordmark keeps its caps: that is the brand, not a label pretending to be one.
+     The sentence beside it does not, because tracked uppercase on a full sentence is the
+     thing that reads as generated. */
+  .bar .mark {
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
@@ -689,9 +696,8 @@
   }
 
   .primary span {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-size: 10.5px;
+    letter-spacing: 0.01em;
     opacity: 0.6;
     transition:
       opacity 200ms ease,
