@@ -14,6 +14,9 @@ importers:
 
   apps/web:
     dependencies:
+      sv-agentation:
+        specifier: ^0.4.0
+        version: 0.4.0(react@19.3.1)(svelte@5.57.3)
       svelte:
         specifier: ^5.39.0
         version: 5.57.3
@@ -232,6 +235,11 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
+  '@lucide/svelte@1.66.0':
+    resolution: {integrity: sha512-G2qFyutQpgk9TY0QYgqXk9rQtUt8p509mFpQzmTpyc894hfRSFhGNcGAVAUgB8znAyVsp5WTF/2vmCwprnNQ/w==}
+    peerDependencies:
+      svelte: ^5
+
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     resolution: {integrity: sha512-oTXEIha4SsuXdTA4Iyskj0kpdx2yVXdhd75c2v3xGrHFfVMsbhTPZU/nMPL4sWKo4pBHm3aucLaqGlF696dTyQ==}
     engines: {node: ^22.20 || ^24.12 || >=25}
@@ -418,6 +426,11 @@ packages:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
     engines: {node: '>= 0.4'}
 
+  bippy@0.5.43:
+    resolution: {integrity: sha512-Tvu7b1M7+d8b9/YHaCeODEsi2CgbuoBql+dWSBrNnCuqJ1gMUeY3i0r+319hvjjl5GVBP6FFWxrKnq3fhZER0w==}
+    peerDependencies:
+      react: '>=17.0.1'
+
   chokidar@4.0.3:
     resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
     engines: {node: '>= 14.16.0'}
@@ -439,6 +452,9 @@ packages:
 
   devalue@5.9.4:
     resolution: {integrity: sha512-sPAT4pztbu6586/hrhOnMKS17IJrvg12mXiSPSS3W5qDeN2RGgvZ0diZCm31dBbnevfVmujNO3IM2wrS4Y2Rhg==}
+
+  element-source@0.0.5:
+    resolution: {integrity: sha512-04NFHxgZ3SLgvMmcPIMsx8bvbIvZZ2F2xNtxiBByACNXFiTJWU8ujz5M1PIVbBuKyKLwmXbPJsu2V2qRNhdXGQ==}
 
   esbuild@0.28.2:
     resolution: {integrity: sha512-HKVLS8dvII+xoKW9kmqxbRKrnWEXfJJr/FZhhJmiqIB0e053QNYFqOBouTMO/k5sID4MvCiUCvv8b9M4h32wIA==}
@@ -512,6 +528,10 @@ packages:
     resolution: {integrity: sha512-LJlKCCAUFKOuZxipUdYw1NzIITEsPcgyOG9LkvRJvuKj/bRzbuRY0ARXvL0pWGpsZvn8jku+LMep2eU0seHp8g==}
     engines: {node: ^10 || ^12 || >=14}
 
+  react@19.3.1:
+    resolution: {integrity: sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw==}
+    engines: {node: '>=0.10.0'}
+
   readdirp@4.1.2:
     resolution: {integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}
     engines: {node: '>= 14.18.0'}
@@ -540,6 +560,11 @@ packages:
   source-map-js@1.2.2:
     resolution: {integrity: sha512-KGj/8Y43x35aZVDtt+J4mK1hoLGHULMYfSkODJNQjNDC3oW1PqPoxMwo0pLUsWM/UEGzON/NxeHywEfNXNP3Vw==}
     engines: {node: '>=0.10.0'}
+
+  sv-agentation@0.4.0:
+    resolution: {integrity: sha512-Wy26LFdv37WBqrMcSb+kiOWH0uod0rXRx13oTkPewUYmHECWLcvFD40cjcWJlnqblIJRjk4rNqZmyVXvGPpOiQ==}
+    peerDependencies:
+      svelte: ^5.0.0
 
   svelte-check@4.7.7:
     resolution: {integrity: sha512-Ge2IMdeTpbJuzNFGRiiMg0RWgbScysKQu7xwcyFJ22+DU9F5nPX51+Q3gHmGqRxYQMx2knreVWt5oCtfe0vf2g==}
@@ -721,6 +746,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
+  '@lucide/svelte@1.66.0(svelte@5.57.3)':
+    dependencies:
+      svelte: 5.57.3
+
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
 
@@ -848,6 +877,10 @@ snapshots:
 
   axobject-query@4.1.0: {}
 
+  bippy@0.5.43(react@19.3.1):
+    dependencies:
+      react: 19.3.1
+
   chokidar@4.0.3:
     dependencies:
       readdirp: 4.1.2
@@ -863,6 +896,12 @@ snapshots:
   deepmerge@4.3.1: {}
 
   devalue@5.9.4: {}
+
+  element-source@0.0.5(react@19.3.1):
+    dependencies:
+      bippy: 0.5.43(react@19.3.1)
+    transitivePeerDependencies:
+      - react
 
   esbuild@0.28.2:
     optionalDependencies:
@@ -936,6 +975,8 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.2
 
+  react@19.3.1: {}
+
   readdirp@4.1.2: {}
 
   readdirp@5.1.1: {}
@@ -982,6 +1023,14 @@ snapshots:
   semver@7.8.5: {}
 
   source-map-js@1.2.2: {}
+
+  sv-agentation@0.4.0(react@19.3.1)(svelte@5.57.3):
+    dependencies:
+      '@lucide/svelte': 1.66.0(svelte@5.57.3)
+      element-source: 0.0.5(react@19.3.1)
+      svelte: 5.57.3
+    transitivePeerDependencies:
+      - react
 
   svelte-check@4.7.7(picomatch@4.0.7)(svelte@5.57.3)(typescript@5.9.3):
     dependencies:

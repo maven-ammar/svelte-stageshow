@@ -182,34 +182,42 @@
   </section>
 
   <footer class="site-footer">
-    <div class="foot-links">
-      <div>
-        <span class="mono">this port</span>
-        <a href="?scene=static-card">Gallery</a>
-        <a href="?scene=hero-demo">Hero demo</a>
-        <a href="?scene=bento">Bento</a>
+    <div class="foot-main">
+      <div class="foot-brand">
+        <a class="foot-mark" href="/">Stageshow</a>
+        <p>A Svelte 5 port of Benji Taylor's kit. MIT, notices kept.</p>
       </div>
-      <div>
-        <span class="mono">the kit</span>
-        <a href="?scene=phones">Phones</a>
-        <a href="?scene=google-calendar">Calendar</a>
-        <a href="?scene=messages">Messages</a>
-      </div>
-      <div>
-        <span class="mono">upstream</span>
-        <a href="https://benji.org/stageshow" target="_blank" rel="noreferrer">Stageshow</a>
-        <a href="https://github.com/benjitaylor/skills" target="_blank" rel="noreferrer">Source</a>
-      </div>
-      <div>
-        <span class="mono">package</span>
-        <a href="https://github.com/maven-ammar/svelte-stageshow" target="_blank" rel="noreferrer">GitHub</a>
-        <a
-          href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0"
-          target="_blank"
-          rel="noreferrer">Release 0.2.0</a
-        >
+
+      <div class="foot-links">
+        <div>
+          <span class="mono">this port</span>
+          <a href="?scene=static-card">Gallery</a>
+          <a href="?scene=hero-demo">Hero demo</a>
+          <a href="?scene=bento">Bento</a>
+        </div>
+        <div>
+          <span class="mono">the kit</span>
+          <a href="?scene=phones">Phones</a>
+          <a href="?scene=google-calendar">Calendar</a>
+          <a href="?scene=messages">Messages</a>
+        </div>
+        <div>
+          <span class="mono">upstream</span>
+          <a href="https://benji.org/stageshow" target="_blank" rel="noreferrer">Stageshow</a>
+          <a href="https://github.com/benjitaylor/skills" target="_blank" rel="noreferrer">Source</a>
+        </div>
+        <div>
+          <span class="mono">package</span>
+          <a href="https://github.com/maven-ammar/svelte-stageshow" target="_blank" rel="noreferrer">GitHub</a>
+          <a
+            href="https://github.com/maven-ammar/svelte-stageshow/releases/tag/v0.2.0"
+            target="_blank"
+            rel="noreferrer">Release 0.2.0</a
+          >
+        </div>
       </div>
     </div>
+
     <div class="legal">
       <span>
         svelte-stageshow / 0.2.0 — MIT. Stageshow is Benji Taylor's; this port keeps his licence and
@@ -217,7 +225,10 @@
       </span>
       <span class="mono">ported by Maven</span>
     </div>
-    <img class="dunes" src="/dunes-ascii.png" alt="" aria-hidden="true" />
+
+    <div class="dunes-wrap" aria-hidden="true">
+      <img class="dunes" src="/dunes-band.png" alt="" />
+    </div>
   </footer>
 
 <style>
@@ -612,8 +623,40 @@
     border-top: 1px solid var(--line);
   }
 
+  /* Wordmark on the left, link groups on the right. The dunes are a thin
+     horizon band at the very bottom, not a full-bleed wall of dots. */
+  .foot-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: start;
+    padding: 0 clamp(18px, 4vw, 64px) 30px;
+  }
+
+  .foot-brand {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+  }
+
+  .foot-mark {
+    font-family: var(--serif);
+    font-size: clamp(26px, 2.4vw, 34px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: #f6f1e7;
+    text-decoration: none;
+  }
+
+  .foot-brand p {
+    margin: 0;
+    max-width: 28ch;
+    font-size: 12px;
+    line-height: 1.55;
+    color: rgba(244, 241, 230, 0.5);
+  }
+
   .foot-links {
-    padding: 0 clamp(18px, 4vw, 64px);
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
@@ -663,13 +706,45 @@
     color: rgba(244, 241, 230, 0.42);
   }
 
-  .dunes {
+  .dunes-wrap {
     position: relative;
     z-index: 0;
+    height: clamp(110px, 14vw, 168px);
+    margin-top: 24px;
+    overflow: hidden;
+  }
+
+  /* A fade so the band meets the footer instead of starting with a hard edge. */
+  .dunes-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 45%;
+    background: linear-gradient(to bottom, #0b0908 0%, rgba(11, 9, 8, 0) 100%);
+    pointer-events: none;
+  }
+
+  /* The dune art only reads as a landscape with vertical room, so in the footer
+     it is used as what it can be at 150px: a fine dot horizon that fades out. */
+  .dunes {
     display: block;
     width: 100%;
-    margin: 18px 0 0;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 30%;
+    opacity: 0.45;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.55) 45%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0.55) 45%,
+      transparent 100%
+    );
   }
 
   @media (max-width: 900px) {
@@ -689,6 +764,16 @@
     .legal {
       flex-direction: column;
       gap: 8px;
+    }
+
+    .foot-main {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 26px;
+    }
+
+    .foot-links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px 16px;
     }
   }
 </style>

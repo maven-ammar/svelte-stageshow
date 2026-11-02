@@ -10,6 +10,15 @@
   const capture = params.get('capture')
   const test = params.get('test')
   const width = Number(params.get('w') ?? 0)
+
+  // Dev-only annotation inspector: the owner marks up the page and hands back
+  // structured notes. Dynamically imported so it never reaches a production bundle.
+  let Inspector = $state<Component | null>(null)
+  if (import.meta.env.DEV) {
+    import('sv-agentation').then((mod) => {
+      Inspector = mod.Agentation as unknown as Component
+    })
+  }
   // The skill's film method screenshots a 900px-wide #example wrapper around
   // the stage. `still=1` is the old direct-still route; the skill's own
   // film.mjs captures the opening frame without it.
@@ -160,6 +169,11 @@
       </p>
     </footer>
   </main>
+{/if}
+
+{#if Inspector}
+  {@const InspectorComponent = Inspector}
+  <InspectorComponent />
 {/if}
 
 

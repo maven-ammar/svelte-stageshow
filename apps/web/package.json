@@ -10,6 +10,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings"
   },
   "dependencies": {
+    "sv-agentation": "^0.4.0",
     "svelte": "^5.39.0",
     "svelte-stageshow": "workspace:*"
   },
