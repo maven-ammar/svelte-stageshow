@@ -24,6 +24,35 @@
   // film.mjs captures the opening frame without it.
   const still = params.get('still') === '1' || params.get('ref') === '1'
 
+  // The shell ships one generic description, so per-route values are written onto
+  // the existing tags rather than added as second ones — otherwise the static tag
+  // wins and every scene page advertises the landing page.
+  $effect(() => {
+    if (capture || test) return
+    const description = landing
+      ? "A complete Svelte 5 port of Benji Taylor's Stageshow kit: 69 framed product-shot scenes, real browser chrome, scripted cursors, and no React at runtime."
+      : `The ${selectedSlug} scene from Benji Taylor's Stageshow kit, ported to Svelte 5. Working component, authored design size, compared against his own render.`
+    const canonical = landing
+      ? 'https://svelte-stageshow.vercel.app/'
+      : `https://svelte-stageshow.vercel.app/scenes/${selectedSlug}`
+
+    let meta = document.head.querySelector<HTMLMetaElement>('meta[name="description"]')
+    if (!meta) {
+      meta = document.createElement('meta')
+      meta.name = 'description'
+      document.head.appendChild(meta)
+    }
+    meta.content = description
+
+    let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+    if (!link) {
+      link = document.createElement('link')
+      link.rel = 'canonical'
+      document.head.appendChild(link)
+    }
+    link.href = canonical
+  })
+
   type SceneModule = { default: Component<Record<string, never>> }
   // Every scene file in this directory is registered automatically. A new
   // port is a new file; no index edit and no chance of forgetting a slug.
@@ -90,29 +119,6 @@
         ? 'svelte-stageshow: a Svelte 5 port of Stageshow'
         : `${selectedSlug} - a Stageshow scene in Svelte 5`}</title
   >
-  <meta
-    name="description"
-    content={landing
-      ? "A complete Svelte 5 port of Benji Taylor's Stageshow kit: 69 framed product-shot scenes, real browser chrome, scripted cursors, and no React at runtime."
-      : `The ${selectedSlug} scene from Benji Taylor's Stageshow kit, ported to Svelte 5. Working component, authored design size, compared against his own render.`}
-  />
-  <link
-    rel="canonical"
-    href={landing
-      ? 'https://svelte-stageshow.vercel.app/'
-      : `https://svelte-stageshow.vercel.app/scenes/${selectedSlug}`}
-  />
-  <meta property="og:type" content="website" />
-  <meta
-    property="og:title"
-    content={landing
-      ? 'svelte-stageshow: a Svelte 5 port of Stageshow'
-      : `${selectedSlug} — a Stageshow scene in Svelte 5`}
-  />
-  <meta
-    property="og:description"
-    content="Every scene, stylesheet and brand mark from Benji Taylor's kit, rebuilt in Svelte 5 and checked against his own renders."
-  />
   <link rel="icon" href="data:," />
 </svelte:head>
 
@@ -149,9 +155,10 @@
   <main class="gallery">
     <header class="gallery-head">
       <a class="gallery-back" href="/">← back to the landing page</a>
+      <h1>{selectedSlug}</h1>
       <p class="lede">
-        The whole Stageshow kit, ported from Benji Taylor's React source. {sceneNames.length} scenes. Pick one;
-        the stage is the shot.
+        One of {sceneNames.length} scenes in the whole Stageshow kit, ported from Benji Taylor's React
+        source. The stage below is the shot.
       </p>
     </header>
 
@@ -165,7 +172,6 @@
 
     <section class="scene-block">
       <div class="scene-head">
-        <h2>{selectedSlug}</h2>
         <p>Capture: <code>?capture={selectedSlug}</code> / design size as authored in the scene.</p>
       </div>
       <div class="scene-stage">
