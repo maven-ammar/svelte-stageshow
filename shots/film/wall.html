@@ -12,15 +12,13 @@
     <style>
       /* The film, as a page.
 
-         One idea, one take, no cuts. It opens inside a single scene, pulls back until that scene
-         is one window on a board of eleven, drifts, then pushes into another and holds. There is
-         no title card and no end card: the last frame is still the product moving, with the name
-         set into the corner of it.
+         One move, no cuts. It opens inside a single scene, pulls back until that scene is one
+         window on a board of eleven, drifts while every window animates, and then fades into the
+         Open Graph card — the same image a link preview shows, so the film and the link end in the
+         same place. No title card, no end card, no cut.
 
-         Every window is the scene at its own aspect — the clips are filmed at native size, so
-         there is no letterbox to hide. A uniform grid of 16:9 cells would have meant black bars
-         inside every window the moment the camera came close, which is exactly what made the
-         first attempt read as video-in-a-video. */
+         Every window is its scene at its own aspect, filmed at native size, so there is no
+         letterbox to hide when the camera comes close. */
 
       *,
       *::before,
@@ -46,6 +44,13 @@
         overflow: hidden;
       }
 
+      #board {
+        position: absolute;
+        inset: 0;
+        background: #08080a;
+        overflow: hidden;
+      }
+
       #world {
         position: absolute;
         left: 50%;
@@ -68,8 +73,8 @@
         display: block;
       }
 
-      /* A vignette, not decoration: it keeps the eye in the middle of the board while twenty-odd
-         square metres of UI are moving at the edges. */
+      /* Keeps the eye in the middle of the board while twenty-odd square metres of UI move at the
+         edges. Not decoration. */
       #vignette {
         position: absolute;
         inset: 0;
@@ -77,50 +82,63 @@
         background: radial-gradient(120% 90% at 50% 46%, transparent 42%, rgba(0, 0, 0, 0.55) 100%);
       }
 
-      /* The signature sits in the frame at the end instead of on a card. He called the end slides
-         odd on the first cut and he was right: a flat card after twenty seconds of motion reads
-         like a slide, not like the film stopping. */
-      #sign {
+      /* The link-preview card, rebuilt rather than pasted, because the owner asked for the gradient
+         behind it to drift and a baked PNG cannot drift. The background is the OG's own colours —
+         near-black #0b0908, an amber light low-left, a violet light high-right — and the dot mark
+         is the OG's mark cropped out and composited back with a screen blend, so the film still
+         lands on the same image a link preview shows. */
+      #og {
         position: absolute;
-        left: 64px;
-        bottom: 56px;
+        inset: 0;
         opacity: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        background: #0b0908;
+        overflow: hidden;
       }
 
-      #sign .name {
+      #og .bg {
+        position: absolute;
+        inset: -22%;
+        will-change: transform;
+        background:
+          radial-gradient(46% 52% at 12% 88%, rgba(105, 74, 13, 0.85) 0%, rgba(47, 26, 18, 0.55) 42%, transparent 72%),
+          radial-gradient(44% 50% at 88% 8%, rgba(58, 37, 80, 0.9) 0%, rgba(30, 21, 39, 0.6) 45%, transparent 74%);
+      }
+
+      #og .mark {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 55%;
+        aspect-ratio: 369 / 409;
+        transform: translate(50%, -50%);
+      }
+
+      /* No blend mode: the mark is keyed to dots-on-transparent, so it keeps the card's own cream
+         however the light behind it moves. */
+      #og .word {
+        position: absolute;
+        left: 104px;
+        top: 178px;
         font-family: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
-        font-style: italic;
-        font-size: 40px;
-        line-height: 1;
-        letter-spacing: -0.01em;
+        font-size: 141px;
+        line-height: 0.9;
+        letter-spacing: -0.012em;
+        color: #f5f1e7;
       }
 
-      #sign .tail {
+      #og .sub {
+        position: absolute;
+        left: 100px;
+        top: 528px;
         font-family: ui-monospace, monospace;
         font-size: 15px;
-        letter-spacing: 0.01em;
-        color: #b6b2a9;
-        display: flex;
-        gap: 14px;
+        letter-spacing: 0.22em;
+        color: #b8b2a6;
       }
 
-      #sign .tail i {
+      #og .sub em {
         font-style: normal;
-        color: #6f6c66;
-      }
-
-      /* A scrim under the type only, so the signature is legible over a light scene without
-         dimming the whole frame. */
-      #scrim {
-        position: absolute;
-        inset: auto 0 0 0;
-        height: 240px;
-        pointer-events: none;
-        opacity: 0;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent);
+        color: #8a857b;
       }
 
       #curtain {
@@ -133,18 +151,23 @@
   </head>
   <body>
     <div id="stage">
-      <div id="world"></div>
-      <div id="vignette"></div>
-      <div id="scrim"></div>
-      <div id="sign">
-        <div class="name">svelte-stageshow</div>
-        <div class="tail"><span>a Svelte 5 port of Stageshow</span><i>·</i><span>copy the CSS</span></div>
+      <div id="og">
+        <div class="bg"></div>
+        <img class="mark" src="og-mark.png" alt="" />
+        <div class="word">svelte<br />stageshow</div>
+        <div class="sub">A SVELTE 5 PORT OF BENJI TAYLOR'S <em>KIT</em></div>
+      </div>
+      <!-- The board carries its own background, so it is a layer that can be faded off the card
+           underneath rather than a transparent container with the card showing through its gaps. -->
+      <div id="board">
+        <div id="world"></div>
+        <div id="vignette"></div>
       </div>
       <div id="curtain"></div>
     </div>
 
     <script>
-      // Scene, native aspect, and the row it belongs to. Every clip was filmed at the stage's own
+      // Scene, native aspect, and the band it belongs to. Every clip was filmed at the stage's own
       // size, so a cell at the right aspect has nothing to letterbox.
       const SCENES = [
         ['dynamic-island', 640, 400, 0],
@@ -163,8 +186,8 @@
       const ROW_GAP = 46
       const GUTTER = 46
       // One target width for every band, so the board is justified edge to edge. Equal heights
-      // with ragged rights is what made the first pass read as a contact sheet; equal widths with
-      // varying heights reads as a plate.
+      // with ragged rights reads as a contact sheet; equal widths with heights taken from each
+      // aspect reads as a plate.
       const TARGET_W = 1900
 
       const rows = new Map()
@@ -180,22 +203,20 @@
           const sum = aspects.reduce((a, b) => a + b, 0)
           const height = Math.round((TARGET_W - GUTTER * (row.length - 1)) / sum)
           const widths = row.map(([, w, h]) => Math.round((height * w) / h))
-          // Absorb rounding into the widest cell so each band lands on the target width exactly.
+          // Absorb rounding into the last cell so each band lands on the target width exactly.
           const slack = TARGET_W - (widths.reduce((a, b) => a + b, 0) + GUTTER * (row.length - 1))
           return { row, widths, height, slack }
         })
 
       const widest = TARGET_W
-
       const world = document.getElementById('world')
-
       const videos = []
       const centre = {}
       let y = 0
+
       for (const band of bands) {
         let x = 0
         band.row.forEach((scene, i) => {
-          // The last cell in the band takes the rounding slack, so the row edge is flush.
           const width = band.widths[i] + (i === band.row.length - 1 ? band.slack : 0)
           const el = document.createElement('div')
           el.className = 'cell'
@@ -205,7 +226,6 @@
           video.muted = true
           video.loop = true
           video.playsInline = true
-          video.autoplay = true
           video.preload = 'auto'
           el.append(video)
           world.append(el)
@@ -215,6 +235,7 @@
         })
         y += band.height + ROW_GAP
       }
+
       const worldH = y - ROW_GAP
       world.style.width = `${widest}px`
       world.style.height = `${worldH}px`
@@ -225,23 +246,28 @@
       // Whatever the layout works out to, the board shot is the scale that fills 96% of the frame.
       const FIT = Math.min(W / widest, H / worldH) * 0.96
 
-      // Shots are [seconds, scene or null, scale]. A scene name means "centre on this cell";
-      // null means "centre on the board". Numbers are literal magnification, so the board shot is
-      // a fraction of FIT and a close-up is around 3.
+      // [seconds, scene or null, scale]. A scene name centres on that cell; null centres the board.
+      // The opening scene is dark-hero because it is the one stage whose aspect is already near
+      // 16:9: at cover it fills the frame at 1.68x, so the first second is the scene as designed
+      // rather than a crop of it. The phone scenes only fill the frame at 3x, which is why opening
+      // on one read as a white screen with a chat bubble in it.
       const SHOTS = [
-        [0.0, 'messages', 3.5], //               inside the thread, full frame
-        [2.2, 'messages', 3.34], //              a breath of pull, so the first beat is never dead
-        [6.4, null, FIT * 0.96], //              pull back: the scene becomes one window on a board
-        [10.6, null, FIT * 1.07], //             drift and creep in, so the board is never a still
-        [14.4, 'chart-scrub', 3.12], //          push into one scene and stop
-        [17.2, 'chart-scrub', 2.96], //          settle, which is where the signature lands
+        [0.0, 'dark-hero', 1.78],
+        [1.8, 'dark-hero', 1.74],
+        [5.6, null, FIT * 0.97],
+        [9.8, null, FIT * 1.04],
       ]
 
-      const EASE = [0.66, 0, 0.34, 1]
+      // The card comes up out of the dark, and the board goes down into it first. A straight
+      // cross-dissolve between a dense grid of UI and a text card has a legible double-exposure
+      // midpoint no matter how the curves are shaped; both backgrounds here are within three
+      // values of each other, so a dip is invisible and the overlap is only darkness.
+      const BOARD_OUT = 10.4
+      const CARD_IN = 10.12
+      const CARD_FULL = 11.02
+      const TOTAL = 14.4
 
-      // A scale of 0 means "whatever fills the frame", because the board's size is a product of
-      // the layout and hardcoding it drifts the moment a scene is added.
-      const scaleOf = (s) => (s === 0 ? FIT : s)
+      const EASE = [0.66, 0, 0.34, 1]
 
       const target = (shot) => {
         if (shot === null) return [widest / 2, worldH / 2, null]
@@ -265,8 +291,8 @@
       function cameraAt(t) {
         const first = SHOTS[0]
         if (t <= first[0]) {
-          const [x, y2] = target(first[1])
-          return [x, y2, scaleOf(first[2])]
+          const [x, y] = target(first[1])
+          return [x, y, first[2]]
         }
         for (let i = 1; i < SHOTS.length; i += 1) {
           const [t1, who1, s1] = SHOTS[i]
@@ -275,46 +301,100 @@
             const p = ease((t - t0) / (t1 - t0))
             const [x0, y0] = target(who0)
             const [x1, y1] = target(who1)
-            // Between two different scenes the centre travels with the board, not with the cells,
-            // so the camera never slides across a scene it is not showing.
-            const same = who0 === who1
-            return [
-              same ? x0 : x0 + (x1 - x0) * p,
-              same ? y0 : y0 + (y1 - y0) * p,
-              scaleOf(s0) + (scaleOf(s1) - scaleOf(s0)) * p,
-            ]
+            return [x0 + (x1 - x0) * p, y0 + (y1 - y0) * p, s0 + (s1 - s0) * p]
           }
         }
         const last = SHOTS[SHOTS.length - 1]
-        const [x, y2] = target(last[1])
-        return [x, y2, scaleOf(last[2])]
+        const [x, y] = target(last[1])
+        return [x, y, last[2]]
       }
 
+      const og = document.getElementById('og')
+      const ogBg = og.querySelector('.bg')
+      const curtain = document.getElementById('curtain')
+      const board = document.getElementById('board')
+
       function place(t) {
-        const [x, y2, s] = cameraAt(t)
+        const [x, y, s] = cameraAt(t)
         // The scale is applied about the world's own centre, so the pan is multiplied by it.
-        world.style.transform = `translate3d(${-s * (x - widest / 2)}px, ${-s * (y2 - worldH / 2)}px, 0) scale(${s})`
-        // The signature rises as the last push settles, and the film ends held.
-        const fade = Math.min(1, Math.max(0, (t - 17.0) / 0.8))
-        const sign = document.getElementById('sign')
-        sign.style.opacity = String(fade)
-        sign.style.transform = `translateY(${(1 - fade) * 10}px)`
-        document.getElementById('scrim').style.opacity = String(fade * 0.9)
-        document.getElementById('curtain').style.opacity = '0'
+        world.style.transform = `translate3d(${-s * (x - widest / 2)}px, ${-s * (y - worldH / 2)}px, 0) scale(${s})`
+        // A straight cross-dissolve between a busy board and a card reads as a double exposure.
+        // So the card does not fade in at all — it sits behind the board at full strength and the
+        // board fades out over it. One image leaves, the other is revealed; nothing is added.
+        const out = Math.min(1, Math.max(0, (t - 9.8) / (BOARD_OUT - 9.8)))
+        const rise = Math.min(1, Math.max(0, (t - CARD_IN) / (CARD_FULL - CARD_IN)))
+        og.style.opacity = String(rise * rise * (3 - 2 * rise))
+        board.style.opacity = String(1 - out)
+        // Two slow orbits with different periods, so the light never repeats within the film and
+        // never looks like it is on a loop. Small amplitudes: the card should breathe, not sway.
+        const a = t * 0.42
+        const b = t * 0.29
+        ogBg.style.transform = `translate3d(${Math.sin(a) * 2.2}%, ${Math.cos(b) * 1.8}%, 0) scale(${1.06 + Math.sin(b * 0.7) * 0.015})`
+        curtain.style.opacity = '0'
+      }
+
+      /* ------------------------------------------------------------------------------------
+         Two clocks.
+         In a browser the page runs on requestAnimationFrame, which is what a person watching it
+         live should get. Under scripts/render-film.mjs the page is asked for a named moment
+         instead, and every clip is seeked to that instant, so the output has one frame per
+         output frame and nothing to duplicate.
+         ------------------------------------------------------------------------------------ */
+
+      const seekAll = async (t) => {
+        await Promise.all(
+          videos.map(
+            (video) =>
+              new Promise((resolve) => {
+                const duration = video.duration || 6
+                const to = Math.min(t % duration, duration - 0.04)
+                if (Math.abs(video.currentTime - to) < 0.002) return resolve()
+                const done = () => {
+                  video.removeEventListener('seeked', done)
+                  resolve()
+                }
+                video.addEventListener('seeked', done)
+                // A seek that never lands must not hang the render; the frame still gets taken.
+                setTimeout(done, 500)
+                video.currentTime = to
+              }),
+          ),
+        )
       }
 
       const ready = () => videos.every((v) => v.readyState >= 2)
       const wait = () => (ready() ? Promise.resolve() : new Promise((r) => setTimeout(wait, 40)))
       const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
-      // '#t=7.4' freezes the camera there, for checking a composition without filming the take.
+      // '#t=7.4' freezes the camera there, for checking a composition without rendering the take.
       const freeze = /t=([\d.]+)/.exec(location.hash)
+      const offline = location.hash.includes('render')
 
-      const start = () => {
-        for (const video of videos) video.play().catch(() => {})
+      // Place the camera immediately, before any clip is decodable. A still taken in the first
+      // second then shows the right composition instead of black, and the real render only ever
+      // takes frames after renderFrame() has resolved.
+      place(freeze ? Number(freeze[1]) : 0)
+
+      // Bounded, because a paused video is allowed to sit at metadata forever and a page that never
+      // signals ready renders black — which cost an hour of guessing at the wrong bug once already.
+      Promise.race([wait(), sleep(5000)]).then(() => {
         window.__filmReady = true
+
+        if (offline) {
+          for (const video of videos) video.pause()
+          window.renderFrame = async (t) => {
+            place(t)
+            await seekAll(t)
+          }
+          place(0)
+          return
+        }
+
+        for (const video of videos) video.play().catch(() => {})
         if (freeze) {
-          place(Number(freeze[1]))
+          const at = Number(freeze[1])
+          place(at)
+          seekAll(at)
           return
         }
         const started = performance.now()
@@ -323,20 +403,7 @@
           requestAnimationFrame(tick)
         }
         tick()
-        window.__filmEnd = 19.4
-      }
-
-      // Never block the film on a webfont: document.fonts.ready can stay pending for as long as
-      // the Google Fonts stylesheet does, and an unsettled promise here means a black capture.
-      let begun = false
-      const once = () => {
-        if (begun) return
-        begun = true
-        start()
-      }
-      Promise.race([document.fonts.ready, sleep(1200)]).then(once, once)
-      wait().then(once)
-      setTimeout(once, 3000)
+      })
     </script>
   </body>
 </html>
