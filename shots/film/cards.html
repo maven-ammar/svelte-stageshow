@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Stageshow film cards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Cards for the launch film. Rendered at 1280x720 with deviceScaleFactor 2, so every
+         measurement here is in CSS pixels at that frame. The background matches the clips'
+         letterbox colour (#0a0a0b) so a card cut is invisible against a scene cut. */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #0a0a0b;
+        color: #f2f0ec;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 88px 96px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .kicker {
+        font-family: ui-monospace, monospace;
+        font-size: 17px;
+        letter-spacing: 0.02em;
+        color: #8f8d88;
+      }
+
+      .display {
+        font-family: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+        font-weight: 400;
+        font-size: 104px;
+        line-height: 0.98;
+        letter-spacing: -0.015em;
+        margin: 0;
+      }
+
+      .display em {
+        font-style: italic;
+        color: #e8e4da;
+      }
+
+      .sub {
+        font-size: 22px;
+        line-height: 1.5;
+        color: #b6b2a9;
+        max-width: 46ch;
+        margin: 0;
+      }
+
+      .foot {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 40px;
+        border-top: 1px solid #26262a;
+        padding-top: 22px;
+        font-family: ui-monospace, monospace;
+        font-size: 17px;
+        color: #8f8d88;
+      }
+
+      .foot strong {
+        color: #f2f0ec;
+        font-weight: 400;
+      }
+
+      /* A single warm hairline, the only colour on the card. */
+      .rule {
+        width: 84px;
+        height: 2px;
+        background: #c8623a;
+      }
+
+      .end .display {
+        font-size: 84px;
+      }
+
+      /* No CSS animation here on purpose: these are screenshotted as stills, so anything that
+         moves at load time would be captured mid-transition. The film fades the cards in. */
+    </style>
+  </head>
+  <body data-card="title">
+    <section class="card" id="title">
+      <div>
+        <div class="rule" style="margin-bottom: 34px"></div>
+        <div class="kicker" style="margin-bottom: 30px">svelte-stageshow</div>
+        <h1 class="display">Stageshow,<br />ported to <em>Svelte 5</em>.</h1>
+      </div>
+      <div>
+        <p class="sub">
+          The scenes Benji Taylor animated, rebuilt as Svelte components with their CSS intact.
+          Take the one you want.
+        </p>
+        <div class="foot">
+          <span>npm <strong>svelte-stageshow</strong></span>
+          <span>svelte-stageshow.vercel.app</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card end" id="end" hidden>
+      <div>
+        <div class="kicker" style="margin-bottom: 30px">install</div>
+        <h1 class="display"><em>pnpm add</em><br />svelte-stageshow</h1>
+      </div>
+      <div>
+        <p class="sub">
+          Import the component, or copy the stylesheet and paste it into whatever you already have.
+          Both work; neither needs a build step.
+        </p>
+        <div class="foot">
+          <span><strong>MIT</strong> · ported with permission</span>
+          <span>svelte-stageshow.vercel.app</span>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // '#end' renders the closing card into the same file, so one source keeps both
+      // consistent. The hash, not a query string: Chromium drops ?card=end from a file://
+      // URL, which is how the first end-card screenshot silently came out as the title.
+      const which = location.hash.slice(1) || 'title'
+      document.body.dataset.card = which
+      document.getElementById(which === 'end' ? 'title' : 'end').hidden = true
+      document.getElementById(which === 'end' ? 'end' : 'title').hidden = false
+    </script>
+  </body>
+</html>

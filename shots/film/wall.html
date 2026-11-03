@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Stageshow film — the wall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* The film, as a page.
+
+         One idea, one take, no cuts. It opens inside a single scene, pulls back until that scene
+         is one window on a board of eleven, drifts, then pushes into another and holds. There is
+         no title card and no end card: the last frame is still the product moving, with the name
+         set into the corner of it.
+
+         Every window is the scene at its own aspect — the clips are filmed at native size, so
+         there is no letterbox to hide. A uniform grid of 16:9 cells would have meant black bars
+         inside every window the moment the camera came close, which is exactly what made the
+         first attempt read as video-in-a-video. */
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #08080a;
+        color: #f2f0ec;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      #stage {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+
+      #world {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform-origin: 50% 50%;
+        will-change: transform;
+      }
+
+      .cell {
+        position: absolute;
+        overflow: hidden;
+        background: #101013;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.07);
+      }
+
+      .cell video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* A vignette, not decoration: it keeps the eye in the middle of the board while twenty-odd
+         square metres of UI are moving at the edges. */
+      #vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(120% 90% at 50% 46%, transparent 42%, rgba(0, 0, 0, 0.55) 100%);
+      }
+
+      /* The signature sits in the frame at the end instead of on a card. He called the end slides
+         odd on the first cut and he was right: a flat card after twenty seconds of motion reads
+         like a slide, not like the film stopping. */
+      #sign {
+        position: absolute;
+        left: 64px;
+        bottom: 56px;
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      #sign .name {
+        font-family: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+        font-style: italic;
+        font-size: 40px;
+        line-height: 1;
+        letter-spacing: -0.01em;
+      }
+
+      #sign .tail {
+        font-family: ui-monospace, monospace;
+        font-size: 15px;
+        letter-spacing: 0.01em;
+        color: #b6b2a9;
+        display: flex;
+        gap: 14px;
+      }
+
+      #sign .tail i {
+        font-style: normal;
+        color: #6f6c66;
+      }
+
+      /* A scrim under the type only, so the signature is legible over a light scene without
+         dimming the whole frame. */
+      #scrim {
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 240px;
+        pointer-events: none;
+        opacity: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent);
+      }
+
+      #curtain {
+        position: absolute;
+        inset: 0;
+        background: #08080a;
+        z-index: 5;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <div id="world"></div>
+      <div id="vignette"></div>
+      <div id="scrim"></div>
+      <div id="sign">
+        <div class="name">svelte-stageshow</div>
+        <div class="tail"><span>a Svelte 5 port of Stageshow</span><i>·</i><span>copy the CSS</span></div>
+      </div>
+      <div id="curtain"></div>
+    </div>
+
+    <script>
+      // Scene, native aspect, and the row it belongs to. Every clip was filmed at the stage's own
+      // size, so a cell at the right aspect has nothing to letterbox.
+      const SCENES = [
+        ['dynamic-island', 640, 400, 0],
+        ['chart-scrub', 640, 400, 0],
+        ['messages', 420, 340, 0],
+        ['phone-touch', 400, 520, 0],
+        ['presence', 660, 420, 1],
+        ['reorder', 520, 360, 1],
+        ['table-edit', 660, 400, 1],
+        ['subscriptions', 720, 440, 1],
+        ['loading', 600, 400, 2],
+        ['form-error', 560, 400, 2],
+        ['dark-hero', 760, 440, 2],
+      ]
+
+      const ROW_GAP = 46
+      const GUTTER = 46
+      // One target width for every band, so the board is justified edge to edge. Equal heights
+      // with ragged rights is what made the first pass read as a contact sheet; equal widths with
+      // varying heights reads as a plate.
+      const TARGET_W = 1900
+
+      const rows = new Map()
+      for (const scene of SCENES) {
+        if (!rows.has(scene[3])) rows.set(scene[3], [])
+        rows.get(scene[3]).push(scene)
+      }
+
+      const bands = [...rows]
+        .sort((a, b) => a[0] - b[0])
+        .map(([, row]) => {
+          const aspects = row.map(([, w, h]) => w / h)
+          const sum = aspects.reduce((a, b) => a + b, 0)
+          const height = Math.round((TARGET_W - GUTTER * (row.length - 1)) / sum)
+          const widths = row.map(([, w, h]) => Math.round((height * w) / h))
+          // Absorb rounding into the widest cell so each band lands on the target width exactly.
+          const slack = TARGET_W - (widths.reduce((a, b) => a + b, 0) + GUTTER * (row.length - 1))
+          return { row, widths, height, slack }
+        })
+
+      const widest = TARGET_W
+
+      const world = document.getElementById('world')
+
+      const videos = []
+      const centre = {}
+      let y = 0
+      for (const band of bands) {
+        let x = 0
+        band.row.forEach((scene, i) => {
+          // The last cell in the band takes the rounding slack, so the row edge is flush.
+          const width = band.widths[i] + (i === band.row.length - 1 ? band.slack : 0)
+          const el = document.createElement('div')
+          el.className = 'cell'
+          el.style.cssText = `left:${x}px;top:${y}px;width:${width}px;height:${band.height}px`
+          const video = document.createElement('video')
+          video.src = `native/${scene[0]}.mp4`
+          video.muted = true
+          video.loop = true
+          video.playsInline = true
+          video.autoplay = true
+          video.preload = 'auto'
+          el.append(video)
+          world.append(el)
+          videos.push(video)
+          centre[scene[0]] = [x + width / 2, y + band.height / 2]
+          x += width + GUTTER
+        })
+        y += band.height + ROW_GAP
+      }
+      const worldH = y - ROW_GAP
+      world.style.width = `${widest}px`
+      world.style.height = `${worldH}px`
+      world.style.margin = `${-worldH / 2}px 0 0 ${-widest / 2}px`
+
+      const W = 1280
+      const H = 720
+      // Whatever the layout works out to, the board shot is the scale that fills 96% of the frame.
+      const FIT = Math.min(W / widest, H / worldH) * 0.96
+
+      // Shots are [seconds, scene or null, scale]. A scene name means "centre on this cell";
+      // null means "centre on the board". Numbers are literal magnification, so the board shot is
+      // a fraction of FIT and a close-up is around 3.
+      const SHOTS = [
+        [0.0, 'messages', 3.5], //               inside the thread, full frame
+        [2.2, 'messages', 3.34], //              a breath of pull, so the first beat is never dead
+        [6.4, null, FIT * 0.96], //              pull back: the scene becomes one window on a board
+        [10.6, null, FIT * 1.07], //             drift and creep in, so the board is never a still
+        [14.4, 'chart-scrub', 3.12], //          push into one scene and stop
+        [17.2, 'chart-scrub', 2.96], //          settle, which is where the signature lands
+      ]
+
+      const EASE = [0.66, 0, 0.34, 1]
+
+      // A scale of 0 means "whatever fills the frame", because the board's size is a product of
+      // the layout and hardcoding it drifts the moment a scene is added.
+      const scaleOf = (s) => (s === 0 ? FIT : s)
+
+      const target = (shot) => {
+        if (shot === null) return [widest / 2, worldH / 2, null]
+        return [centre[shot][0], centre[shot][1], shot]
+      }
+
+      // Bezier easing by bisection: no dependency, and 24 steps is far below a frame of error.
+      function ease(p) {
+        let lo = 0
+        let hi = 1
+        let t = p
+        for (let i = 0; i < 24; i += 1) {
+          t = (lo + hi) / 2
+          const x = 3 * (1 - t) * (1 - t) * t * EASE[0] + 3 * (1 - t) * t * t * EASE[2] + t * t * t
+          if (x < p) lo = t
+          else hi = t
+        }
+        return 3 * (1 - t) * t * t + t * t * t
+      }
+
+      function cameraAt(t) {
+        const first = SHOTS[0]
+        if (t <= first[0]) {
+          const [x, y2] = target(first[1])
+          return [x, y2, scaleOf(first[2])]
+        }
+        for (let i = 1; i < SHOTS.length; i += 1) {
+          const [t1, who1, s1] = SHOTS[i]
+          const [t0, who0, s0] = SHOTS[i - 1]
+          if (t <= t1) {
+            const p = ease((t - t0) / (t1 - t0))
+            const [x0, y0] = target(who0)
+            const [x1, y1] = target(who1)
+            // Between two different scenes the centre travels with the board, not with the cells,
+            // so the camera never slides across a scene it is not showing.
+            const same = who0 === who1
+            return [
+              same ? x0 : x0 + (x1 - x0) * p,
+              same ? y0 : y0 + (y1 - y0) * p,
+              scaleOf(s0) + (scaleOf(s1) - scaleOf(s0)) * p,
+            ]
+          }
+        }
+        const last = SHOTS[SHOTS.length - 1]
+        const [x, y2] = target(last[1])
+        return [x, y2, scaleOf(last[2])]
+      }
+
+      function place(t) {
+        const [x, y2, s] = cameraAt(t)
+        // The scale is applied about the world's own centre, so the pan is multiplied by it.
+        world.style.transform = `translate3d(${-s * (x - widest / 2)}px, ${-s * (y2 - worldH / 2)}px, 0) scale(${s})`
+        // The signature rises as the last push settles, and the film ends held.
+        const fade = Math.min(1, Math.max(0, (t - 17.0) / 0.8))
+        const sign = document.getElementById('sign')
+        sign.style.opacity = String(fade)
+        sign.style.transform = `translateY(${(1 - fade) * 10}px)`
+        document.getElementById('scrim').style.opacity = String(fade * 0.9)
+        document.getElementById('curtain').style.opacity = '0'
+      }
+
+      const ready = () => videos.every((v) => v.readyState >= 2)
+      const wait = () => (ready() ? Promise.resolve() : new Promise((r) => setTimeout(wait, 40)))
+      const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+      // '#t=7.4' freezes the camera there, for checking a composition without filming the take.
+      const freeze = /t=([\d.]+)/.exec(location.hash)
+
+      const start = () => {
+        for (const video of videos) video.play().catch(() => {})
+        window.__filmReady = true
+        if (freeze) {
+          place(Number(freeze[1]))
+          return
+        }
+        const started = performance.now()
+        const tick = () => {
+          place((performance.now() - started) / 1000)
+          requestAnimationFrame(tick)
+        }
+        tick()
+        window.__filmEnd = 19.4
+      }
+
+      // Never block the film on a webfont: document.fonts.ready can stay pending for as long as
+      // the Google Fonts stylesheet does, and an unsettled promise here means a black capture.
+      let begun = false
+      const once = () => {
+        if (begun) return
+        begun = true
+        start()
+      }
+      Promise.race([document.fonts.ready, sleep(1200)]).then(once, once)
+      wait().then(once)
+      setTimeout(once, 3000)
+    </script>
+  </body>
+</html>

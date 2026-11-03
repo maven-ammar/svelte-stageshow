@@ -1,0 +1,14 @@
+[0:v]scale=1280:720,setsar=1,fps=30,trim=duration=4.5,setpts=PTS-STARTPTS,fade=t=in:st=0:d=0.5,format=yuv420p[v0];
+[1:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v1];
+[2:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v2];
+[3:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v3];
+[4:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v4];
+[5:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v5];
+[6:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v6];
+[7:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v7];
+[8:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v8];
+[9:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v9];
+[10:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v10];
+[11:v]scale=1280:720:force_original_aspect_ratio=decrease:flags=lanczos,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=0x0a0a0b,setsar=1,fps=30,format=yuv420p[v11];
+[12:v]scale=1280:720,setsar=1,fps=30,trim=duration=4.5,setpts=PTS-STARTPTS,fade=t=out:st=3.9:d=0.6,format=yuv420p[v12];
+[v0][v1][v2][v3][v4][v5][v6][v7][v8][v9][v10][v11][v12]concat=n=13:v=1:a=0[outv]
