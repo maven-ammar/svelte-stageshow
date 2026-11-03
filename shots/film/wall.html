@@ -252,20 +252,20 @@
       // rather than a crop of it. The phone scenes only fill the frame at 3x, which is why opening
       // on one read as a white screen with a chat bubble in it.
       const SHOTS = [
-        [0.0, 'dark-hero', 1.78],
-        [1.8, 'dark-hero', 1.74],
-        [5.6, null, FIT * 0.97],
-        [9.8, null, FIT * 1.04],
+        [0.0, 'dark-hero', 1.8],
+        [1.1, 'dark-hero', 1.75],
+        [4.2, null, FIT * 0.97],
+        [7.0, null, FIT * 1.04],
       ]
 
       // The card comes up out of the dark, and the board goes down into it first. A straight
       // cross-dissolve between a dense grid of UI and a text card has a legible double-exposure
       // midpoint no matter how the curves are shaped; both backgrounds here are within three
       // values of each other, so a dip is invisible and the overlap is only darkness.
-      const BOARD_OUT = 10.4
-      const CARD_IN = 10.12
-      const CARD_FULL = 11.02
-      const TOTAL = 14.4
+      const BOARD_OUT = 7.62
+      const CARD_IN = 7.34
+      const CARD_FULL = 8.2
+      const TOTAL = 10.0
 
       const EASE = [0.66, 0, 0.34, 1]
 
@@ -321,7 +321,7 @@
         // A straight cross-dissolve between a busy board and a card reads as a double exposure.
         // So the card does not fade in at all — it sits behind the board at full strength and the
         // board fades out over it. One image leaves, the other is revealed; nothing is added.
-        const out = Math.min(1, Math.max(0, (t - 9.8) / (BOARD_OUT - 9.8)))
+        const out = Math.min(1, Math.max(0, (t - 7.0) / (BOARD_OUT - 7.0)))
         const rise = Math.min(1, Math.max(0, (t - CARD_IN) / (CARD_FULL - CARD_IN)))
         og.style.opacity = String(rise * rise * (3 - 2 * rise))
         board.style.opacity = String(1 - out)
