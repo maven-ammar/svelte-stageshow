@@ -124,6 +124,12 @@
     <span class="sub">A Svelte 5 port of Benji Taylor's Stageshow</span>
     <a class="src" href="/docs/">docs</a>
     <a class="src" href="https://benji.org/stageshow" target="_blank" rel="noreferrer">original</a>
+    <a
+      class="npm"
+      href="https://www.npmjs.com/package/svelte-stageshow"
+      target="_blank"
+      rel="noreferrer">400+ downloads on day one</a
+    >
   </header>
 
   <DotHero />
@@ -358,6 +364,29 @@
   .src {
     color: var(--orange);
     text-decoration: none;
+  }
+
+  /* Social proof for the week the package shipped: a pill in the bar, not a strip above
+     it. A strip would read as an announcement, and the site is not selling anything.
+     Muted ink and a hairline border so it separates from the nav without a fill, and so
+     it reads as a quiet aside rather than a fourth nav link. */
+  .npm {
+    color: var(--dim);
+    font-family: var(--ss-font, system-ui, -apple-system, 'Segoe UI', sans-serif);
+    font-size: 13px;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 11px 4px;
+    transition:
+      color 160ms ease,
+      border-color 160ms ease;
+  }
+
+  .npm:hover,
+  .npm:focus-visible {
+    color: var(--paper);
+    border-color: rgba(244, 241, 230, 0.3);
   }
 
   .port {
@@ -912,6 +941,17 @@
     .foot-links {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 22px 16px;
+    }
+  }
+
+  /* At phone width the bar cannot hold the wordmark, two links and the pill on one line.
+     Wrap rather than shrink anything: the pill drops to a second line and starts at the
+     page's left margin, under the wordmark, where it reads as a line of the header rather
+     than a badge floating in the corner. */
+  @media (max-width: 640px) {
+    .bar {
+      flex-wrap: wrap;
+      row-gap: 10px;
     }
   }
 </style>
